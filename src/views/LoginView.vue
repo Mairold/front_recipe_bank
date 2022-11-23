@@ -9,16 +9,19 @@
 
       <div class="col-lg-5">
 
-<!--        <AlertError :message="errorMessage"/>-->
 
         <div class="input-group mb-3">
           <span class="input-group-text">Kasutajanimi</span>
           <input v-model="username" type="text" class="form-control">
         </div>
 
-      <div class="input-group mb-3">
+        <div class="input-group mb-3">
           <span class="input-group-text">parool</span>
           <input v-model="password" type="password" class="form-control">
+        </div>
+
+        <div v-if="errorMessage.length > 0" class="alert alert-danger" role="alert">
+          {{ errorMessage }}
         </div>
       </div>
     </div>
@@ -35,7 +38,7 @@
 
       <div class="d-grid gap-2 col-6 mx-auto">
 
-        <button v-on:click="login" type="button" class="btn btn-success">Tee kasutaja</button>
+        <button v-on:click="createUser" type="button" class="btn btn-success">Tee kasutaja</button>
 
       </div>
 
@@ -43,9 +46,7 @@
   </div>
 
 
-
 </template>
-
 
 
 <script>
@@ -57,7 +58,41 @@ export default {
       username: '',
       password: '',
       errorMessage: '',
-      userId: ''
+      userId: 0,
+    }
+  },
+  methods: {
+
+    login: function () {
+
+      this.errorMessage = ''
+      if (this.username.length === 0 || this.password.length === 0) {
+        this.errorMessage = 'Palun täida kõik väljad'
+
+      } else {
+
+        this.$http.get("/login", {
+              params: {
+                username: this.username,
+                password: this.password
+              }
+            }
+        ).then(response => {
+          this.userId = response.data
+          console.log(response.data)
+
+          sessionStorage.setItem('userId', this.userId)
+          this.$router.push({name: 'mainRoute'})
+          // sessionStorage.getItem('userId') on vaja teha järgmisele lehele, kuhu kasutaja pushitakse
+
+        }).catch(error => {
+          this.errorMessage = 'Siia tuleb Backendi vastus'
+          console.log(error)
+        });
+      }
+    },
+    createUser: function () {
+      this.$router.push({name: 'createUserRoute'})
     }
   }
 }
