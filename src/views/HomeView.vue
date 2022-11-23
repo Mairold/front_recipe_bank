@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Tere tulemast kodukokaabilise lehele!! :)"/>
+    <HelloWorld msg="Siia tuleb kodukoka abilise leht!! :)"/>
   </div>
 </template>
 
