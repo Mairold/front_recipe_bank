@@ -15,9 +15,7 @@
       <div class="col-6 offset-md-2">
         <select v-model="ingredient.selectedIngredientGroupId" class="form-select" aria-label="Default select example">
           <option selected>Vali grupp</option>
-          <option v-for="ingredientGroup in " value="1">One</option>
-          <option value="2">Two</option>
-          <option value="3">Three</option>
+          <option v-for="ingredientGroup in ingredientGroups " value="1">{{ingredientGroup.ingredientGroupName}}</option>
         </select>
       </div>
     </div>
@@ -135,7 +133,7 @@ export default {
     },
 
     getAllMeasurements: function () {
-      this.$http.get("/ingredientsu/measurements")
+      this.$http.get("/ingredients/measurements")
           .then(response => {
             this.measurements = response.data
             console.log(response.data)
