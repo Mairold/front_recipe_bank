@@ -24,7 +24,7 @@
     </div>
     <div class="d-grid gap-2 col-5 mx-auto">
       <button v-on:click="createUserButtonClicked" type="button" class="btn btn-success">Loo kasutaja</button>
-      <div v-if="errorMessage" class="alert alert-danger" role="alert">{{ errorMessage.message }}</div>
+      <div v-if="errorMessage.message.length > 0" class="alert alert-danger" role="alert">{{ errorMessage.message }}</div>
     </div>
   </div>
 
@@ -46,6 +46,7 @@ export default {
   },
   methods: {
     createUser: function () {
+      this.errorMessage.message = ''
       this.$http.post("/login", null, {
             params: {
               username: this.username,
