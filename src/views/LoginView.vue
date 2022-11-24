@@ -20,8 +20,8 @@
           <input v-model="password" type="password" class="form-control">
         </div>
 
-        <div v-if="errorMessage.length > 0" class="alert alert-danger" role="alert">
-          {{ errorMessage }}
+        <div v-if="errorMessage.message.length > 0" class="alert alert-danger" role="alert">
+          {{ errorMessage.message }}
         </div>
       </div>
     </div>
@@ -57,17 +57,20 @@ export default {
     return {
       username: '',
       password: '',
-      errorMessage: '',
       userId: 0,
+      errorMessage: {
+        message: '',
+        errorCode: ''
+      },
     }
   },
   methods: {
 
     login: function () {
 
-      this.errorMessage = ''
+      this.errorMessage.message = ''
       if (this.username.length === 0 || this.password.length === 0) {
-        this.errorMessage = 'Palun täida kõik väljad'
+        this.errorMessage.message = 'Palun täida kõik väljad'
 
       } else {
 
@@ -83,10 +86,9 @@ export default {
 
           sessionStorage.setItem('userId', this.userId)
           this.$router.push({name: 'mainRoute'})
-          // sessionStorage.getItem('userId') on vaja teha järgmisele lehele, kuhu kasutaja pushitakse
 
         }).catch(error => {
-          this.errorMessage = 'Siia tuleb Backendi vastus'
+          this.errorMessage = error.response.data
           console.log(error)
         });
       }
