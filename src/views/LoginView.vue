@@ -86,7 +86,6 @@ export default {
 
           sessionStorage.setItem('userId', this.userId)
           this.$router.push({name: 'mainRoute'})
-          // sessionStorage.getItem('userId') on vaja teha järgmisele lehele, kuhu kasutaja pushitakse
 
         }).catch(error => {
           this.errorMessage = error.response.data
