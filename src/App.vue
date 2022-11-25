@@ -5,7 +5,6 @@
       <router-link to="/about">About</router-link> |
       <router-link to="/login">Sisselogimine</router-link> |
       <router-link to="/main">Avavaade</router-link> |
-      <router-link to="/create-user">Uus kasutaja</router-link> |
       <router-link to="/menu">Koosta menüü</router-link>
     </nav>
     <router-view/>
