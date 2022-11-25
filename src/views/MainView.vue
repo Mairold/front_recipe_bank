@@ -5,6 +5,8 @@
       <h1>Avavaade</h1>
     </div>
 
+<!--    Siia lehele tuleb kasutaja viimane menüü ja viimane ostunimekiri-->
+
   </div>
 </template>
 
