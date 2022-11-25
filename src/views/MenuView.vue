@@ -2,7 +2,7 @@
   <div>
 
     <div class="row justify-content-center m-2">
-      <h1>Koosta menüü üldvaade</h1>
+      <h1>"Koosta menüü" üldvaade</h1>
     </div>
 
     <div class="row justify-content-start">

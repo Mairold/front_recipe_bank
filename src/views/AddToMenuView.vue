@@ -5,14 +5,14 @@
     </div>
 
     <div>
-      <div class="row justify-content-center m-5">
-        <div class="col-6 offset-md-2">
+      <div class="row row-cols-auto justify-content-center m-5">
+        <div class="col offset-md-0">
 
           <button type="button" class="btn btn-success">Ei leidnud endale isuäratavat retsepti? Lisa uus siit</button>
         </div>
-          <div class="col-6 offset-md-2">
+          <div class="col pe-5">
 
-          <button type="button" class="btn btn-success">Tagasi menüüd vaatama</button>
+          <button v-on:click="backToMenu" type="button" class="btn btn-success">Tagasi menüüd vaatama</button>
 
         </div>
       </div>
@@ -25,6 +25,22 @@
 
 <script>
 export default {
-  name: "AddToMenuView"
+  name: "AddToMenuView",
+
+  data: function () {
+    return {
+
+    }
+  },
+
+  methods: {
+
+    backToMenu: function () {
+      this.$router.push({name: 'menuRoute'})
+    },
+    addNewRecipe: function () {
+      this.$router.push({name: 'menuRoute'})
+    }
+  }
 }
 </script>
