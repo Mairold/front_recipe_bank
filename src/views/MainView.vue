@@ -1,6 +1,9 @@
 <template>
   <div>
-<h1>Avavaade</h1>
+
+    <div class="row justify-content-center m-2">
+      <h1>Avavaade</h1>
+    </div>
 
   </div>
 </template>
