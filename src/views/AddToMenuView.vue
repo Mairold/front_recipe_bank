@@ -8,7 +8,7 @@
       <div class="row row-cols-auto justify-content-center m-5">
         <div class="col offset-md-0">
 
-          <button type="button" class="btn btn-success">Ei leidnud endale isuäratavat retsepti? Lisa uus siit</button>
+          <button v-on:click="addNewRecipe" type="button" class="btn btn-success">Ei leidnud endale isuäratavat retsepti? Lisa uus siit</button>
         </div>
           <div class="col pe-5">
 
@@ -39,7 +39,7 @@ export default {
       this.$router.push({name: 'menuRoute'})
     },
     addNewRecipe: function () {
-      this.$router.push({name: 'menuRoute'})
+      this.$router.push({name: 'addRecipeRoute'})
     }
   }
 }
