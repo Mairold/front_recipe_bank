@@ -9,8 +9,7 @@
         <div class="col offset-md-0">
 
           <button v-on:click="addNewRecipe" type="button" class="btn btn-success">Ei leidnud endale isuäratavat
-            retsepti? Lisa uus siit
-          </button>
+            retsepti? Lisa uus siit </button>
         </div>
         <div class="col pe-5">
 
