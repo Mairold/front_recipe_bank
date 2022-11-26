@@ -13,9 +13,11 @@
     </div>
     <div class="row justify-content-start mt-2 mb-4">
       <div class="col-6 offset-md-2">
-        <select v-model="ingredient.selectedIngredientGroupId" class="form-select" aria-label="Default select example">
-          <option selected>Vali grupp</option>
-          <option v-for="ingredientGroup in ingredientGroups " value="1">{{ingredientGroup.ingredientGroupName}}</option>
+        <select v-model="ingredient.selectedIngredientGroupId" class="form-select" aria-label="--Vali grupp--">
+          <option selected value="0">--Vali grupp--</option>
+          <option v-for="ingredientGroup in ingredientGroups " :value="ingredientGroup.ingredientGroupId">
+            {{ ingredientGroup.ingredientGroupName }}
+          </option>
         </select>
       </div>
     </div>
@@ -24,9 +26,9 @@
     <!--Ühikute lisamine-->
     <div class="row justify-content-start mt-5">
       <div class="col-2 offset-md-2">
-        <select v-model="selectedMeasurementId" class="form-select" aria-label="Default select example">
+        <select v-model="selectedMeasurement" class="form-select" aria-label="Default select example">
           <option selected disabled>Vali ühik</option>
-          <option v-for="unit in measurements" :value="unit.measurementId"> {{ unit.measurementName }}</option>
+          <option v-for="unit in measurements" :value="unit"> {{ unit.measurementName }}</option>
         </select>
       </div>
       <div class="col-4">
@@ -45,12 +47,14 @@
             <th scope="col"></th>
           </tr>
           </thead>
-          <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td v-for="measurement in ingredient.allowedMeasurements">{{ measurement.allowedMeasurementName }}</td>
+          <tbody v-if="ingredient?.allowedMeasurements[0]?.measurementName !== ''">
+          <tr v-for="measurement in ingredient?.allowedMeasurements">
+            <th scope="row">{{ measurement.sequenceNumber }}</th>
+            <td>{{ measurement?.measurementName }}</td>
             <td>
-              <button type="button" class="btn btn-sm btn-danger">Kustuta</button>
+              <button v-on:click="deleteButtonClickEvent(measurement)" type="button" class="btn btn-sm btn-danger">
+                Kustuta
+              </button>
             </td>
           </tr>
           </tbody>
@@ -84,16 +88,17 @@ export default {
     return {
       ingredient: {
         ingredientName: '',
-        selectedIngredientGroupId: '',
+        selectedIngredientGroupId: 0,
         allowedMeasurements: [
           {
-            allowedMeasurementId: 0,
-            allowedMeasurementName: ''
+            measurementName: '',
+            measurementId: 0
           }
         ],
       },
       ingredientGroups: [
         {
+          ingredientGroupId: 0,
           ingredientGroupName: ''
         }
       ],
@@ -103,7 +108,10 @@ export default {
           measurementName: ''
         }
       ],
-      selectedMeasurementId: 0,
+      selectedMeasurement: {
+        measurementId: 0,
+        measurementName: ''
+      },
       errorResponse: {
         message: 'Proov',
         errorCode: ''
@@ -114,18 +122,57 @@ export default {
   methods: {
 
 
-    addMeasurementUnit: function () {
-      let addedIngredient = this.measurements.find(x => x.id === this.selectedMeasurementId)
-      if (this.ingredient.allowedMeasurements.includes(addedIngredient.measurementName)) {
-        this.ingredient.allowedMeasurements.push()
+    validateDuplications: function () {
+      return this.ingredient.allowedMeasurements.filter(a => a.measurementName === this.selectedMeasurement.measurementName).length > 0;
+    },
+
+    addMeasurementToAllowedMeasurementsList: function () {
+      if (this.ingredient?.allowedMeasurements[0]?.measurementName === '') {
+        this.ingredient.allowedMeasurements[0].measurementName = this.selectedMeasurement.measurementName
+        this.ingredient.allowedMeasurements[0].measurementId = this.selectedMeasurement.measurementId
       } else {
-        this.errorResponse.message = 'Oled selle ühiku juba lisanud!'
+        this.ingredient.allowedMeasurements.push({
+          measurementName: this.selectedMeasurement.measurementName,
+          measurementId: this.selectedMeasurement.measurementId
+        })
       }
     },
 
+    addMeasurementUnit: function () {
+      this.errorResponse.message = ''
+      if (this.selectedMeasurement.measurementName === '') {
+        this.errorResponse.message = 'Sobiv ühik valimata!'
+      } else {
+        if (this.validateDuplications()) {
+          this.errorResponse.message = 'Oled selle ühiku juba lisanud!'
+        } else {
+          this.addMeasurementToAllowedMeasurementsList();
+        }
+      }
+      this.generateRowNumbers()
+    },
+
+    generateRowNumbers: function () {
+      let counter = 1
+      this.ingredient.allowedMeasurements.forEach(element => {
+            element.sequenceNumber = counter++
+          }
+      )
+    },
+
+    deleteButtonClickEvent: function (measurement) {
+        let index = this.ingredient.allowedMeasurements.indexOf(measurement)
+        this.ingredient.allowedMeasurements.splice(index,1)
+        this.generateRowNumbers()
+    },
+
     addIngredient: function () {
-      this.$http.post("/ingredient/", this.ingredient
+      let requestBody = this.ingredient
+      requestBody.allowedMeasurements.forEach(a => delete a['sequenceNumber']);
+
+      this.$http.post("/ingredient", requestBody
       ).then(response => {
+        this.errorResponse.message = 'Uus toiduaine salvestatud'
         console.log(response.data)
       }).catch(error => {
         console.log(error)
@@ -133,7 +180,7 @@ export default {
     },
 
     getAllMeasurements: function () {
-      this.$http.get("/ingredients/measurements")
+      this.$http.get("/ingredient/measurements")
           .then(response => {
             this.measurements = response.data
             console.log(response.data)
