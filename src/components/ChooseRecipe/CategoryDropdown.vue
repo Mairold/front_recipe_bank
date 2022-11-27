@@ -10,13 +10,32 @@
 <script>
 export default {
   name: 'CategoryDropdown',
-  props: {
-    categories: {}
-  },
+
   data: function () {
     return {
       selectedCategoryId: 0,
+      categories: [
+        {
+          categoryName: '',
+          categoryId: 0
+        },
+      ],
     }
   },
+  methods: {
+    getCategoryDropdownInfo: function () {
+      this.$http.get('/add-to-menu/category')
+          .then(result => {
+            this.categories = result.data
+            console.log('CATEGORIES: ' + JSON.stringify(this.categories))
+          })
+          .catch(error => {
+            console.log('Mingi viga tuli')
+          });
+    },
+  },
+  beforeMount() {
+    this.getCategoryDropdownInfo()
+  }
 }
 </script>

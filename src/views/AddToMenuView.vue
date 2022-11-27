@@ -7,12 +7,14 @@
     <div>
       <div class="row justify-content-between mt-5">
         <div class="col col-lg-6">
-          <button v-on:click="addNewRecipe" type="button" class="btn btn-success">Ei leidnud endale isuäratavat
-            retsepti? Lisa uus siit
+          <button v-on:click="addNewRecipe" type="button" class="btn btn-success">
+            Ei leidnud endale isuäratavat retsepti? Lisa uus siit
           </button>
         </div>
         <div class="col col-lg-6">
-          <button v-on:click="backToMenu" type="button" class="btn btn-success">Tagasi menüüd vaatama</button>
+          <button v-on:click="backToMenu" type="button" class="btn btn-success">
+            Tagasi menüüd vaatama
+          </button>
         </div>
       </div>
     </div>
@@ -27,14 +29,14 @@
                    autocomplete="on" data-bd-docs-version="5.0">
           </div>
           <div class="row mt-3">
-            <CategoryDropdown :categories="categories"/>    <!-- siin on Kategooria rippmenüü-->
+            <CategoryDropdown/> <!-- see on Kategooria rippmenüü-->
           </div>
           <div class="row mt-3">
-            <PrepTimeDropdown :prep-times="prepTimes"/>   <!-- siin on Ajakulu rippmenüü-->
+            <PrepTimeDropdown/> <!-- see on Ajakulu rippmenüü-->
           </div>
         </div>
         <div class="col col-lg-10">
-          <ChooseRecipeTable/>  <!-- siin on nelja veeruga retseptide tabel, mille viimases veerus on nupud-->
+          <ChooseRecipeTable/>  <!-- see on nelja veeruga retseptide tabel, mille viimases veerus on nupud-->
         </div>
       </div>
     </div>
@@ -51,20 +53,7 @@ export default {
   name: "AddToMenuView",
   components: {PrepTimeDropdown, CategoryDropdown, ChooseRecipeTable},
   data: function () {
-    return {
-      categories: [
-        {
-          categoryName: '',
-          categoryId: 0
-        },
-      ],
-      prepTimes: [
-        {
-          prepTime: '',
-          prepTimeId: 0
-        }
-      ]
-    }
+    return {}
   },
 
   methods: {
@@ -75,33 +64,6 @@ export default {
     addNewRecipe: function () {
       this.$router.push({name: 'addRecipeRoute'})
     },
-    getCategoryDropdownInfo: function () {
-      this.$http.get('/add-to-menu/category')
-          .then(result => {
-            this.categories = result.data
-            console.log('CATEGORIES: ' + JSON.stringify(this.categories))
-          })
-          .catch(error => {
-            console.log('Mingi viga tuli')
-          });
-    },
-    getPrepTimeDropdownInfo: function () {
-      this.$http.get('/add-to-menu/prep-time')
-          .then(result => {
-            this.prepTimes = result.data
-            // alert('Töötab!')
-            console.log('PREP-TIMES: ' + JSON.stringify(this.prepTimes))
-          })
-          .catch(error => {
-            console.log('Mingi viga tuli')
-          })
-      ;
-    }
-  },
-  beforeMount() {
-    this.getCategoryDropdownInfo()
-    this.getPrepTimeDropdownInfo()
   }
-
 }
 </script>
