@@ -20,24 +20,21 @@
     <div class="container">
       <div class="row justify-content-start m-5">
         <div class="col col-lg-2">
-          <!-- siia tuleb otsingukast, mille võtsin Bootstrapi avalehelt :-)-->
+          <!-- siin on otsingukast, mille rottisin Bootstrapi avalehelt -->
           <div class="row">
             <input type="search" class="form-control" id="search-input" placeholder="Otsi retsepti"
                    aria-label="Search docs for..."
                    autocomplete="on" data-bd-docs-version="5.0">
           </div>
-          <!-- siia tuleb kategooria rippmenüü-->
           <div class="row mt-3">
-            <CategoryDropdown :categories="categories"/>
+            <CategoryDropdown :categories="categories"/>    <!-- siin on Kategooria rippmenüü-->
           </div>
-          <!-- siia tuleb Ajakulu rippmenüü-->
           <div class="row mt-3">
-            <PrepTimeDropdown :prep-times="prepTimes"/>
+            <PrepTimeDropdown :prep-times="prepTimes"/>   <!-- siin on Ajakulu rippmenüü-->
           </div>
         </div>
         <div class="col col-lg-10">
-          <!-- siin on nelja veeruga tabel, mille viimases veerus on nupud-->
-          <ChooseRecipeTable/>
+          <ChooseRecipeTable/>  <!-- siin on nelja veeruga retseptide tabel, mille viimases veerus on nupud-->
         </div>
       </div>
     </div>
@@ -47,8 +44,8 @@
 
 <script>
 import ChooseRecipeTable from "@/components/ChooseRecipe/ChooseRecipeTable";
-import CategoryDropdown from "@/views/CategoryDropdown";
-import PrepTimeDropdown from "@/views/PrepTimeDropdown";
+import CategoryDropdown from "@/components/ChooseRecipe/CategoryDropdown";
+import PrepTimeDropdown from "@/components/ChooseRecipe/PrepTimeDropdown";
 
 export default {
   name: "AddToMenuView",
@@ -57,34 +54,14 @@ export default {
     return {
       categories: [
         {
-          categoryName: 'Supp',
-          categoryId: 1
+          categoryName: '',
+          categoryId: 0
         },
-        {
-          categoryName: 'Praad',
-          categoryId: 2
-        },
-        {
-          categoryName: 'Magustoit',
-          categoryId: 3
-        },
-        {
-          categoryName: 'Salat',
-          categoryId: 4
-        }
       ],
       prepTimes: [
         {
-          prepTime: '0-15 min',
-          prepTimeId: 1
-        },
-        {
-          prepTime: '1-2 h',
-          prepTimeId: 2
-        },
-        {
-          prepTime: '2+ h',
-          prepTimeId: 3
+          prepTime: '',
+          prepTimeId: 0
         }
       ]
     }
@@ -97,7 +74,34 @@ export default {
     },
     addNewRecipe: function () {
       this.$router.push({name: 'addRecipeRoute'})
+    },
+    getCategoryDropdownInfo: function () {
+      this.$http.get('/add-to-menu/category')
+          .then(result => {
+            this.categories = result.data
+            console.log('CATEGORIES: ' + JSON.stringify(this.categories))
+          })
+          .catch(error => {
+            console.log('Mingi viga tuli')
+          });
+    },
+    getPrepTimeDropdownInfo: function () {
+      this.$http.get('/add-to-menu/prep-time')
+          .then(result => {
+            this.prepTimes = result.data
+            // alert('Töötab!')
+            console.log('PREP-TIMES: ' + JSON.stringify(this.prepTimes))
+          })
+          .catch(error => {
+            console.log('Mingi viga tuli')
+          })
+      ;
     }
+  },
+  beforeMount() {
+    this.getCategoryDropdownInfo()
+    this.getPrepTimeDropdownInfo()
   }
+
 }
 </script>

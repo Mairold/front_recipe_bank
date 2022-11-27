@@ -1,5 +1,5 @@
 <template>
-  <select class="form-select" aria-label="Default select example">
+  <select v-model="selectedCategoryId" class="form-select" aria-label="Default select example">
     <option selected disabled value="0">Kategooria</option>
     <option v-for="category in categories" :key="category.categoryId" :value="category.categoryId">
       {{ category.categoryName }}
@@ -12,6 +12,11 @@ export default {
   name: 'CategoryDropdown',
   props: {
     categories: {}
-  }
+  },
+  data: function () {
+    return {
+      selectedCategoryId: 0,
+    }
+  },
 }
 </script>
