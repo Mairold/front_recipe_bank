@@ -90,34 +90,40 @@
     </div>
     <div class="form-group col-md-12">
 
-    <div class="row-cols-md-6">
-      <button type="button" class="btn btn-success">Lisa deeki uus toiduaine</button>
-    </div>
+      <div class="row-cols-md-6">
+        <button type="button" class="btn btn-success">Lisa deeki uus toiduaine</button>
+      </div>
 
       <button type="button" class="btn btn-success">Salvesta retsept</button>
     </div>
 
     <div class="form-group col-md-12">
-    <div class="row-cols-md-3">
-      <button type="button" class="btn btn-success">Salvesta retsept ja lisa menüüsse</button>
-
       <div class="row-cols-md-3">
-      <select class="form-select" aria-label="Default select example">
-        <option selected>Vali grupp</option>
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
-      </select>
+        <button type="button" class="btn btn-success">Salvesta retsept ja lisa menüüsse</button>
+
+        <div class="row-cols-md-3">
+          <select class="form-select" aria-label="Default select example">
+            <option selected>Vali grupp</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+          </select>
+        </div>
+      </div>
     </div>
-    </div>
-    </div>
-    </div>
+  </div>
 
 </template>
 
 <script>
 export default {
-  name: "AddRecipe"
+  name: "AddRecipe",
+  data: function () {
+    return {
+      recipeName:'',
+
+    }
+  }
 }
 </script>
 
