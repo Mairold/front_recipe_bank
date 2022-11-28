@@ -4,6 +4,7 @@ import HomeView from '../views/HomeView.vue'
 import LoginView from "@/views/LoginView";
 import MainView from "@/views/MainView";
 import CreateUserView from "@/views/CreateUserView";
+import NewIngredientView from "@/views/NewIngredientView";
 
 Vue.use(VueRouter)
 
@@ -27,6 +28,11 @@ const routes = [
     path: '/create_user',
     name: 'createUserRoute',
     component: CreateUserView
+  },
+  {
+    path: '/ingredient',
+    name: 'newIngredientRoute',
+    component: NewIngredientView
   },
   {
     path: '/about',
