@@ -84,19 +84,6 @@ export default {
       })
     },
 
-    // replaceListFirstPosition: function (selectedMeasurement) {
-    //   this.ingredient.allowedMeasurements[0].measurementName = selectedMeasurement.measurementName
-    //   this.ingredient.allowedMeasurements[0].measurementId = selectedMeasurement.measurementId
-    // },
-
-    // addMeasurementToAllowedMeasurementsList: function (selectedMeasurement) {
-    //   if (this.ingredient?.allowedMeasurements[0]?.measurementName === '') {
-    //     this.replaceListFirstPosition(selectedMeasurement);
-    //   } else {
-    //     this.addMeasurementToEndOfList(selectedMeasurement);
-    //   }
-    // },
-
     generateRowNumbers: function () {
       let counter = 1
       this.ingredient.allowedMeasurements.forEach(element => {
