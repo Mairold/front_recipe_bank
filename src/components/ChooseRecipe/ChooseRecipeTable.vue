@@ -2,29 +2,11 @@
   <table class="table table-success table-striped">
     <ChooseRecipeTableHead/>
     <tbody>
-    <tr>
-      <th scope="row">*</th>
-      <td>Supp</td>
-      <td>Frikadellisupp</td>
-      <td>0-15 min</td>
-      <td>
-        <button type="button" class="btn btn-light">Lisa menüüsse</button>
-      </td>
-    </tr>
-    <tr>
-      <th scope="row">*</th>
-      <td>Praad</td>
-      <td>Seapraad hapukapsaga</td>
-      <td>2+ h</td>
-      <td>
-        <button type="button" class="btn btn-light">Lisa menüüsse</button>
-      </td>
-    </tr>
-    <tr>
-      <th scope="row">*</th>
-      <td>Magustoit</td>
-      <td>Õunakook</td>
-      <td>1-2 h</td>
+    <tr v-for="recipe in recipes" :key="recipe.recipeId">
+      <th scope="row">{{recipe.sequenceNumber}}</th>
+      <td>{{recipe.categoryName}} </td>
+      <td>{{ recipe.recipeName }}</td>
+      <td>{{ recipe.prepTime }}</td>
       <td>
         <button type="button" class="btn btn-light">Lisa menüüsse</button>
       </td>
@@ -38,9 +20,11 @@ import ChooseRecipeTableHead from "@/components/ChooseRecipe/ChooseRecipeTableHe
 export default {
   name: 'ChooseRecipeTable',
   components: {ChooseRecipeTableHead},
+  props: {
+    recipes: {}
+  },
   data: function () {
     return {
-      // todo: Tabelis on vaja esitada jrk nr, kategooria nimi, retsepti nimi ja ajakulu
 
     }
   },

@@ -36,7 +36,7 @@
           </div>
         </div>
         <div class="col col-lg-10">
-          <ChooseRecipeTable/>  <!-- see on nelja veeruga retseptide tabel, mille viimases veerus on nupud-->
+          <ChooseRecipeTable :recipes="recipes"/>  <!-- see on nelja veeruga retseptide tabel, mille viimases veerus on nupud-->
         </div>
       </div>
     </div>
@@ -53,7 +53,21 @@ export default {
   name: "AddToMenuView",
   components: {PrepTimeDropdown, CategoryDropdown, ChooseRecipeTable},
   data: function () {
-    return {}
+    return {
+      recipes:
+        {
+          recipeId: 0,
+          recipeName: '',
+          categoryName: '',
+          prepTime: ''
+        },
+      requestInfo: {
+        searchBoxValue: '',
+        categoryId: 0,
+        prepTimeId: 0
+
+      },
+    }
   },
 
   methods: {
@@ -64,6 +78,29 @@ export default {
     addNewRecipe: function () {
       this.$router.push({name: 'addRecipeRoute'})
     },
+
+    getAllRecipes: function () {
+      this.$http.get("/add-to-menu/recipe")
+          .then(response => {
+            this.recipes = response.data
+            this.addSequenceNumbers()
+            console.log(response.data)
+          })
+          .catch(error => {
+            console.log(error)
+          })
+    },
+    addSequenceNumbers: function () {
+      let counter = 1
+      this.recipes.forEach(recipe => {
+        recipe.sequenceNumber = counter
+        counter++
+      })
+    },
+
+  },
+  beforeMount() {
+    this.getAllRecipes()
   }
 }
 </script>
