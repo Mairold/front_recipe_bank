@@ -2,88 +2,52 @@
   <div class="container overflow-hidden">
 
     <!--Üldandmed-->
-
     <div class="row justify-content-start mt-5">
-      <div class="col-6 offset-md-2">
-        <div class="form-floating ">
-          <input v-model="ingredient.ingredientName" type="text" class="form-control" id="floatingInput" placeholder="">
-          <label for="floatingInput">Toiduaine nimetus</label>
-        </div>
-      </div>
+      <IngredientNameInput :ingredient="ingredient"/>
     </div>
     <div class="row justify-content-start mt-2 mb-4">
-      <div class="col-6 offset-md-2">
-        <select v-model="ingredient.selectedIngredientGroupId" class="form-select" aria-label="--Vali grupp--">
-          <option selected value="0">--Vali grupp--</option>
-          <option v-for="ingredientGroup in ingredientGroups " :value="ingredientGroup.ingredientGroupId">
-            {{ ingredientGroup.ingredientGroupName }}
-          </option>
-        </select>
-      </div>
+      <IngredientGroupSelect @groupChangeEvent="addInfoToGroupId"/>
     </div>
-
 
     <!--Ühikute lisamine-->
-    <div class="row justify-content-start mt-5">
-      <div class="col-2 offset-md-2">
-        <select v-model="selectedMeasurement" class="form-select" aria-label="Default select example">
-          <option selected disabled>Vali ühik</option>
-          <option v-for="unit in measurements" :value="unit"> {{ unit.measurementName }}</option>
-        </select>
-      </div>
-      <div class="col-4">
-        <button v-on:click="addMeasurementUnit()" type="button" class="btn btn-success">Lisa lubatud ühikud</button>
-      </div>
-    </div>
+    <IngredientSelectBox @addMeasurementUnit="addNewMeasurementUnit"/>
 
     <!--Lubatud ühikud-->
     <div class="row justify-content-start mt-5 ">
       <div class="col-4 offset-md-2">
-        <div class="table table-success table-striped ">
-          <thead>
-          <tr>
-            <th scope="col">{#}</th>
-            <th scope="col">Ühik</th>
-            <th scope="col"></th>
-          </tr>
-          </thead>
-          <tbody v-if="ingredient?.allowedMeasurements[0]?.measurementName !== ''">
-          <tr v-for="measurement in ingredient?.allowedMeasurements">
-            <th scope="row">{{ measurement.sequenceNumber }}</th>
-            <td>{{ measurement?.measurementName }}</td>
-            <td>
-              <button v-on:click="deleteButtonClickEvent(measurement)" type="button" class="btn btn-sm btn-danger">
-                Kustuta
-              </button>
-            </td>
-          </tr>
-          </tbody>
-        </div>
+        <AllowedMeasurementTable :allowedMeasurements="ingredient.allowedMeasurements"
+                                 @deleteButtonClickEvent="deleteButtonClickEvent()"/>
       </div>
       <div class="col-2">
-        <div v-if="errorResponse.message.length > 0" class="alert alert-danger" role="alert">
-          {{ errorResponse.message }}
-        </div>
+        <AlertMessage :error-response="errorResponse"/>
       </div>
     </div>
 
     <!--Nupud-->
     <div>
       <div class="row row-cols-auto justify-content-center mt-5">
-        <div class="col offset-md-2">
-          <button v-on:click="addIngredient" type="button" class="btn btn-success">Salvesta deeki</button>
-        </div>
-        <div class="col pe-5 ">
-          <button type="button" class="btn btn-success">Tagasi</button>
-        </div>
+        <SaveButton @addIngredient="addIngredient"/>
+        <BackButton @backButtonAction="navigateToPreviousPage"/>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import AlertMessage from "@/views/AlertMessage";
+import IngredientNameInput from "@/views/IngredientNameInput";
+import IngredientGroupSelect from "@/views/IngredientGroupSelect";
+import IngredientSelectBox from "@/views/IngredientSelectBox";
+import AllowedMeasurementTable from "@/views/AllowedMeasurementTable";
+import SaveButton from "@/views/SaveButton";
+import BackButton from "@/views/BackButton";
+
 export default {
   name: "NewIngredientView",
+  components: {
+    BackButton, SaveButton, AllowedMeasurementTable, IngredientSelectBox,
+    IngredientGroupSelect, IngredientNameInput, AlertMessage
+  },
   data: function () {
     return {
       ingredient: {
@@ -96,60 +60,42 @@ export default {
           }
         ],
       },
-      ingredientGroups: [
-        {
-          ingredientGroupId: 0,
-          ingredientGroupName: ''
-        }
-      ],
-      measurements: [
-        {
-          measurementId: 0,
-          measurementName: ''
-        }
-      ],
-      selectedMeasurement: {
-        measurementId: 0,
-        measurementName: ''
-      },
       errorResponse: {
         message: 'Proov',
-        errorCode: ''
+        errorCode: '',
+        alertAttClass: 'alert alert-danger'
       }
     }
   },
 
   methods: {
 
-
-    validateDuplications: function () {
-      return this.ingredient.allowedMeasurements.filter(a => a.measurementName === this.selectedMeasurement.measurementName).length > 0;
+    addInfoToGroupId: function (groupId) {
+      this.ingredient.selectedIngredientGroupId = groupId
     },
 
-    addMeasurementToAllowedMeasurementsList: function () {
+    validateDuplications: function (selectedMeasurement) {
+      return this.ingredient.allowedMeasurements.filter(a => a.measurementName === selectedMeasurement.measurementName).length > 0;
+    },
+
+    addMeasurementToEndOfList: function (selectedMeasurement) {
+      this.ingredient.allowedMeasurements.push({
+        measurementName: selectedMeasurement.measurementName,
+        measurementId: selectedMeasurement.measurementId
+      })
+    },
+
+    replaceListFirstPosition: function (selectedMeasurement) {
+      this.ingredient.allowedMeasurements[0].measurementName = selectedMeasurement.measurementName
+      this.ingredient.allowedMeasurements[0].measurementId = selectedMeasurement.measurementId
+    },
+
+    addMeasurementToAllowedMeasurementsList: function (selectedMeasurement) {
       if (this.ingredient?.allowedMeasurements[0]?.measurementName === '') {
-        this.ingredient.allowedMeasurements[0].measurementName = this.selectedMeasurement.measurementName
-        this.ingredient.allowedMeasurements[0].measurementId = this.selectedMeasurement.measurementId
+        this.replaceListFirstPosition(selectedMeasurement);
       } else {
-        this.ingredient.allowedMeasurements.push({
-          measurementName: this.selectedMeasurement.measurementName,
-          measurementId: this.selectedMeasurement.measurementId
-        })
+        this.addMeasurementToEndOfList(selectedMeasurement);
       }
-    },
-
-    addMeasurementUnit: function () {
-      this.errorResponse.message = ''
-      if (this.selectedMeasurement.measurementName === '') {
-        this.errorResponse.message = 'Sobiv ühik valimata!'
-      } else {
-        if (this.validateDuplications()) {
-          this.errorResponse.message = 'Oled selle ühiku juba lisanud!'
-        } else {
-          this.addMeasurementToAllowedMeasurementsList();
-        }
-      }
-      this.generateRowNumbers()
     },
 
     generateRowNumbers: function () {
@@ -160,51 +106,59 @@ export default {
       )
     },
 
-    deleteButtonClickEvent: function (measurement) {
-        let index = this.ingredient.allowedMeasurements.indexOf(measurement)
-        this.ingredient.allowedMeasurements.splice(index,1)
-        this.generateRowNumbers()
+    addNewMeasurementUnit: function (selectedMeasurement) {
+      this.errorResponse.message = ''
+      if (selectedMeasurement.measurementName === '') {
+        this.showErrorMessage('Sobiv ühik valimata!', 'alert alert-danger');
+      } else {
+        if (this.validateDuplications(selectedMeasurement)) {
+          this.showErrorMessage('Oled selle ühiku juba lisanud!', 'alert alert-danger');
+        } else {
+          this.addMeasurementToAllowedMeasurementsList(selectedMeasurement);
+        }
+      }
+      this.generateRowNumbers()
     },
 
-    addIngredient: function () {
+    deleteButtonClickEvent: function (measurement) {
+      let index = this.ingredient.allowedMeasurements.indexOf(measurement)
+      this.ingredient.allowedMeasurements.splice(index, 1)
+      this.generateRowNumbers()
+    },
+
+    navigateToPreviousPage: function () {
+      // this.$router.push('page name')
+      alert("See nupp viib eelmisele lehele")
+    },
+
+    postIngredient: function () {
       let requestBody = this.ingredient
-      requestBody.allowedMeasurements.forEach(a => delete a['sequenceNumber']);
+      requestBody?.allowedMeasurements.forEach(a => delete a['sequenceNumber']);
 
       this.$http.post("/ingredient", requestBody
       ).then(response => {
-        this.errorResponse.message = 'Uus toiduaine salvestatud'
+        this.showErrorMessage('Uus toiduaine salvestatud.', 'alert alert-success');
         console.log(response.data)
       }).catch(error => {
+        if (error.response.status === 403) {
+          this.showErrorMessage(error.response.data?.message, 'alert alert-danger');
+        }
         console.log(error)
       })
     },
 
-    getAllMeasurements: function () {
-      this.$http.get("/ingredient/measurements")
-          .then(response => {
-            this.measurements = response.data
-            console.log(response.data)
-          })
-          .catch(error => {
-            console.log(error)
-          })
+    showErrorMessage: function (message, alertClass) {
+      this.errorResponse.message = message
+      this.errorResponse.alertAttClass = alertClass
     },
 
-    getAllIngredientGroups: function () {
-      this.$http.get("/ingredient/group")
-          .then(response => {
-            this.ingredientGroups = response.data
-            console.log(response.data)
-          })
-          .catch(error => {
-            console.log(error)
-          })
+    addIngredient: function () {
+      if (this.ingredient.ingredientName.length === 0 || this.ingredient.selectedIngredientGroupId === 0 || this.ingredient.allowedMeasurements.length === 0) {
+        this.showErrorMessage('Palun täida kõik väljad. Vähemalt üks lubatud ühik peab olema lisatud.', 'alert alert-danger');
+      } else {
+        this.postIngredient();
+      }
     },
-  }
-  ,
-  beforeMount() {
-    this.getAllMeasurements()
-    this.getAllIngredientGroups()
   }
 }
 </script>
