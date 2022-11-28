@@ -29,14 +29,15 @@
                    autocomplete="on" data-bd-docs-version="5.0">
           </div>
           <div class="row mt-3">
-            <CategoryDropdown/> <!-- see on Kategooria rippmenüü-->
+            <CategoryDropdown @clickSelectCategoryEvent ="getRecipeByCategoryId"/> <!-- see on Kategooria rippmenüü-->
           </div>
           <div class="row mt-3">
             <PrepTimeDropdown/> <!-- see on Ajakulu rippmenüü-->
           </div>
         </div>
         <div class="col col-lg-10">
-          <ChooseRecipeTable :recipes="recipes"/>  <!-- see on nelja veeruga retseptide tabel, mille viimases veerus on nupud-->
+          <ChooseRecipeTable :recipes="recipes"/>
+          <!-- see on nelja veeruga retseptide tabel, mille viimases veerus on nupud-->
         </div>
       </div>
     </div>
@@ -54,18 +55,18 @@ export default {
   components: {PrepTimeDropdown, CategoryDropdown, ChooseRecipeTable},
   data: function () {
     return {
-      recipes:
-        {
-          recipeId: 0,
-          recipeName: '',
-          categoryName: '',
-          prepTime: ''
-        },
+      recipes: [
+          {
+            recipeId: 0,
+            recipeName: '',
+            categoryName: '',
+            prepTime: ''
+          }
+          ],
       requestInfo: {
         searchBoxValue: '',
         categoryId: 0,
         prepTimeId: 0
-
       },
     }
   },
@@ -98,9 +99,41 @@ export default {
       })
     },
 
+    getRecipeByCategoryId: function () {
+      this.$http.get("/add-to-menu/info/by-category", {
+            params: {
+              categoryId: 2
+            }
+          }
+      ).then(response => {
+        // this.recipes = response.data
+        this.addSequenceNumbers()
+        console.log(response.data)
+      }).catch(error => {
+        console.log(error)
+      })
+    },
+
+    // getCategoryById: function (selectedCategoryId) {
+    //   this.$http.get("/add-to-menu/info/by-category", {
+    //         params: {
+    //           categoryId:
+    //         }
+    //       }
+    //   ).then(response => {
+    //     this.recipes = response.data
+    //     this.addSequenceNumbers()
+    //     console.log(response.data)
+    //   })
+    //       .catch(error => {
+    //         console.log(error)
+    //       })
+    // }
   },
   beforeMount() {
     this.getAllRecipes()
+    this.getRecipeByCategoryId()
+
   }
 }
 </script>
