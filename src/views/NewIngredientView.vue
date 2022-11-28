@@ -16,7 +16,7 @@
     <div class="row justify-content-start mt-5 ">
       <div class="col-4 offset-md-2">
         <AllowedMeasurementTable :allowedMeasurements="ingredient.allowedMeasurements"
-                                 @deleteButtonClickEvent="deleteButtonClickEvent()"/>
+                                 @deleteButtonClickEvent="deleteButtonClickEvent"/>
       </div>
       <div class="col-2">
         <AlertMessage :error-response="errorResponse"/>
@@ -34,13 +34,13 @@
 </template>
 
 <script>
-import AlertMessage from "@/views/AlertMessage";
-import IngredientNameInput from "@/views/IngredientNameInput";
-import IngredientGroupSelect from "@/views/IngredientGroupSelect";
-import IngredientSelectBox from "@/views/IngredientSelectBox";
-import AllowedMeasurementTable from "@/views/AllowedMeasurementTable";
-import SaveButton from "@/views/SaveButton";
-import BackButton from "@/views/BackButton";
+import AlertMessage from "@/components/AlertMessage";
+import IngredientNameInput from "@/components/IngredientNameInput";
+import IngredientGroupSelect from "@/components/IngredientGroupSelect";
+import IngredientSelectBox from "@/components/IngredientSelectBox";
+import AllowedMeasurementTable from "@/components/AllowedMeasurementTable";
+import SaveButton from "@/components/SaveButton";
+import BackButton from "@/components/BackButton";
 
 export default {
   name: "NewIngredientView",
@@ -61,7 +61,7 @@ export default {
         ],
       },
       errorResponse: {
-        message: 'Proov',
+        message: '',
         errorCode: '',
         alertAttClass: 'alert alert-danger'
       }
