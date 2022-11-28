@@ -1,5 +1,5 @@
 <template>
-  <div class="table table-success table-striped ">
+  <div v-if="allowedMeasurements.length > 0" class="table table-success table-striped ">
     <thead>
     <tr>
       <th scope="col">{#}</th>
@@ -7,7 +7,7 @@
       <th scope="col"></th>
     </tr>
     </thead>
-    <tbody v-if="allowedMeasurements[0]?.measurementName !== ''">
+    <tbody>
     <tr v-for="measurement in allowedMeasurements">
       <th scope="row">{{ measurement.sequenceNumber }}</th>
       <td>{{ measurement?.measurementName }}</td>
