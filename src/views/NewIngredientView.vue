@@ -34,13 +34,13 @@
 </template>
 
 <script>
-import AlertMessage from "@/components/AlertMessage";
-import IngredientNameInput from "@/components/IngredientNameInput";
-import IngredientGroupSelect from "@/components/IngredientGroupSelect";
-import IngredientSelectBox from "@/components/IngredientSelectBox";
-import AllowedMeasurementTable from "@/components/AllowedMeasurementTable";
-import SaveButton from "@/components/SaveButton";
-import BackButton from "@/components/BackButton";
+import AlertMessage from "@/components/general/AlertMessage";
+import IngredientNameInput from "@/components/ingredient/IngredientNameInput";
+import IngredientGroupSelect from "@/components/ingredient/IngredientGroupSelect";
+import IngredientSelectBox from "@/components/ingredient/IngredientSelectBox";
+import AllowedMeasurementTable from "@/components/ingredient/AllowedMeasurementTable";
+import SaveButton from "@/components/general/SaveButton";
+import BackButton from "@/components/general/BackButton";
 
 export default {
   name: "NewIngredientView",
@@ -62,7 +62,6 @@ export default {
       },
       errorResponse: {
         message: '',
-        errorCode: '',
         alertAttClass: 'alert alert-danger'
       }
     }
@@ -152,8 +151,15 @@ export default {
       this.errorResponse.alertAttClass = alertClass
     },
 
+    isAllInputPresent: function () {
+      return this.ingredient.ingredientName.length === 0 ||
+          this.ingredient.selectedIngredientGroupId === 0 ||
+          this.ingredient.allowedMeasurements[0]?.measurementName === '' ||
+          this.ingredient.allowedMeasurements?.length === 0;
+    },
+
     addIngredient: function () {
-      if (this.ingredient.ingredientName.length === 0 || this.ingredient.selectedIngredientGroupId === 0 || this.ingredient.allowedMeasurements.length === 0) {
+      if (this.isAllInputPresent()) {
         this.showErrorMessage('Palun täida kõik väljad. Vähemalt üks lubatud ühik peab olema lisatud.', 'alert alert-danger');
       } else {
         this.postIngredient();
