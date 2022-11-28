@@ -91,7 +91,7 @@
     <div class="form-group col-md-12">
 
       <div class="row-cols-md-6">
-        <button type="button" class="btn btn-success">Lisa deeki uus toiduaine</button>
+        <button v-on:click="addNewIngredient" type="button" class="btn btn-success">Lisa deeki uus toiduaine</button>
       </div>
 
       <button type="button" class="btn btn-success">Salvesta retsept</button>
@@ -122,6 +122,11 @@ export default {
     return {
       recipeName:'',
 
+    }
+  },
+  methods: {addNewIngredient
+    : function () {
+      this.$router.push({name: 'newIngredientRoute'})
     }
   }
 }
