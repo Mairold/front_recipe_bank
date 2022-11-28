@@ -29,14 +29,14 @@
                    autocomplete="on" data-bd-docs-version="5.0">
           </div>
           <div class="row mt-3">
-            <CategoryDropdown @clickSelectCategoryEvent ="getRecipeByCategoryId"/> <!-- see on Kategooria rippmenüü-->
+            <CategoryDropdown @clickSelectCategoryEvent="getRecipeByCategoryId"/> <!-- see on Kategooria rippmenüü-->
           </div>
           <div class="row mt-3">
-            <PrepTimeDropdown/> <!-- see on Ajakulu rippmenüü-->
+            <PrepTimeDropdown @clickSelectPrepTimeEvent="getRecipeByPrepTimeId"/> <!-- see on Ajakulu rippmenüü-->
           </div>
         </div>
         <div class="col col-lg-10">
-          <ChooseRecipeTable :recipes="recipes"/>
+          <ChooseRecipeTable :recipes="recipes" @clickAlertButtonEvent="alertRecipeName"/>
           <!-- see on nelja veeruga retseptide tabel, mille viimases veerus on nupud-->
         </div>
       </div>
@@ -56,13 +56,13 @@ export default {
   data: function () {
     return {
       recipes: [
-          {
-            recipeId: 0,
-            recipeName: '',
-            categoryName: '',
-            prepTime: ''
-          }
-          ],
+        {
+          recipeId: 0,
+          recipeName: '',
+          categoryName: '',
+          prepTime: ''
+        }
+      ],
       requestInfo: {
         searchBoxValue: '',
         categoryId: 0,
@@ -91,22 +91,33 @@ export default {
             console.log(error)
           })
     },
-    addSequenceNumbers: function () {
-      let counter = 1
-      this.recipes.forEach(recipe => {
-        recipe.sequenceNumber = counter
-        counter++
-      })
-    },
 
-    getRecipeByCategoryId: function () {
+    getRecipeByCategoryId: function (selectedCategoryId) {
+      alert('Klick event juhtus, saime parentis sõnumi ja käivitasime selle meetodi, Category id: ' + selectedCategoryId)
+
       this.$http.get("/add-to-menu/info/by-category", {
             params: {
-              categoryId: 2
+              categoryId: selectedCategoryId
             }
           }
       ).then(response => {
-        // this.recipes = response.data
+        this.recipes = response.data
+        this.addSequenceNumbers()
+
+        console.log(response.data)
+      }).catch(error => {
+        console.log(error)
+      })
+    },
+    getRecipeByPrepTimeId: function (selectedPrepTimeId) {
+      alert('Klick event juhtus, saime parentis sõnumi ja käivitasime selle meetodi, PrepTime id: ' + selectedPrepTimeId)
+      this.$http.get("/add-to-menu/info/by-preptime", {
+        params: {
+          prepTimeId: selectedPrepTimeId
+        }
+      }
+      ).then(response => {
+        this.recipes = response.data
         this.addSequenceNumbers()
         console.log(response.data)
       }).catch(error => {
@@ -114,25 +125,22 @@ export default {
       })
     },
 
-    // getCategoryById: function (selectedCategoryId) {
-    //   this.$http.get("/add-to-menu/info/by-category", {
-    //         params: {
-    //           categoryId:
-    //         }
-    //       }
-    //   ).then(response => {
-    //     this.recipes = response.data
-    //     this.addSequenceNumbers()
-    //     console.log(response.data)
-    //   })
-    //       .catch(error => {
-    //         console.log(error)
-    //       })
-    // }
+    alertRecipeName: function (recipeName) {
+      alert(recipeName + ' alert from child')
+    },
+
+    addSequenceNumbers: function () {
+      let counter = 1
+      this.recipes.forEach(recipe => {
+        recipe.sequenceNumber = counter
+        counter++
+      })
+    }
   },
   beforeMount() {
     this.getAllRecipes()
-    this.getRecipeByCategoryId()
+    // this.getRecipeByCategoryId()
+    // this.getRecipeByPrepTimeId()
 
   }
 }

@@ -8,7 +8,7 @@
       <td>{{ recipe.recipeName }}</td>
       <td>{{ recipe.prepTime }}</td>
       <td>
-        <button type="button" class="btn btn-light">Lisa menüüsse</button>
+        <button v-on:click="clickAlertButtonEvent(recipe.recipeName)" type="button" class="btn btn-light">Lisa menüüsse</button>
       </td>
     </tr>
     </tbody>
@@ -28,5 +28,11 @@ export default {
 
     }
   },
+  methods: {
+    clickAlertButtonEvent: function (recipeName) {
+      this.$emit('clickAlertButtonEvent', recipeName)
+
+    },
+  }
 }
 </script>
