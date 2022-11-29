@@ -9,6 +9,7 @@
       <IngredientGroupSelect @groupChangeEvent="addInfoToGroupId"/>
     </div>
 
+
     <!--Ühikute lisamine-->
     <IngredientSelectBox @addMeasurementUnit="addNewMeasurementUnit"/>
 
