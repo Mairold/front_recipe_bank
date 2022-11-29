@@ -1,8 +1,10 @@
 <template>
-  <input v-on:input="insertSearchValueEvent" v-model="searchValue" type="search" class="form-control" id="search-input" placeholder="Otsi retsepti"
+  <input v-on:input="insertSearchValueEvent" v-model="searchValue" type="search" class="form-control" id="search-input"
+         placeholder="Otsi retsepti"
          aria-label="Search docs for..."
          autocomplete="on" data-bd-docs-version="5.0">
 </template>
+
 <script>
 export default {
   name: 'SearchBox',
@@ -10,21 +12,13 @@ export default {
   data: function () {
     return {
       searchValue: '',
-
     }
   },
+
   methods: {
     insertSearchValueEvent: function () {
-      console.log('Searchboxi test')
       this.$emit('insertSearchValueEvent', this.searchValue)
     },
-
-
   },
-
-
-
-
 }
-
 </script>

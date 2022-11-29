@@ -23,10 +23,12 @@
       <div class="row justify-content-start m-5">
         <div class="col col-lg-2">
           <div class="row">
-            <SearchBox @insertSearchValueEvent="saveSearchIntoRequestInfo"/> <!-- siin on otsingukast, mille rottisin Bootstrapi avalehelt -->
+            <SearchBox @insertSearchValueEvent="saveSearchIntoRequestInfo"/>
+            <!-- siin on otsingukast, mille rottisin Bootstrapi avalehelt -->
           </div>
           <div class="row mt-3">
-            <CategoryDropdown @clickSelectCategoryEvent="saveCategoryIntoRequestInfo"/> <!-- see on Kategooria rippmenüü-->
+            <CategoryDropdown @clickSelectCategoryEvent="saveCategoryIntoRequestInfo"/>
+            <!-- see on Kategooria rippmenüü-->
           </div>
           <div class="row mt-3">
             <PrepTimeDropdown @clickSelectPrepTimeEvent="savePrepTimeInfoRequestInfo"/> <!-- see on Ajakulu rippmenüü-->
@@ -38,7 +40,6 @@
         </div>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -90,29 +91,28 @@ export default {
           })
     },
 
-    saveSearchIntoRequestInfo: function (searchBoxContent){
-      this.searchBoxValue = searchBoxContent
+    saveSearchIntoRequestInfo: function (searchBoxContent) {
+      this.requestInfo.searchBoxValue = searchBoxContent
       this.getRecipeByRequestInfo()
     },
 
     saveCategoryIntoRequestInfo: function (selectedCategoryId) {
-      this.categoryId = selectedCategoryId
+      this.requestInfo.categoryId = selectedCategoryId
       this.getRecipeByRequestInfo()
     },
 
     savePrepTimeInfoRequestInfo: function (selectedPrepTimeId) {
-      this.prepTimeId = selectedPrepTimeId
+      this.requestInfo.prepTimeId = selectedPrepTimeId
       this.getRecipeByRequestInfo()
     },
 
-    getRecipeByRequestInfo: function() {
-      alert('Klick event juhtus, saime parentis sõnumi ja käivitasime selle meetodi, Category id: ' + selectedCategoryId)
+    getRecipeByRequestInfo: function () {
 
       this.$http.get("/add-to-menu/info/by-category", {
             params: {
-              searchBoxValue: this.searchBoxValue,
-              categoryId: this.categoryId,
-              prepTimeId: this.prepTimeId
+              searchBoxValue: this.requestInfo.searchBoxValue,
+              categoryId: this.requestInfo.categoryId,
+              prepTimeId: this.requestInfo.prepTimeId
             }
           }
       ).then(response => {
@@ -140,9 +140,6 @@ export default {
 
   beforeMount() {
     this.getAllRecipes()
-    // this.getRecipeByCategoryId()
-    // this.getRecipeByPrepTimeId()
-
   }
 }
 </script>
