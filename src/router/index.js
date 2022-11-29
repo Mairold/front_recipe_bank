@@ -5,6 +5,8 @@ import LoginView from "@/views/LoginView";
 import MainView from "@/views/MainView";
 import CreateUserView from "@/views/CreateUserView";
 import NewIngredientView from "@/views/NewIngredientView";
+import CreateMenuView from "@/views/CreateMenuView";
+import CreateSectionView from "@/views/CreateSectionView";
 
 Vue.use(VueRouter)
 
@@ -28,6 +30,16 @@ const routes = [
     path: '/create_user',
     name: 'createUserRoute',
     component: CreateUserView
+  },
+ {
+    path: '/create_menu',
+    name: 'createMenuRoute',
+    component: CreateMenuView
+  },
+ {
+    path: '/create_menu/create_section',
+    name: 'createSectionRoute',
+    component: CreateSectionView
   },
   {
     path: '/ingredient',
