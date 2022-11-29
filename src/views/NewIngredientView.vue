@@ -9,7 +9,6 @@
       <IngredientGroupSelect @groupChangeEvent="addInfoToGroupId"/>
     </div>
 
-
     <!--Ühikute lisamine-->
     <IngredientSelectBox @addMeasurementUnit="addNewMeasurementUnit"/>
 
@@ -53,7 +52,7 @@ export default {
     return {
       ingredient: {
         ingredientName: '',
-        selectedIngredientGroupId: 0,
+        ingredientGroupId: 0,
         allowedMeasurements: [
           {
             measurementName: '',
@@ -71,31 +70,18 @@ export default {
   methods: {
 
     addInfoToGroupId: function (groupId) {
-      this.ingredient.selectedIngredientGroupId = groupId
+      this.ingredient.ingredientGroupId = groupId
     },
 
     validateDuplications: function (selectedMeasurement) {
       return this.ingredient.allowedMeasurements.filter(a => a.measurementName === selectedMeasurement.measurementName).length > 0;
     },
 
-    addMeasurementToEndOfList: function (selectedMeasurement) {
+    addMeasurementToAllowedMeasurementsList: function (selectedMeasurement) {
       this.ingredient.allowedMeasurements.push({
         measurementName: selectedMeasurement.measurementName,
         measurementId: selectedMeasurement.measurementId
       })
-    },
-
-    replaceListFirstPosition: function (selectedMeasurement) {
-      this.ingredient.allowedMeasurements[0].measurementName = selectedMeasurement.measurementName
-      this.ingredient.allowedMeasurements[0].measurementId = selectedMeasurement.measurementId
-    },
-
-    addMeasurementToAllowedMeasurementsList: function (selectedMeasurement) {
-      if (this.ingredient?.allowedMeasurements[0]?.measurementName === '') {
-        this.replaceListFirstPosition(selectedMeasurement);
-      } else {
-        this.addMeasurementToEndOfList(selectedMeasurement);
-      }
     },
 
     generateRowNumbers: function () {
@@ -154,8 +140,7 @@ export default {
 
     isAllInputPresent: function () {
       return this.ingredient.ingredientName.length === 0 ||
-          this.ingredient.selectedIngredientGroupId === 0 ||
-          this.ingredient.allowedMeasurements[0]?.measurementName === '' ||
+          this.ingredient.ingredientGroupId === 0 ||
           this.ingredient.allowedMeasurements?.length === 0;
     },
 
@@ -166,6 +151,9 @@ export default {
         this.postIngredient();
       }
     },
+  },
+  beforeMount() {
+    this.ingredient.allowedMeasurements = []
   }
 }
 </script>

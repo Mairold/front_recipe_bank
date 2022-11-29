@@ -55,6 +55,7 @@ export default {
           }
       ).then(response => {
         console.log(response.data)
+        this.$router.push({name: 'loginRoute'})
       }).catch(error => {
         this.errorMessage = error.response.data
         console.log(error)
@@ -70,7 +71,7 @@ export default {
 
       } else {
         this.createUser()
-        this.$router.push({name: 'loginRoute'})
+
       }
     }
   },
