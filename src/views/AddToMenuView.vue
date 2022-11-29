@@ -22,17 +22,14 @@
     <div class="container">
       <div class="row justify-content-start m-5">
         <div class="col col-lg-2">
-          <!-- siin on otsingukast, mille rottisin Bootstrapi avalehelt -->
           <div class="row">
-            <input type="search" class="form-control" id="search-input" placeholder="Otsi retsepti"
-                   aria-label="Search docs for..."
-                   autocomplete="on" data-bd-docs-version="5.0">
+            <SearchBox @insertSearchValueEvent="saveSearchIntoRequestInfo"/> <!-- siin on otsingukast, mille rottisin Bootstrapi avalehelt -->
           </div>
           <div class="row mt-3">
-            <CategoryDropdown @clickSelectCategoryEvent="getRecipeByCategoryId"/> <!-- see on Kategooria rippmenüü-->
+            <CategoryDropdown @clickSelectCategoryEvent="saveCategoryIntoRequestInfo"/> <!-- see on Kategooria rippmenüü-->
           </div>
           <div class="row mt-3">
-            <PrepTimeDropdown @clickSelectPrepTimeEvent="getRecipeByPrepTimeId"/> <!-- see on Ajakulu rippmenüü-->
+            <PrepTimeDropdown @clickSelectPrepTimeEvent="savePrepTimeInfoRequestInfo"/> <!-- see on Ajakulu rippmenüü-->
           </div>
         </div>
         <div class="col col-lg-10">
@@ -49,10 +46,11 @@
 import ChooseRecipeTable from "@/components/ChooseRecipe/ChooseRecipeTable";
 import CategoryDropdown from "@/components/ChooseRecipe/CategoryDropdown";
 import PrepTimeDropdown from "@/components/ChooseRecipe/PrepTimeDropdown";
+import SearchBox from "@/views/SearchBox";
 
 export default {
   name: "AddToMenuView",
-  components: {PrepTimeDropdown, CategoryDropdown, ChooseRecipeTable},
+  components: {SearchBox, PrepTimeDropdown, CategoryDropdown, ChooseRecipeTable},
   data: function () {
     return {
       recipes: [
@@ -92,33 +90,35 @@ export default {
           })
     },
 
-    getRecipeByCategoryId: function (selectedCategoryId) {
+    saveSearchIntoRequestInfo: function (searchBoxContent){
+      this.searchBoxValue = searchBoxContent
+      this.getRecipeByRequestInfo()
+    },
+
+    saveCategoryIntoRequestInfo: function (selectedCategoryId) {
+      this.categoryId = selectedCategoryId
+      this.getRecipeByRequestInfo()
+    },
+
+    savePrepTimeInfoRequestInfo: function (selectedPrepTimeId) {
+      this.prepTimeId = selectedPrepTimeId
+      this.getRecipeByRequestInfo()
+    },
+
+    getRecipeByRequestInfo: function() {
       alert('Klick event juhtus, saime parentis sõnumi ja käivitasime selle meetodi, Category id: ' + selectedCategoryId)
 
       this.$http.get("/add-to-menu/info/by-category", {
             params: {
-              categoryId: selectedCategoryId
+              searchBoxValue: this.searchBoxValue,
+              categoryId: this.categoryId,
+              prepTimeId: this.prepTimeId
             }
           }
       ).then(response => {
         this.recipes = response.data
         this.addSequenceNumbers()
 
-        console.log(response.data)
-      }).catch(error => {
-        console.log(error)
-      })
-    },
-    getRecipeByPrepTimeId: function (selectedPrepTimeId) {
-      alert('Klick event juhtus, saime parentis sõnumi ja käivitasime selle meetodi, PrepTime id: ' + selectedPrepTimeId)
-      this.$http.get("/add-to-menu/info/by-preptime", {
-        params: {
-          prepTimeId: selectedPrepTimeId
-        }
-      }
-      ).then(response => {
-        this.recipes = response.data
-        this.addSequenceNumbers()
         console.log(response.data)
       }).catch(error => {
         console.log(error)
@@ -137,6 +137,7 @@ export default {
       })
     }
   },
+
   beforeMount() {
     this.getAllRecipes()
     // this.getRecipeByCategoryId()
