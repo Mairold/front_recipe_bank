@@ -1,16 +1,13 @@
 <template>
   <div id="app">
     <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> |
       <router-link to="/login">Sisselogimine</router-link> |
-      <router-link to="/main">Avavaade</router-link> |
-      <router-link to="/menu">Koosta menüü</router-link>
-      <router-link to="/login">Sisselogimine</router-link> |
-      <router-link to="/main">Avavaade</router-link> |
       <router-link to="/create_user">Uus kasutaja</router-link> |
+      <router-link to="/main">Avavaade</router-link> |
+      <router-link to="/menu">Koosta menüü</router-link> |
+      <router-link to="/add-to-menu">Vali retsept</router-link> |
       <router-link to="/ingredient">Ingredient</router-link> |
-      <router-link to="/about">About</router-link>
+
     </nav>
     <router-view/>
   </div>

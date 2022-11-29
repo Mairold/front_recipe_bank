@@ -47,7 +47,7 @@
 import ChooseRecipeTable from "@/components/ChooseRecipe/ChooseRecipeTable";
 import CategoryDropdown from "@/components/ChooseRecipe/CategoryDropdown";
 import PrepTimeDropdown from "@/components/ChooseRecipe/PrepTimeDropdown";
-import SearchBox from "@/views/SearchBox";
+import SearchBox from "@/components/ChooseRecipe/SearchBox";
 
 export default {
   name: "AddToMenuView",
