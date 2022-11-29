@@ -7,6 +7,7 @@
       <router-link to="/menu">Koosta menüü</router-link> |
       <router-link to="/add-to-menu">Vali retsept</router-link> |
       <router-link to="/ingredient">Ingredient</router-link> |
+      <router-link to="/addRecipe">Lisa retsept</router-link>
 
     </nav>
     <router-view/>

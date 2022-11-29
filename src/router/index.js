@@ -7,6 +7,7 @@ import CreateUserView from "@/views/CreateUserView";
 import NewIngredientView from "@/views/NewIngredientView";
 import MenuView from "@/views/MenuView";
 import AddToMenuView from "@/views/AddToMenuView";
+import AddRecipeView from "@/views/AddRecipeView";
 
 Vue.use(VueRouter)
 
@@ -20,6 +21,11 @@ const routes = [
         path: '/login',
         name: 'loginRoute',
         component: LoginView
+    },
+    {
+        path: '/addRecipe',
+        name: 'addRecipe',
+        component: AddRecipeView
     },
     {
         path: '/main',
