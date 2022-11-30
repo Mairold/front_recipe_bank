@@ -128,7 +128,7 @@ export default {
     },
 
     alertRecipeName: function (recipeName) {
-      alert(recipeName + ' alert from child')
+      this.$router.push({name: 'addToMenuInsertRoute'})
     },
 
     addSequenceNumbers: function () {

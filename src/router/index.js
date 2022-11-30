@@ -6,8 +6,10 @@ import MainView from "@/views/MainView";
 import CreateUserView from "@/views/CreateUserView";
 import NewIngredientView from "@/views/NewIngredientView";
 import MenuView from "@/views/MenuView";
-import AddToMenuView from "@/views/AddToMenuView";
+import AddToMenuView from "@/views/AddToMenuMainView";
 import AddRecipeView from "@/views/AddRecipeView";
+import AddToMenuMainView from "@/views/AddToMenuMainView";
+import AddToMenuInsertView from "@/views/AddToMenuInsertView";
 
 Vue.use(VueRouter)
 
@@ -33,7 +35,7 @@ const routes = [
         component: MainView
     },
     {
-        path: '/create_user',
+        path: '/create-user',
         name: 'createUserRoute',
         component: CreateUserView
     },
@@ -50,7 +52,17 @@ const routes = [
     {
         path: '/add-to-menu',
         name: 'addToMenuRoute',
-        component: AddToMenuView
+        component: AddToMenuMainView
+    },
+    {
+        path: '/add-to-menu-insert',
+        name: 'addToMenuInsertRoute',
+        component: AddToMenuInsertView
+    },
+    {
+        path: '/add-to-menu-change',
+        name: 'addToMenuChangeRoute',
+        component: AddToMenuMainView
     },
     {
         path: '/about',
