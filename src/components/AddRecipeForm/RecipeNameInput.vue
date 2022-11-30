@@ -1,7 +1,10 @@
 <template>
   <div class="col-lg-5">
-    <input v-on:change="recipeId.recipeName" type="text" class="form-control" id="recipeId"
+
+    <input v-model="recipeName" type="text" class="form-control" id="recipeId"
            placeholder="Retsepti pealkiri">
+
+
   </div>
 </template>
 
@@ -9,7 +12,7 @@
 export default {
   name: "RecipeNameInput",
   props:{
-    recipeId:{}
+    recipeName:{}
   }
 }
 </script>

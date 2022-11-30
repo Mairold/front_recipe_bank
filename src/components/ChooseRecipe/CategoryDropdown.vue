@@ -18,7 +18,7 @@ export default {
       categories: [
         {
           categoryName: '',
-          categoryId: 0
+          categoryId: 0,
         },
       ],
     }
@@ -35,6 +35,7 @@ export default {
           });
     },
     clickSelectCategoryEvent: function () {
+      console.log('olen siin')
       this.$emit('clickSelectCategoryEvent', this.selectedCategoryId)
     },
   },

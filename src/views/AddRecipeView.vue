@@ -13,12 +13,11 @@
             Üldandmed
             <form>
               <div class="form-row">
-
-
                 <!-- Sisesta retsepti pealkiri -->
 
                 <div class="form-group col-md-12">
-                  <input type="text" class="form-control" id="recipeId" placeholder="Retsepti pealkiri">
+                  <RecipeNameInput :recipeName="recipe.recipeName"/>  <!-- recipe lilla - parentis komponent, valge recipe
+                  on childis. -->
                 </div>
               </div>
 
@@ -26,32 +25,22 @@
 
               <div class="row justify-content-center mt-3">
                 <div class="col-md-4 ">
-                  <select class="form-select" aria-label="Default select example">
-                    <option selected>Kategooria</option>
-                    <option value="1">One</option>
-                  </select>
-
-
-                  <!-- Vali retsepti valmistamise aeg-->
-
+                  <CategoryDropdown @clickSelectCategoryEvent="addInfoToRecipeCategoryId"/>
                 </div>
+
+                <!-- Vali retsepti valmistamise aeg-->
+
                 <div class="col-md-4 ">
-                  <select class="form-select" aria-label="Default select example">
-                    <option selected>Valmistamise aeg</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </select>
+                  <PrepTimeDropdown @clickSelectPrepTimeEvent="addInfoToPrepTimeId"/>
                 </div>
 
                 <!-- Vali retsepti sööjate arv -->
 
-                <div class="col-md-4 ">
-                  <select class="form-select" aria-label="Default select example">
-                    <option selected>Sööjate arv</option>
-                    <option value="1">One</option>
-                  </select>
+                <div class="form-group col-md-4">
+                  <ServingSizeInput :servingSize="recipe.servingSize"/>
                 </div>
+
+
               </div>
               <div class="form-group">
               </div>
@@ -67,32 +56,48 @@
 
               <!-- Vali retsepti koostisosa -->
 
+              <table class="table table-success table-striped">
+                <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">KOOSTISOSA</th>
+                  <th scope="col">KOOGUS</th>
+                  <th scope="col">ÜHIK</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <th scope="row">1</th>
+                  <td>PORGAND</td>
+                  <td>5</td>
+                  <td>TK</td>
+                </tr>
+                </tbody>
+              </table>
+              <!-- Vali retsepti koostisosa -->
+
               <div class="col-md-3">
-                <select class="form-select" aria-label="Default select example">
-                  <option selected>Koostisosa, ühik</option>
-                  <option value="1">One</option>
-                </select>
+                <RecipeIngredient @clickSelectRecipeIngredientEvent="addInfoToRecipeIngredient"/>
               </div>
 
               <!-- Vali retsepti koostisosa ühiku kogus -->
 
               <div class="col-md-2">
-                <input type="newRecipe" class="form-control" id="recipeId" placeholder="500">
+                <RecipeIngredientQuantity :ingredientQuantity="recipe.recipeIngredient.ingredientQuantity"/>
               </div>
 
               <!-- Vali retsepti koostisosa ühiku  -->
 
 
               <div class="col-md-2">
-                <select class="form-select" aria-label="Default select example">
-                  <option selected>Ühik</option>
-                  <option value="1">One</option>
-                </select></div>
-
-              <!-- NUPP: lisa rida retsepti  -->
+                <RecipeIngredientSelectBox @clickSelectMeasurement="addNewMeasurementUnit"/>
+              </div>
 
               <div class="col-md-1">
-                <input type="image" src="plus.ico.png" height="30" width="30"/>
+
+                <button v-on:click="addIngredientToTable" type="button" class="btn btn-success">Lisa</button>
+
               </div>
 
               <!-- Vali retsepti valmistamise juhend -->
@@ -114,7 +119,7 @@
       <!-- NUPP: Lisa deeki uus toiduaine-->
 
       <div class="row-cols-md-6">
-        <button type="button" class="btn btn-success">Lisa deeki uus toiduaine</button>
+        <button v-on:click="addNewIngredient" type="button" class="btn btn-success">Lisa deeki uus toiduaine</button>
       </div>
 
       <!-- NUPP: Salvesta retsept retseptide kataloogi -->
@@ -140,15 +145,102 @@
     </div>
   </div>
 
+
 </template>
 
+
+<!-- Kas peaks grupeerima retseptis oelvad kõik komponendid, valmistusaja jm üheks recipeElementGroupId ks?
+või piisab kui kõik retsepti elemendid on seotud ühe recipe Id'ga? -->
+
+
 <script>
+import RecipeNameInput from "@/components/AddRecipeForm/RecipeNameInput";
+import CategoryDropdown from "@/components/ChooseRecipe/CategoryDropdown";
+import PrepTimeDropdown from "@/components/ChooseRecipe/PrepTimeDropdown";
+import RecipeIngredient from "@/components/AddRecipeForm/RecipeIngredient";
+import RecipeIngredientQuantity from "@/components/AddRecipeForm/RecipeIngredientQuantity";
+import AllowedMeasurementTable from "@/components/ingredient/AllowedMeasurementTable";
+import RecipeInstructions from "@/components/AddRecipeForm/RecipeInstructions";
+import ServingSizeInput from "@/components/AddRecipeForm/ServingSizeInput";
+import IngredientSelectBox from "@/components/ingredient/IngredientSelectBox";
+import RecipeIngredientSelectBox from "@/components/AddRecipeForm/RecipeIngredientSelectBox";
+
+
 export default {
   name: "AddRecipe",
+  components: {
+    RecipeNameInput, CategoryDropdown, PrepTimeDropdown,
+    ServingSizeInput, RecipeIngredient, RecipeIngredientQuantity,
+    AllowedMeasurementTable, RecipeInstructions, IngredientSelectBox, RecipeIngredientSelectBox
+  },
+
+
   data: function () {
     return {
-      recipeName:'',
+      recipe: {
+        recipeId: 0,
+        recipeName: '',
+        servingSize: 0,
+        servingSizeId: 0,
+        recipeCategoryId: 0,
+        prepTimeId: '',
+        recipeIngredient: [
+          {
+            ingredientName: '',
+            ingredientId: 0,
+            ingredientQuantity: 0,
+            measurementName: '',
+            measurementId: 0,
+          }
+        ],
+      },
 
+      tempIngredient:
+          {
+            ingredientName: '',
+            ingredientId: 0,
+            ingredientQuantity: 0,
+            measurementName: '',
+            measurementId: 0,
+          },
+      errorMessage:
+          {
+            message: '',
+            errorCode: ''
+          }
+    }
+  },
+  methods: {
+    addIngredientToTable: function () {
+      this.errorMessage.message = ''
+      if (this.tempIngredient.ingredientName.length === 0 || this.tempIngredient.ingredientQuantity.length === 0
+          || this.tempIngredient.measurementName.length === 0) {
+        this.errorMessage.message = 'Palun täida kõik väljad'
+      } else {
+
+        this.recipe.recipeIngredient.push(this.tempIngredient)
+
+      }
+    },
+
+    addInfoToRecipeCategoryId: function (recipeCategoryId) {
+      this.recipe.recipeCategoryId = recipeCategoryId
+      console.log(this.recipe.recipeCategoryId)
+    },
+    addNewIngredient: function () {
+      this.$router.push({name: 'newIngredientRoute'})
+    },
+    addInfoToPrepTimeId: function (prepTimeId) {
+      this.recipe.prepTimeId = prepTimeId
+
+    },
+    addInfoToRecipeIngredient: function (ingredient) {
+      this.tempIngredient.ingredientId = ingredient.ingredientId
+      this.tempIngredient.ingredientName = ingredient.ingredientName
+    },
+    addNewMeasurementUnit: function (recipeMeasurement) {
+      this.tempIngredient.measurementId = recipeMeasurement.measurementId
+      this.tempIngredient.measurementName = recipeMeasurement.measurementName
     }
   }
 }
