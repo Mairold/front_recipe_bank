@@ -66,7 +66,11 @@ export default {
     },
 
     getMenuSections: function () {
-      this.$http.get("/menu/sections")
+      this.$http.get("/menu/sections" , {
+        params: {
+          menuId:sessionStorage.getItem('menuId')
+        }
+      })
           .then(response => {
             this.sections = response.data
             console.log(response.data)
