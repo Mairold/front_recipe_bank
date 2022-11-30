@@ -130,7 +130,6 @@ export default {
     },
 
 
-
     alertRecipeName: function (recipeName) {
       alert(recipeName + ' alert from child')
     },
