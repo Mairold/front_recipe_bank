@@ -25,7 +25,7 @@ export default {
   },
   methods: {
     getPrepTimeDropdownInfo: function () {
-      this.$http.get('/add-to-menu/prep-time')
+      this.$http.get('/prep-time')
           .then(result => {
             this.prepTimes = result.data
           })
