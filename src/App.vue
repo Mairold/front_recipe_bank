@@ -5,6 +5,8 @@
       <router-link to="/main">Avavaade</router-link> |
       <router-link to="/menu">Koosta menüü</router-link> |
       <router-link to="/add-to-menu">Vali retsept</router-link> |
+      <router-link to="/add-to-menu-insert">Lisa retsept menüüsse</router-link> |
+      <router-link to="/add-to-menu-change">Muuda retsepti menüüs</router-link> |
       <router-link to="/ingredient">Lisa toiduaine</router-link> |
       <router-link to="/addRecipe">Lisa retsept</router-link>
 

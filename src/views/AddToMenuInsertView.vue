@@ -6,12 +6,12 @@
     </div>
 
     <div>
-
       <div class="row justify-content-center mt-2">
         <div class="col-lg-6">
           <div class="input-group mb-3">
             <div class="form-floating "><input type="text" class="form-control" id="floatingInput" placeholder="">
               <label for="floatingInput">Retsepti nimetus, mis tuleb kaasa eelmisest vaatest</label></div>
+<!--            todo: siia väljale peab tulema "Vali retsept" vaatest kaasa menüüsse salvestatava retsepti nimetus-->
           </div>
         </div>
       </div>
@@ -19,30 +19,29 @@
       <div class="row justify-content-center mt-1">
         <div class="col-lg-3">
           <h5>Sisesta palun sööjate arv:</h5>
+        </div>
+      </div>
+
+      <div class="row justify-content-center mt-1">
+        <div class="col-lg-1">
           <div class="input-group mb-3">
-            <div class="form-floating "><input type="number" class="form-control" id="servingSizeInput" placeholder="">
-              <label for="servingSizeInput">Siia sisesta sööjate arv</label></div>
+            <div><input type="number" class="form-control" id="servingSizeInput">
+            </div>
           </div>
         </div>
-
-
-    </div>
+      </div>
     </div>
 
     <div class="row justify-content-center mt-3">
       <div class="col-lg-9">
-        <h5>Siia saad sisestada oma kommentaarid retsepti kohta. Näiteks söögikord, kes valmistab jms:</h5>
-      </div>
-      <div class="col-lg-6">
-        <div class="input-group mb-3">
-          <div class="form-floating "><input type="text" class="form-control" id="floatingInput" placeholder="">
-            <label for="floatingInput">Siia sisesta oma kommentaarid retsepti kohta</label></div>
-        </div>
+        <h5>Siia väljale saad sisestada oma kommentaarid retsepti kohta. Näiteks söögikord, toimkond jms:</h5>
       </div>
     </div>
 
     <div class="row justify-content-center mt-2">
-      <div class="d-grid gap-2 col-6 mx-auto">
+      <div class="d-grid gap-5 col-7 mx-auto">
+        <div><input type="text" class="form-control" id="floatingInput">
+        </div>
         <button v-on:click="insertToMenu" type="button" class="btn btn-success">Lisa menüüsse</button>
       </div>
     </div>
@@ -58,8 +57,8 @@ export default {
   methods: {
 
     insertToMenu: function () {
-      // nupule vajutades salvestatakse retsept id järgi menüüsse ja võetakse kaasa sööjate arv ning kommentaar
-
+      // todo: nupule vajutades salvestatakse retsept id järgi menüüsse ja võetakse sinna kaasa sööjate arv ning kommentaar.
+      // todo: Peale nupu vajutamist liigutakse "Koosta menüü" üldvaatesse, kuhu on kuvatud äsja menüüsse lisatud retsept.
 
     }
   }

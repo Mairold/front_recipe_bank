@@ -10,6 +10,7 @@ import AddToMenuView from "@/views/AddToMenuMainView";
 import AddRecipeView from "@/views/AddRecipeView";
 import AddToMenuMainView from "@/views/AddToMenuMainView";
 import AddToMenuInsertView from "@/views/AddToMenuInsertView";
+import AddToMenuChangeView from "@/views/AddToMenuChangeView";
 
 Vue.use(VueRouter)
 
@@ -62,7 +63,7 @@ const routes = [
     {
         path: '/add-to-menu-change',
         name: 'addToMenuChangeRoute',
-        component: AddToMenuMainView
+        component: AddToMenuChangeView
     },
     {
         path: '/about',
