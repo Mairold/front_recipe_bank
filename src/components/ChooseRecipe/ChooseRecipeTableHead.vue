@@ -14,4 +14,3 @@ export default {
   name: 'ChooseRecipeTableHead'
 }
 </script>
-<!--vist valmis?-->

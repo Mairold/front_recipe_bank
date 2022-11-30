@@ -1,7 +1,7 @@
 <template>
   <select v-on:change="clickSelectCategoryEvent" v-model="selectedCategoryId" class="form-select"
           aria-label="Default select example">
-    <option selected disabled value="0">Kategooria</option>
+    <option selected value="0">Kategooria</option>
     <option v-for="category in categories" :key="category.categoryId" :value="category.categoryId">
       {{ category.categoryName }}
     </option>
@@ -17,8 +17,9 @@ export default {
       selectedCategoryId: 0,
       categories: [
         {
-          categoryName: '',
-          categoryId: 0
+          categoryId: 0,
+          categoryName: ''
+
         },
       ],
     }
@@ -26,7 +27,7 @@ export default {
 
   methods: {
     getCategoryDropdownInfo: function () {
-      this.$http.get('/add-to-menu/category')
+      this.$http.get('/category')
           .then(result => {
             this.categories = result.data
           })
