@@ -72,11 +72,12 @@ export default {
 
   methods: {
 
-    backToMenu: function () {
-      this.$router.push({name: 'menuRoute'})
-    },
     addNewRecipe: function () {
       this.$router.push({name: 'addRecipeRoute'})
+    },
+
+    backToMenu: function () {
+      this.$router.push({name: 'menuRoute'})
     },
 
     getAllRecipes: function () {
@@ -102,15 +103,12 @@ export default {
     },
 
     savePrepTimeInfoRequestInfo: function (selectedPrepTimeId) {
-      console.log("Olen siin 2")
 
       this.requestInfo.prepTimeId = selectedPrepTimeId
-      console.log("Olen siin 2 " + this.requestInfo.prepTimeId)
       this.getRecipeByRequestInfo()
     },
 
     getRecipeByRequestInfo: function () {
-      console.log("Olen siin 3")
       this.$http.get("/filter-recipes", {
             params: {
 
@@ -128,7 +126,6 @@ export default {
         console.log(error)
       })
     },
-
 
     alertRecipeName: function (recipeName) {
       alert(recipeName + ' alert from child')

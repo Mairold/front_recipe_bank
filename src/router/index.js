@@ -24,7 +24,7 @@ const routes = [
     },
     {
         path: '/addRecipe',
-        name: 'addRecipe',
+        name: 'addRecipeRoute',
         component: AddRecipeView
     },
     {
