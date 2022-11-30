@@ -80,7 +80,7 @@ export default {
     },
 
     getAllRecipes: function () {
-      this.$http.get("/add-to-menu/recipe")
+      this.$http.get("/recipe")
           .then(response => {
             this.recipes = response.data
             this.addSequenceNumbers()
@@ -102,17 +102,21 @@ export default {
     },
 
     savePrepTimeInfoRequestInfo: function (selectedPrepTimeId) {
+      console.log("Olen siin 2")
+
       this.requestInfo.prepTimeId = selectedPrepTimeId
+      console.log("Olen siin 2 " + this.requestInfo.prepTimeId)
       this.getRecipeByRequestInfo()
     },
 
     getRecipeByRequestInfo: function () {
-
-      this.$http.get("/add-to-menu/info/by-category", {
+      console.log("Olen siin 3")
+      this.$http.get("/filter-recipes", {
             params: {
-              searchBoxValue: this.requestInfo.searchBoxValue,
+
+              prepTimeId: this.requestInfo.prepTimeId,
               categoryId: this.requestInfo.categoryId,
-              prepTimeId: this.requestInfo.prepTimeId
+              searchBoxValue: this.requestInfo.searchBoxValue
             }
           }
       ).then(response => {
@@ -124,6 +128,8 @@ export default {
         console.log(error)
       })
     },
+
+
 
     alertRecipeName: function (recipeName) {
       alert(recipeName + ' alert from child')

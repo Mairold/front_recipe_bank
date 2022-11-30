@@ -1,7 +1,7 @@
 <template>
-  <select v-on:change="clickSelectPrepTimeEvent" v-model="selectedPrepTimeId" class="form-select"
+  <select v-on:change="clickSelectEvent" v-model="selectedPrepTimeId" class="form-select"
           aria-label="Default select example">
-    <option selected disabled value="0">Ajakulu</option>
+    <option selected value="0">Ajakulu</option>
     <option v-for="prepTime in prepTimes" :key="prepTime.prepTimeId" :value="prepTime.prepTimeId">
       {{ prepTime.prepTime }}
     </option>
@@ -33,7 +33,8 @@ export default {
             console.log(error)
           })
     },
-    clickSelectPrepTimeEvent: function () {
+    clickSelectEvent: function () {
+      console.log("Olen siin 999 " + this.selectedPrepTimeId)
       this.$emit('clickSelectPrepTimeEvent', this.selectedPrepTimeId)
     },
   },
