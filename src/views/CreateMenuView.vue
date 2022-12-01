@@ -86,7 +86,7 @@ export default {
 
   methods: {
     getRecipeInSections: function () {
-      this.$http.get("/menu/section/recipe", {
+      this.$http.get("/recipe/inSection", {
             params: {
               menuId: sessionStorage.getItem('menuId')
             }
