@@ -6,7 +6,7 @@
 
     <!--  Lisa sektsioon nupp-->
     <div class="row justify-content-evenly">
-      <NewMenuButton/>
+      <NewMenuButton @newMenuEvent="addIdToMenuId"/>
       <NewSectionButton/>
     </div>
     <div v-for="section in sections">
@@ -18,8 +18,8 @@
         </div>
         <div v-for="recipe in recipesInMenuSection" class="row justify-content-center">
           <div class="col">
-            <table class="table table-success table-striped">
-              <thead>
+            <table v-if="recipe.sectionInMenuId === section.sectionId" class="table table-success table-striped">
+              <thead >
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">Nimi</th>
@@ -30,7 +30,7 @@
               </tr>
               </thead>
               <tbody>
-              <tr v-if="recipe.recipeInSectionId === section.sectionId">
+              <tr >
                 <th scope="row">1</th>
                 <td>{{ recipe.recipeName }}</td>
                 <td>{{ recipe.plannedServingSize }}</td>
@@ -67,24 +67,37 @@ export default {
 
   data: function () {
     return {
-
-      sections: [{
+      menuId: 0,
+      sections: [
+          {
         sectionId: 0,
         sectionName: '',
       }
       ],
-      recipesInMenuSection: [{
-        recipeInSectionId: 0,
-        sectionInMenuId: 0,
-        recipeName: '',
-        plannedServingSize: 0,
-        recipeComment: '',
-      }
+      recipesInMenuSection: [
+          {
+        recipeInSectionId: 1,
+        sectionInMenuId: 36,
+        recipeName: 'Alkohol',
+        plannedServingSize: 1000,
+        recipeComment: 'Lheb liiale',
+      },
+        {
+        recipeInSectionId: 2,
+        sectionInMenuId: 37,
+        recipeName: 'Vaarikad',
+        plannedServingSize: 15,
+        recipeComment: 'MMMMMMM',
+      },
       ]
     }
   },
 
   methods: {
+    addIdToMenuId:function (menuId) {
+      this.menuId = menuId
+      console.log(this.menuId)
+    },
     getRecipeInSections: function () {
       this.$http.get("/recipe/inSection", {
             params: {
