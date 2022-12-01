@@ -4,7 +4,6 @@
     <input v-model="recipeName" type="text" class="form-control" id="recipeId"
            placeholder="Retsepti pealkiri">
 
-
   </div>
 </template>
 

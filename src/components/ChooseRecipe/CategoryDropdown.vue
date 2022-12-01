@@ -26,7 +26,7 @@ export default {
 
   methods: {
     getCategoryDropdownInfo: function () {
-      this.$http.get('/add-to-menu/category')
+      this.$http.get('/category')
           .then(result => {
             this.categories = result.data
           })

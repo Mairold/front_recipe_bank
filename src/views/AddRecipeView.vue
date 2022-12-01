@@ -6,51 +6,65 @@
 
     <!-- Üldandmete komponent -->
 
-    <div class="container.col-md-8" aria-placeholder="Üldandmed" type="text" id="General">
+    <div class="container.col-md-8" aria-placeholder="Üldandmed" type="text"
+         id="General">
       <div class="row justify-content-center">
         <div class="col-lg-5">
-          <div style="border:1px solid darkslategrey; text-align: left; padding:10px; text-indent: 3px">
-            Üldandmed
-            <form>
-              <div class="form-row">
-                <!-- Sisesta retsepti pealkiri -->
+          <div v-if="recipeResponse.recipeId === 0">
+            <div style="border:1px solid darkslategrey; text-align: left; padding:10px; text-indent: 3px">
+              Üldandmed
+              <form>
+                <div class="form-row">
+                  <!-- Sisesta retsepti pealkiri -->
 
-                <div class="form-group col-md-12">
-                  <RecipeNameInput :recipeName="recipe.recipeName"/>  <!-- recipe lilla - parentis komponent, valge recipe
-                  on childis. -->
-                </div>
-              </div>
+                  <div class="form-group col-md-12">
+                    <!--                  <RecipeNameInput :recipeName="recipeRequest.recipeName"/>  &lt;!&ndash; recipe lilla - parentis komponent, valge recipe-->
+                    <!--                  on childis. &ndash;&gt;-->
+                    <input v-model="recipeRequest.recipeName" type="text" class="form-control" id="recipeId"
+                           placeholder="Retsepti pealkiri">
 
-              <!-- Vali retsepti kategooria-->
-
-              <div class="row justify-content-center mt-3">
-                <div class="col-md-4 ">
-                  <CategoryDropdown @clickSelectCategoryEvent="addInfoToRecipeCategoryId"/>
+                  </div>
                 </div>
 
-                <!-- Vali retsepti valmistamise aeg-->
+                <!-- Vali retsepti kategooria-->
 
-                <div class="col-md-4 ">
-                  <PrepTimeDropdown @clickSelectPrepTimeEvent="addInfoToPrepTimeId"/>
+                <div class="row justify-content-center mt-3">
+                  <div class="col-md-4 ">
+                    <CategoryDropdown @clickSelectCategoryEvent="setCategoryId"/>
+                  </div>
+
+                  <!-- Vali retsepti valmistamise aeg-->
+
+                  <div class="col-md-4 ">
+                    <PrepTimeDropdown @clickSelectPrepTimeEvent="setPrepTimeId"/>
+                  </div>
+
+                  <!-- Vali retsepti sööjate arv -->
+
+                  <div class="form-group col-md-4">
+                    <ServingSizeInput :servingSize="recipeRequest.servingSize"/>
+                  </div>
+
+                  <button v-on:click="addRecipe" type="button" class="btn btn-success">Lisa</button>
+
                 </div>
-
-                <!-- Vali retsepti sööjate arv -->
-
-                <div class="form-group col-md-4">
-                  <ServingSizeInput :servingSize="recipe.servingSize"/>
+                <div class="form-group">
                 </div>
-
-
-              </div>
-              <div class="form-group">
-              </div>
-            </form>
+              </form>
+            </div>
           </div>
 
+          <div v-if="recipeResponse.recipeId !== 0">
+            <div style="border:1px solid darkslategrey; text-align: left; padding:10px; text-indent: 3px">
+              <h1>Retsept</h1>
+              <h3>{{recipeRequest.recipeName}}</h3>
+            </div>
+          </div>
 
           <!-- Koostisosade komponent -->
 
-          <div style="border:1px solid darkslategrey; text-align: left; padding:10px; text-indent: 3px">
+          <div v-if="recipeResponse.recipeId !== 0"
+               style="border:1px solid darkslategrey; text-align: left; padding:10px; text-indent: 3px">
             Koostisosad
             <div class="row g-3">
 
@@ -78,13 +92,13 @@
               <!-- Vali retsepti koostisosa -->
 
               <div class="col-md-3">
-                <RecipeIngredient @clickSelectRecipeIngredientEvent="addInfoToRecipeIngredient"/>
+                <RecipeIngredient @clickSelectRecipeIngredientEvent="setRecipeIngredientId"/>
               </div>
 
               <!-- Vali retsepti koostisosa ühiku kogus -->
 
               <div class="col-md-2">
-                <RecipeIngredientQuantity :ingredientQuantity="recipe.recipeIngredient.ingredientQuantity"/>
+                <RecipeIngredientQuantity :ingredientQuantity="tempIngredient.ingredientQuantity"/>
               </div>
 
               <!-- Vali retsepti koostisosa ühiku  -->
@@ -177,21 +191,51 @@ export default {
 
   data: function () {
     return {
-      recipe: {
+      displayAddIngredient: false,
+      recipeRequest: {
+        recipeName: '',
+        recipeCategoryId: 0,
+        preparationTimeId: '',
+        servingSize: 4
+      },
+      recipeResponse: {
+        recipeId: 0
+      },
+
+      recipeIngredientRequest : {
         recipeId: 0,
+        ingredientId: 0,
+        ingredientQuantity: 0,
+        measurementId: 0,
+      },
+
+
+
+      recipe: {
         recipeName: '',
         servingSize: 0,
-        servingSizeId: 0,
         recipeCategoryId: 0,
         prepTimeId: '',
         recipeIngredient: [
           {
-            ingredientName: '',
             ingredientId: 0,
+            ingredientName: '',
             ingredientQuantity: 0,
             measurementName: '',
             measurementId: 0,
-          }
+          }, {
+            ingredientId: 0,
+            ingredientName: '',
+            ingredientQuantity: 0,
+            measurementName: '',
+            measurementId: 0,
+          }, {
+            ingredientId: 0,
+            ingredientName: '',
+            ingredientQuantity: 0,
+            measurementName: '',
+            measurementId: 0,
+          },
         ],
       },
 
@@ -211,6 +255,40 @@ export default {
     }
   },
   methods: {
+
+    setCategoryId: function (selectedCategoryId) {
+      this.recipeRequest.recipeCategoryId = selectedCategoryId;
+    },
+
+    setPrepTimeId: function (selectedPrepTimeIdd) {
+      this.recipeRequest.preparationTimeId = selectedPrepTimeIdd;
+    },
+
+
+    addRecipe: function () {
+      this.$http.post("/recipe", this.recipeRequest
+      ).then(response => {
+        this.recipeResponse.recipeId = response.data.recipeId;
+        this.recipeIngredientRequest.recipeId = response.data.recipeId;
+      }).catch(error => {
+        console.log(error)
+      })
+    },
+    setRecipeIngredientId: function (info) {
+      alert(JSON.stringify(info))
+    },
+
+
+    addRecipeIngredient: function () {
+      this.$http.post("/recipe/ingredient", this.recipeIngredientRequest
+      ).then(response => {
+        // getRecipeIngredientsByRecipeId
+      }).catch(error => {
+        console.log(error)
+      })
+    },
+
+
     addIngredientToTable: function () {
       this.errorMessage.message = ''
       if (this.tempIngredient.ingredientName.length === 0 || this.tempIngredient.ingredientQuantity.length === 0
@@ -241,7 +319,12 @@ export default {
     addNewMeasurementUnit: function (recipeMeasurement) {
       this.tempIngredient.measurementId = recipeMeasurement.measurementId
       this.tempIngredient.measurementName = recipeMeasurement.measurementName
-    }
+    },
+
+
+    //todo post kogu stuff
+
+
   }
 }
 </script>
