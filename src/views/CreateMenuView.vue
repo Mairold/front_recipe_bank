@@ -1,18 +1,56 @@
 <template>
 
 
-  <div class="container overflow-hidden" :id="app">
+  <div class="container overflow-hidden">
     <h1>Loo uus menüü!</h1>
 
     <!--  Lisa sektsioon nupp-->
-    <NewSectionButton @sectionButtonEvent="generateNewSection"/>
-
+    <div class="row justify-content-evenly">
+      <NewMenuButton/>
+      <NewSectionButton/>
+    </div>
     <div v-for="section in sections">
-      <div class="row justify-content-center border border-success rounded-3 mt-3">
-        <div class="col">
-          Seda divi hakkame juurde looma nupu vajutusega.
+      <div class="border border-success rounded-3 mt-3">
+        <div class="row justify-content-start">
+          <div class="col-2">
+            <h3>{{ section.sectionName }}</h3>
+          </div>
         </div>
-
+        <div v-for="recipe in recipesInMenuSection" class="row justify-content-center">
+          <div class="col">
+            <table class="table table-success table-striped">
+              <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nimi</th>
+                <th scope="col">Inimeste arv</th>
+                <th scope="col">Kommentaar</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr v-if="recipe.recipeInSectionId === section.sectionId">
+                <th scope="row">1</th>
+                <td>{{ recipe.recipeName }}</td>
+                <td>{{ recipe.plannedServingSize }}</td>
+                <td>{{ recipe.recipeComment }}</td>
+                <td>
+                  <button type="button" class="btn btn-success">Muuda</button>
+                </td>
+                <td>
+                  <button type="button" class="btn btn-danger">Kustuta</button>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="row justify-content-start m-1">
+          <div class="col-2">
+            <button type="button" class="btn btn-success">Lisa retsept</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -20,45 +58,40 @@
 
 <script>
 import NewSectionButton from "@/components/menu/NewSectionButton";
-import SectionField from "@/components/menu/SectionField";
+import NewMenuButton from "@/views/NewMenuButton";
 
 export default {
   name: "CreateMenuView",
-  components: {SectionField, NewSectionButton},
+  components: {NewMenuButton, NewSectionButton},
 
 
   data: function () {
     return {
-      menuId: 0,
+
       sections: [{
         sectionId: 0,
         sectionName: '',
-        recipes: [{
-          recipeInSectionId: 0,
-          recipeName: '',
-          plannedServingSize: 0,
-        }
-        ]
+      }
+      ],
+      recipesInMenuSection: [{
+        recipeInSectionId: 0,
+        sectionInMenuId: 0,
+        recipeName: '',
+        plannedServingSize: 0,
+        recipeComment: '',
       }
       ]
-
     }
   },
 
   methods: {
-    generateNewSection: function () {
-      this.$router.push({name: 'createSectionRoute'})
-    },
-
-    addNewMenu: function () {
-      this.$http.post("/menu", null, {
+    getRecipeInSections: function () {
+      this.$http.get("/menu/section/recipe", {
             params: {
-              userId: sessionStorage.getItem('userId'),
+              menuId: sessionStorage.getItem('menuId')
             }
           }
       ).then(response => {
-        this.menuId = response.data
-        sessionStorage.setItem('menuId', this.menuId)
         console.log(response.data)
       }).catch(error => {
         console.log(error)
@@ -66,9 +99,9 @@ export default {
     },
 
     getMenuSections: function () {
-      this.$http.get("/menu/sections" , {
+      this.$http.get("/menu/section", {
         params: {
-          menuId:sessionStorage.getItem('menuId')
+          menuId: sessionStorage.getItem('menuId')
         }
       })
           .then(response => {
@@ -81,8 +114,8 @@ export default {
     },
   },
   beforeMount() {
-    this.addNewMenu()
     this.getMenuSections()
+    this.getRecipeInSections()
   }
 }
 </script>
