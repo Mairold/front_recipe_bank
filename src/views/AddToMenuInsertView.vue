@@ -18,7 +18,7 @@
 
       <div class="row justify-content-center mt-1">
         <div class="col-lg-3">
-          <h5>Sisesta palun sööjate arv:</h5>
+          <h5>Sisesta sööjate arv:</h5>
         </div>
       </div>
 
@@ -34,7 +34,7 @@
 
     <div class="row justify-content-center mt-3">
       <div class="col-lg-9">
-        <h5>Siia väljale saad sisestada oma kommentaarid retsepti kohta. Näiteks söögikord, toimkond jms:</h5>
+        <h5>Sisesta kommentaarid retsepti kohta. Näiteks söögikord, toimkond jms:</h5>
       </div>
     </div>
 

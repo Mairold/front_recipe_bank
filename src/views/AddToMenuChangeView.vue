@@ -2,7 +2,7 @@
   <div>
 
     <div class="row justify-content-center m-1">
-      <h1>Menüüsse salvestatud retsepti andmete muutmine</h1>
+      <h1>Lisatud retsepti andmete muutmine</h1>
     </div>
 
     <div>
@@ -18,7 +18,7 @@
 
       <div class="row justify-content-center mt-1">
         <div class="col-lg-3">
-          <h5>Sisesta palun sööjate arv:</h5>
+          <h5>Muuda sööjate arvu:</h5>
           <!--         todo: siia väljale peab tulema "Koosta menüü" üldvaatest kaasa menüüsse salvestatud sööjate arv -->
         </div>
       </div>
@@ -35,13 +35,13 @@
 
     <div class="row justify-content-center mt-3">
       <div class="col-lg-9">
-        <h5>Siia väljale saad sisestada oma kommentaarid retsepti kohta. Näiteks söögikord, toimkond jms:</h5>
+        <h5>Täienda kommentaari:</h5>
         <!--         todo: siia väljale peab tulema "Koosta menüü" üldvaatest kaasa menüüsse salvestatud retsepti kommentaar -->
       </div>
     </div>
 
     <div class="row justify-content-center mt-2">
-      <div class="d-grid gap-5 col-6 mx-auto">
+      <div class="d-grid gap-5 col-7 mx-auto">
         <div><input type="text" class="form-control" id="floatingInput">
         </div>
         <button v-on:click="changeInMenu" type="button" class="btn btn-success">Salvesta muudatused</button>
