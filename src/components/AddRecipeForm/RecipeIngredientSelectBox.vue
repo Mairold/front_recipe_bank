@@ -35,7 +35,7 @@ export default {
 
 
     getAllMeasurements: function () {
-      this.$http.get("/addRecipe/measurements")
+      this.$http.get("/ingredient/measurements")
           .then(response => {
             this.measurements = response.data
             console.log(response.data)

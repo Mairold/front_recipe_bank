@@ -1,15 +1,20 @@
 <template>
 
-<div>
 
+  <div class="col-md-4">
+    <input v-model="recipeInstructions" type="text" class="form-control" id="recipeId"
+           placeholder="Retsepti pealkiri">
 
-</div>
+  </div>
 
 </template>
 
 <script>
 export default {
-  name: "RecipeInstructions"
+  name: "RecipeInstructions",
+  props: {
+    recipeName: {}
+  }
 }
 </script>
 

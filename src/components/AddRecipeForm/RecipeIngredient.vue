@@ -1,10 +1,10 @@
 <template>
 
-  <select v-on:change="clickSelectRecipeIngredientEvent" v-model="selectedIngredient"
+  <select v-on:change="clickSelectRecipeIngredientEvent" v-model="selectedIngredientId"
           class="form-select" aria-label="Koostisosa">
     <option selected disabled value="0">Koostisosa</option>
-    <option v-for="ingredient in ingredients" :key="ingredient.ingredientNameId"
-            :value="ingredient.ingredientNameId"> {{ ingredient.ingredientName }}
+    <option v-for="ingredient in ingredients" :key="ingredient.ingredientId"
+            :value="ingredient.ingredientId"> {{ ingredient.ingredientName }}
     </option>
   </select>
 
@@ -17,14 +17,11 @@ export default {
 
   data: function () {
     return {
-      selectedIngredient: {
-        ingredientName: '',
-        ingredientId: 0,
-      },
+      selectedIngredientId:0,
       ingredients: [
         {
           ingredientName: '',
-          ingredientNameId: 0,
+          ingredientId: 0,
         }
       ]
     }
@@ -32,8 +29,9 @@ export default {
 
   methods: {
     getAllIngredientInfo: function () {
-      this.$http.get("/addRecipe/recipeIngredient")
+      this.$http.get("/ingredient/recipeIngredient")
           .then(response => {
+            this.ingredients = response.data
             console.log(response.data)
           })
           .catch(error => {
@@ -41,7 +39,7 @@ export default {
           });
     },
     clickSelectRecipeIngredientEvent: function (){
-      this.$emit('clickSelectRecipeIngredientEvent'), this.selectedIngredient
+      this.$emit('clickSelectRecipeIngredientEvent', this.selectedIngredientId)
     }
   },
   beforeMount() {

@@ -18,8 +18,6 @@
                   <!-- Sisesta retsepti pealkiri -->
 
                   <div class="form-group col-md-12">
-                    <!--                  <RecipeNameInput :recipeName="recipeRequest.recipeName"/>  &lt;!&ndash; recipe lilla - parentis komponent, valge recipe-->
-                    <!--                  on childis. &ndash;&gt;-->
                     <input v-model="recipeRequest.recipeName" type="text" class="form-control" id="recipeId"
                            placeholder="Retsepti pealkiri">
 
@@ -57,7 +55,7 @@
           <div v-if="recipeResponse.recipeId !== 0">
             <div style="border:1px solid darkslategrey; text-align: left; padding:10px; text-indent: 3px">
               <h1>Retsept</h1>
-              <h3>{{recipeRequest.recipeName}}</h3>
+              <h3>{{ recipeRequest.recipeName }}</h3>
             </div>
           </div>
 
@@ -146,25 +144,15 @@
 
     <div class="form-group col-md-12">
       <div class="row-cols-md-3">
-        <button type="button" class="btn btn-success">Salvesta retsept ja lisa menüüsse</button>
+        <button type="button" class="btn btn-success">Lisa retsept menüüsse</button>
 
-        <div class="row-cols-md-3">
-          <select class="form-select" aria-label="Default select example">
-            <option selected>Vali grupp</option>
-            <option value="1">One</option>
 
-          </select>
-        </div>
       </div>
     </div>
   </div>
 
 
 </template>
-
-
-<!-- Kas peaks grupeerima retseptis oelvad kõik komponendid, valmistusaja jm üheks recipeElementGroupId ks?
-või piisab kui kõik retsepti elemendid on seotud ühe recipe Id'ga? -->
 
 
 <script>
@@ -202,13 +190,12 @@ export default {
         recipeId: 0
       },
 
-      recipeIngredientRequest : {
+      recipeIngredientRequest: {
         recipeId: 0,
         ingredientId: 0,
         ingredientQuantity: 0,
         measurementId: 0,
       },
-
 
 
       recipe: {
@@ -276,6 +263,9 @@ export default {
     },
     setRecipeIngredientId: function (info) {
       alert(JSON.stringify(info))
+      console.log(info)
+      this.recipeIngredientRequest.ingredientId = info
+
     },
 
 
@@ -320,9 +310,6 @@ export default {
       this.tempIngredient.measurementId = recipeMeasurement.measurementId
       this.tempIngredient.measurementName = recipeMeasurement.measurementName
     },
-
-
-    //todo post kogu stuff
 
 
   }
