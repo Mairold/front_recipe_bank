@@ -3,6 +3,11 @@
     <h1>Loo uus poenimekiri!</h1>
     <div class="row justify-content-start">
       <AddNewShoppingList @newShoppingListEvent="setShoppingListId"/>
+      <div class="col-3">
+        <div v-if="customShoppingListIngredient.shoppingListId === 0 & shoppingListIngredient.length === 0">
+          <== Alusta uut poenimekirja.
+        </div>
+      </div>
     </div>
     <div v-if="customShoppingListIngredient.shoppingListId > 0" class="border border-success rounded-3 mt-3">
       <div class="row m-1">
@@ -120,7 +125,7 @@ export default {
     },
 
     updateShoppingList: function () {
-      console.log(this.customShoppingListIngredient.shoppingListId)
+      console.log(this.shoppingListIngredient.length)
       this.$http.put("/some/path", null, {
             params: {
               shoppingListComment: this.shoppingListComment,
@@ -149,6 +154,7 @@ export default {
 
   beforeMount() {
     this.getAllShoppingListIngredients()
+    this.shoppingListIngredient = []
   }
 }
 </script>

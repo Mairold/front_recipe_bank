@@ -8,10 +8,10 @@
     <div class="row justify-content-center">
       <NewMenuButton @newMenuEvent="addIdToMenuId"/>
       <div class="col-3">
-        <div v-if="menuId === 0 & sections.length === 0" role="alert">
+        <div v-if="menuId === 0 & sections.length === 0"  >
           <== Alusta uut Menüü plaani.
         </div>
-        <div v-if="menuId > 0 & sections.length === 0" role="alert">
+        <div v-if="menuId > 0 & sections.length === 0" >
           Nüüd tee uus menüü väli ==>
         </div>
       </div>
