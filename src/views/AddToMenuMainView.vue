@@ -127,8 +127,10 @@ export default {
       })
     },
 
-    alertRecipeName: function (recipeName) {
-      alert(recipeName + ' alert from child')
+    alertRecipeName: function (recipe) {
+      sessionStorage.setItem('recipeId', recipe.recipeId)
+      sessionStorage.setItem('recipeName', recipe.recipeName)
+      this.$router.push({name: 'addToMenuInsertRoute'})
     },
 
     addSequenceNumbers: function () {
