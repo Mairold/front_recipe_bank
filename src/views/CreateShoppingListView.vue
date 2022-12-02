@@ -14,6 +14,52 @@
         </div>
         <addNewCustomShoppingListIngredient @saveShoppingListIngredientEvent="saveCustomShoppingListIngredeient"/>
       </div>
+      <div class="row justify-content-evenly">
+        <div class="col">
+          <table class="table table-success table-striped">
+            <thead>
+            <tr>
+              <th scope="col">Koostisosa</th>
+              <th scope="col">Kogus</th>
+              <th scope="col">Ühik</th>
+              <th scope="col">Grupp</th>
+              <th scope="col">Muuda</th>
+              <th scope="col">Kustuta</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="product in shoppingListIngredient">
+              <td>{{ product.shoppingListIngredientName }}</td>
+              <td>{{ product.quantity }}</td>
+              <td>{{ product.measurementName }}</td>
+              <td>{{ product.ingredientGroupName }}</td>
+              <td>
+                <button type="button" class="btn btn-success">Muuda</button>
+              </td>
+              <td>
+                <button type="button" class="btn btn-danger">Kustuta</button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+    <div class="row justify-content-start mt-3">
+      <div class="col-6">
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="inputGroup-sizing-default">Kommentaar</span>
+          <input v-model="shoppingListComment" type="text" class="form-control"
+                 aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-start">
+      <div class="col-4">
+        <button v-on:click="updateShoppingList" type="button" class="btn btn-success">Salvesta poenimekiri
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -31,7 +77,8 @@ export default {
   components: {
     AddNewCustomShoppingListIngredient,
     IngredientGroupSelect,
-    IngredientQuantity, ShoppingListIngredientNameInput, AddNewShoppingList, MeasurementDropDownBox},
+    IngredientQuantity, ShoppingListIngredientNameInput, AddNewShoppingList, MeasurementDropDownBox
+  },
   data: function () {
     return {
       shoppingListIngredient: [
@@ -53,6 +100,7 @@ export default {
             shoppingListId: 0,
             quantity: 0,
           },
+      shoppingListComment: ''
     }
   },
   methods: {
@@ -79,11 +127,39 @@ export default {
     saveCustomShoppingListIngredeient: function () {
       this.$http.post("/shoppingList/customIngredient", this.customShoppingListIngredient
       ).then(response => {
-        console.log(response.data)
       }).catch(error => {
         console.log(error)
       })
     },
+
+    getAllShoppingListIngredients: function () {
+      this.$http.get("/shoppingList/ingredients", {
+            params: {
+              shoppingListId: sessionStorage.getItem('shoppingListId'),
+            }
+          }
+      ).then(response => {
+        this.shoppingListIngredient = response.data
+      }).catch(error => {
+        console.log(error)
+      })
+    },
+
+    updateShoppingList: function () {
+      this.$http.put("/some/path", null, {
+            params: {
+              shoppingListComment: this.shoppingListComment,
+            }
+          }
+      ).then(response => {
+      }).catch(error => {
+        console.log(error)
+      })
+    },
+
+  },
+  beforeMount() {
+    this.getAllShoppingListIngredients()
   }
 }
 </script>

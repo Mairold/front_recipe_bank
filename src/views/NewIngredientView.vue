@@ -119,6 +119,12 @@ export default {
       alert("See nupp viib eelmisele lehele")
     },
 
+    resetAllFields: function () {
+      this.ingredient.ingredientName = ''
+      this.ingredient.ingredientGroupId = 0
+      this.ingredient.allowedMeasurements = []
+    },
+
     postIngredient: function () {
       let requestBody = this.ingredient
       requestBody?.allowedMeasurements.forEach(a => delete a['sequenceNumber']);
@@ -127,6 +133,7 @@ export default {
       ).then(response => {
         this.showErrorMessage('Uus toiduaine salvestatud.', 'alert alert-success');
         console.log(response.data)
+        this.resetAllFields()
       }).catch(error => {
         if (error.response.status === 403) {
           this.showErrorMessage(error.response.data?.message, 'alert alert-danger');

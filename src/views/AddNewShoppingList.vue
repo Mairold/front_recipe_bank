@@ -24,7 +24,6 @@ export default {
         this.shoppingListId = response.data
         sessionStorage.setItem('shoppingListId', response.data)
         this.$emit('newShoppingListEvent',this.shoppingListId)
-
       }).catch(error => {
         console.log(error)
       })

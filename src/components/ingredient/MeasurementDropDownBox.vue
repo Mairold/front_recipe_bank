@@ -30,7 +30,6 @@ export default {
       this.$http.get("/ingredient/measurements")
           .then(response => {
             this.measurements = response.data
-            console.log(response.data)
           })
           .catch(error => {
             console.log(error)

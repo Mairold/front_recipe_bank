@@ -34,7 +34,6 @@ export default {
       this.$http.get("/ingredient/group")
           .then(response => {
             this.ingredientGroups = response.data
-            console.log(response.data)
           })
           .catch(error => {
             console.log(error)
