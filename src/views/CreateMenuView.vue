@@ -9,7 +9,7 @@
       <NewMenuButton @newMenuEvent="addIdToMenuId"/>
       <NewSectionButton/>
     </div>
-    <div v-for="section in sections">
+    <div v-for="section in sections" :key="section.sectionId">
       <div class="border border-success rounded-3 mt-3">
         <div class="row justify-content-start">
           <div class="col-2">
@@ -58,14 +58,14 @@ export default {
       recipesInMenuSection: [
         {
           recipeInSectionId: 1,
-          sectionInMenuId: 9,
+          sectionInMenuId: 11,
           recipeName: 'Alkohol',
           plannedServingSize: 1000,
           recipeComment: 'Lheb liiale',
         },
         {
           recipeInSectionId: 2,
-          sectionInMenuId: 10,
+          sectionInMenuId: 12,
           recipeName: 'Vaarikad',
           plannedServingSize: 15,
           recipeComment: 'MMMMMMM',
