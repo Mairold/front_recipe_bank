@@ -28,16 +28,16 @@
             </tr>
             </thead>
             <tbody>
-            <tr v-for="product in shoppingListIngredient">
+            <tr v-for="product in shoppingListIngredient" :key="product.shoppingListIngredientId">
               <td>{{ product.shoppingListIngredientName }}</td>
               <td>{{ product.quantity }}</td>
               <td>{{ product.measurementName }}</td>
               <td>{{ product.ingredientGroupName }}</td>
               <td>
-                <button type="button" class="btn btn-success">Muuda</button>
+                <button v-on:click="deleteFromList(product)" type="button" class="btn btn-success">Muuda</button>
               </td>
               <td>
-                <button type="button" class="btn btn-danger">Kustuta</button>
+                <button v-on:click="changeShopingListIngredient(product.shoppingListIngredientId)" type="button" class="btn btn-danger">Kustuta</button>
               </td>
             </tr>
             </tbody>
@@ -83,6 +83,7 @@ export default {
     return {
       shoppingListIngredient: [
         {
+          shoppingListIngredientId: 0,
           shoppingListIngredientName: '',
           shoppingListIngredientIsCustom: false,
           ingredientGroupName: '',
@@ -156,6 +157,17 @@ export default {
         console.log(error)
       })
     },
+
+    deleteFromList: function (ingredient) {
+      let index = this.shoppingListIngredient.indexOf(ingredient)
+      this.shoppingListIngredient.splice(index, 1)
+    },
+
+    changeShopingListIngredient: function (id) {
+      this.$router.push({name:'',query:{
+        shoppingListIngredientId: id
+        }})
+    }
 
   },
   beforeMount() {
