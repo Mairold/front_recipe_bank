@@ -11,6 +11,8 @@ import AddRecipeView from "@/views/AddRecipeView";
 import AddToMenuMainView from "@/views/AddToMenuMainView";
 import AddToMenuInsertView from "@/views/AddToMenuInsertView";
 import AddToMenuChangeView from "@/views/AddToMenuChangeView";
+import CreateMenuView from "@/views/CreateMenuView";
+import CreateSectionView from "@/views/CreateSectionView";
 
 Vue.use(VueRouter)
 
@@ -64,6 +66,16 @@ const routes = [
         path: '/add-to-menu-change',
         name: 'addToMenuChangeRoute',
         component: AddToMenuChangeView
+    },
+    {
+        path: '/create_menu',
+        name: 'createMenuRoute',
+        component: CreateMenuView
+    },
+    {
+        path: '/create_menu/create_section',
+        name: 'createSectionRoute',
+        component: CreateSectionView
     },
     {
         path: '/about',
