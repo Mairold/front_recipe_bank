@@ -31,14 +31,14 @@
 
 <script>
 import MeasurementDropDownBox from "@/components/ingredient/MeasurementDropDownBox";
-import AddNewShoppingList from "@/views/AddNewShoppingList";
-import ShoppingListIngredientNameInput from "@/views/ShoppingListIngredientNameInput";
-import IngredientQuantity from "@/views/IngredientQuantity";
+import AddNewShoppingList from "@/components/ShoppingList/AddNewShoppingList";
+import ShoppingListIngredientNameInput from "@/components/ShoppingList/ShoppingListIngredientNameInput";
+import IngredientQuantity from "@/components/ShoppingList/IngredientQuantity";
 import IngredientGroupSelect from "@/components/ingredient/IngredientGroupSelect";
-import AddNewCustomShoppingListIngredient from "@/views/AddNewCustomShoppingListIngredient";
-import ShoppingListCommentInput from "@/views/ShoppingListCommentInput";
-import UpdateShoppingListButton from "@/views/UpdateShoppingListButton";
-import ShoppingListTable from "@/views/ShoppingListTable";
+import AddNewCustomShoppingListIngredient from "@/components/ShoppingList/AddNewCustomShoppingListIngredient";
+import ShoppingListCommentInput from "@/components/ShoppingList/ShoppingListCommentInput";
+import UpdateShoppingListButton from "@/components/ShoppingList/UpdateShoppingListButton";
+import ShoppingListTable from "@/components/ShoppingList/ShoppingListTable";
 
 export default {
   name: "CreateShoppingListView",
