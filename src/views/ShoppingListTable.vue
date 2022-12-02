@@ -1,0 +1,47 @@
+<template>
+  <div class="col">
+    <table class="table table-success table-striped">
+      <thead>
+      <tr>
+        <th scope="col">Koostisosa</th>
+        <th scope="col">Kogus</th>
+        <th scope="col">Ühik</th>
+        <th scope="col">Grupp</th>
+        <th scope="col">Muuda</th>
+        <th scope="col">Kustuta</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr v-for="product in shoppingListIngredient" :key="product.shoppingListIngredientId">
+        <td>{{ product.shoppingListIngredientName }}</td>
+        <td>{{ product.quantity }}</td>
+        <td>{{ product.measurementName }}</td>
+        <td>{{ product.ingredientGroupName }}</td>
+        <td>
+          <button v-on:click="changeShoppingListIngredient(product.shoppingListIngredientId)" type="button" class="btn btn-success">Muuda</button>
+        </td>
+        <td>
+          <button v-on:click="deleteFromList(product)" type="button" class="btn btn-danger">Kustuta</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</template>
+<script>
+export default {
+  name: 'ShoppingListTable',
+  props: {
+    shoppingListIngredient: {}
+  },
+  methods: {
+    deleteFromList: function (product) {
+      this.$emit('deleteButtonClickEvent',product)
+    },
+
+    changeShoppingListIngredient: function (shoppingListIngredientId) {
+      this.$emit('changeButtonClickEvent',shoppingListIngredientId)
+    }
+  }
+}
+</script>

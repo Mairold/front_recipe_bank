@@ -15,51 +15,16 @@
         <addNewCustomShoppingListIngredient @saveShoppingListIngredientEvent="saveCustomShoppingListIngredeient"/>
       </div>
       <div class="row justify-content-evenly">
-        <div class="col">
-          <table class="table table-success table-striped">
-            <thead>
-            <tr>
-              <th scope="col">Koostisosa</th>
-              <th scope="col">Kogus</th>
-              <th scope="col">Ühik</th>
-              <th scope="col">Grupp</th>
-              <th scope="col">Muuda</th>
-              <th scope="col">Kustuta</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr v-for="product in shoppingListIngredient" :key="product.shoppingListIngredientId">
-              <td>{{ product.shoppingListIngredientName }}</td>
-              <td>{{ product.quantity }}</td>
-              <td>{{ product.measurementName }}</td>
-              <td>{{ product.ingredientGroupName }}</td>
-              <td>
-                <button v-on:click="deleteFromList(product)" type="button" class="btn btn-success">Muuda</button>
-              </td>
-              <td>
-                <button v-on:click="changeShopingListIngredient(product.shoppingListIngredientId)" type="button" class="btn btn-danger">Kustuta</button>
-              </td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
+        <ShoppingListTable :shopping-list-ingredient="shoppingListIngredient"
+                           @changeButtonClickEvent="changeShopingListIngredient"
+                           @deleteButtonClickEvent="deleteFromList"/>
       </div>
-
     </div>
     <div class="row justify-content-start mt-3">
-      <div class="col-6">
-        <div class="input-group mb-3">
-          <span class="input-group-text" id="inputGroup-sizing-default">Kommentaar</span>
-          <input v-model="shoppingListComment" type="text" class="form-control"
-                 aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-        </div>
-      </div>
+      <ShoppingListCommentInput :shopping-list-comment="shoppingListComment"/>
     </div>
     <div class="row justify-content-start">
-      <div class="col-4">
-        <button v-on:click="updateShoppingList" type="button" class="btn btn-success">Salvesta poenimekiri
-        </button>
-      </div>
+      <UpdateShoppingListButton @updateButtonClickEvent="updateShoppingList"/>
     </div>
   </div>
 </template>
@@ -71,14 +36,21 @@ import ShoppingListIngredientNameInput from "@/views/ShoppingListIngredientNameI
 import IngredientQuantity from "@/views/IngredientQuantity";
 import IngredientGroupSelect from "@/components/ingredient/IngredientGroupSelect";
 import AddNewCustomShoppingListIngredient from "@/views/AddNewCustomShoppingListIngredient";
+import ShoppingListCommentInput from "@/views/ShoppingListCommentInput";
+import UpdateShoppingListButton from "@/views/UpdateShoppingListButton";
+import ShoppingListTable from "@/views/ShoppingListTable";
 
 export default {
   name: "CreateShoppingListView",
   components: {
+    ShoppingListTable,
+    UpdateShoppingListButton,
+    ShoppingListCommentInput,
     AddNewCustomShoppingListIngredient,
     IngredientGroupSelect,
     IngredientQuantity, ShoppingListIngredientNameInput, AddNewShoppingList, MeasurementDropDownBox
   },
+
   data: function () {
     return {
       shoppingListIngredient: [
@@ -91,7 +63,6 @@ export default {
           quantity: 0,
         }
       ],
-
       customShoppingListIngredient:
           {
             shoppingListIngredientName: '',
@@ -104,6 +75,7 @@ export default {
       shoppingListComment: ''
     }
   },
+
   methods: {
     setMeasurementId: function (measurementId) {
       this.customShoppingListIngredient.measurementId = measurementId
@@ -164,12 +136,15 @@ export default {
     },
 
     changeShopingListIngredient: function (id) {
-      this.$router.push({name:'',query:{
-        shoppingListIngredientId: id
-        }})
+      this.$router.push({
+        name: '', query: {
+          shoppingListIngredientId: id
+        }
+      })
     }
 
   },
+
   beforeMount() {
     this.getAllShoppingListIngredients()
   }
