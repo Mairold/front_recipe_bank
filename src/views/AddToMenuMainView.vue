@@ -77,7 +77,7 @@ export default {
     },
 
     backToMenu: function () {
-      this.$router.push({name: 'menuRoute'})
+      this.$router.push({name: 'createMenuRoute'})
     },
 
     getAllRecipes: function () {
