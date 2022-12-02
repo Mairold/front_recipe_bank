@@ -77,6 +77,8 @@ export default {
   methods: {
     addIdToMenuId: function (menuId) {
       this.menuId = menuId
+      this.getMenuSections()
+      this.getRecipeInSections()
       console.log(this.menuId)
     },
     getRecipeInSections: function () {

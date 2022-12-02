@@ -4,7 +4,7 @@
     <div class="row justify-content-start">
       <AddNewShoppingList @newShoppingListEvent="setShoppingListId"/>
     </div>
-    <div v-if="customShoppingListIngredient.shoppingListId === 0" class="border border-success rounded-3 mt-3">
+    <div v-if="customShoppingListIngredient.shoppingListId !== 0" class="border border-success rounded-3 mt-3">
       <div class="row m-1">
         <ShoppingListIngredientNameInput @addIngredientNameEvent="setShoppingListIngredientName"/>
         <IngredientQuantity @addIngredientQuantityEvent="setShoppingListIngredientQuantity"/>
@@ -95,6 +95,7 @@ export default {
 
     setShoppingListId: function (shoppingListId) {
       this.customShoppingListIngredient.shoppingListId = shoppingListId
+      this.getAllShoppingListIngredients()
     },
 
     saveCustomShoppingListIngredeient: function () {
