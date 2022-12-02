@@ -5,8 +5,16 @@
     <h1>Loo uus menüü!</h1>
 
     <!--  Lisa sektsioon nupp-->
-    <div class="row justify-content-evenly">
+    <div class="row justify-content-center">
       <NewMenuButton @newMenuEvent="addIdToMenuId"/>
+      <div class="col-3">
+        <div v-if="menuId === 0 & sections.length === 0" role="alert">
+          <== Alusta uut Menüü plaani.
+        </div>
+        <div v-if="menuId > 0 & sections.length === 0" role="alert">
+          Nüüd tee uus menüü väli ==>
+        </div>
+      </div>
       <NewSectionButton/>
     </div>
     <div v-for="section in sections" :key="section.sectionId">
@@ -40,10 +48,11 @@
 import NewSectionButton from "@/components/menu/NewSectionButton";
 import NewMenuButton from "@/components/menu/NewMenuButton";
 import RecipesInSectionTable from "@/views/RecipesInSectionTable";
+import AlertMessage from "@/components/general/AlertMessage";
 
 export default {
   name: "CreateMenuView",
-  components: {RecipesInSectionTable, NewMenuButton, NewSectionButton},
+  components: {AlertMessage, RecipesInSectionTable, NewMenuButton, NewSectionButton},
 
 
   data: function () {
@@ -58,19 +67,23 @@ export default {
       recipesInMenuSection: [
         {
           recipeInSectionId: 1,
-          sectionInMenuId: 11,
+          sectionInMenuId: 18,
           recipeName: 'Alkohol',
           plannedServingSize: 1000,
           recipeComment: 'Lheb liiale',
         },
         {
           recipeInSectionId: 2,
-          sectionInMenuId: 12,
+          sectionInMenuId: 19,
           recipeName: 'Vaarikad',
           plannedServingSize: 15,
           recipeComment: 'MMMMMMM',
         },
-      ]
+      ],
+      errorResponse: {
+        message: '',
+        alertAttClass: 'alert alert-danger'
+      }
     }
   },
 
@@ -131,7 +144,7 @@ export default {
   beforeMount() {
     this.getMenuSections()
     this.getRecipeInSections()
-    this.menuId = sessionStorage.getItem('menuId')
+    this.sections = []
   }
 }
 </script>

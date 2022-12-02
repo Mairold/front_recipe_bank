@@ -48,7 +48,6 @@ export default {
             }
         ).then(response => {
           sessionStorage.setItem('sectionInMenuId', response.data)
-          console.log(response.data)
           this.$router.push({name: 'createMenuRoute'})
         }).catch(error => {
           console.log(error)
