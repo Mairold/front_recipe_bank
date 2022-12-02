@@ -264,7 +264,8 @@ export default {
     setRecipeIngredientId: function (info) {
       alert(JSON.stringify(info))
       console.log(info)
-      this.recipeIngredientRequest.ingredientId = info
+      this.recipeIngredientRequest.ingredientId = info // miks on recipeRequest ja recipeResponse eraldI?
+      // siin püüame kinni.
 
     },
 
@@ -283,10 +284,13 @@ export default {
       this.errorMessage.message = ''
       if (this.tempIngredient.ingredientName.length === 0 || this.tempIngredient.ingredientQuantity.length === 0
           || this.tempIngredient.measurementName.length === 0) {
+        // kas siin ei peaks olema
         this.errorMessage.message = 'Palun täida kõik väljad'
       } else {
 
         this.recipe.recipeIngredient.push(this.tempIngredient)
+
+
 
       }
     },

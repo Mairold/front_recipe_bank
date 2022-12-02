@@ -37,6 +37,7 @@ export default {
           .catch(error => {
             console.log(error)
           });
+
     },
     clickSelectRecipeIngredientEvent: function (){
       this.$emit('clickSelectRecipeIngredientEvent', this.selectedIngredientId)
