@@ -51,6 +51,12 @@
             <button v-on:click="addNewRecipeToMenu" type="button" class="btn btn-success">Lisa retsept</button>
           </div>
         </div>
+
+      </div>
+    </div>
+    <div class="row justify-content-end mt-3">
+      <div class="col-2">
+        <button v-on:click="moveToShoppingList" type="button" class="btn btn-success">Salvesta ja loo poenimekiri</button>
       </div>
     </div>
   </div>
@@ -77,14 +83,14 @@ export default {
       recipesInMenuSection: [
           {
         recipeInSectionId: 1,
-        sectionInMenuId: 8,
+        sectionInMenuId: 9,
         recipeName: 'Alkohol',
         plannedServingSize: 1000,
         recipeComment: 'Lheb liiale',
       },
         {
         recipeInSectionId: 2,
-        sectionInMenuId: 7,
+        sectionInMenuId: 10,
         recipeName: 'Vaarikad',
         plannedServingSize: 15,
         recipeComment: 'MMMMMMM',
@@ -128,11 +134,16 @@ export default {
 
     addNewRecipeToMenu: function () {
       this.$router.push({name: 'addToMenuRoute'})
+    },
+
+    moveToShoppingList: function () {
+      this.$router.push({name: 'createShoppingListRoute'})
     }
   },
   beforeMount() {
     this.getMenuSections()
     this.getRecipeInSections()
+    this.menuId = sessionStorage.getItem('menuId')
   }
 }
 </script>

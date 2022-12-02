@@ -1,5 +1,5 @@
 <template>
-  <div class="col-6 offset-md-2">
+  <div >
     <select @change="groupChangeEvent" v-model="selectedIngredientGroupId" class="form-select"
             aria-label="--Vali grupp--">
       <option selected disabled value="0">--Vali grupp--</option>

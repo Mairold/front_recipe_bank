@@ -6,7 +6,9 @@
       <IngredientNameInput :ingredient="ingredient"/>
     </div>
     <div class="row justify-content-start mt-2 mb-4">
-      <IngredientGroupSelect @groupChangeEvent="addInfoToGroupId"/>
+      <div class="col-6 offset-md-2">
+        <IngredientGroupSelect @groupChangeEvent="addInfoToGroupId"/>
+      </div>
     </div>
 
     <!--Ühikute lisamine-->
