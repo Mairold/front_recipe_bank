@@ -48,7 +48,7 @@
         </div>
         <div class="row justify-content-start m-1">
           <div class="col-2">
-            <button type="button" class="btn btn-success">Lisa retsept</button>
+            <button v-on:click="addNewRecipeToMenu" type="button" class="btn btn-success">Lisa retsept</button>
           </div>
         </div>
       </div>
@@ -77,14 +77,14 @@ export default {
       recipesInMenuSection: [
           {
         recipeInSectionId: 1,
-        sectionInMenuId: 36,
+        sectionInMenuId: 8,
         recipeName: 'Alkohol',
         plannedServingSize: 1000,
         recipeComment: 'Lheb liiale',
       },
         {
         recipeInSectionId: 2,
-        sectionInMenuId: 37,
+        sectionInMenuId: 7,
         recipeName: 'Vaarikad',
         plannedServingSize: 15,
         recipeComment: 'MMMMMMM',
@@ -125,6 +125,10 @@ export default {
             console.log(error)
           })
     },
+
+    addNewRecipeToMenu: function () {
+      this.$router.push({name: 'addToMenuRoute'})
+    }
   },
   beforeMount() {
     this.getMenuSections()
