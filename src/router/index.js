@@ -12,6 +12,7 @@ import AddToMenuChangeView from "@/views/AddToMenuChangeView";
 import CreateMenuView from "@/views/CreateMenuView";
 import CreateSectionView from "@/views/CreateSectionView";
 import CreateShoppingListView from "@/views/CreateShoppingListView";
+import ChangeShoppingList from "@/views/ChangeShoppingList";
 
 Vue.use(VueRouter)
 
@@ -75,6 +76,11 @@ const routes = [
         path: '/create_shopping_list',
         name: 'createShoppingListRoute',
         component: CreateShoppingListView
+    },
+    {
+        path: '/change_shopping_list',
+        name: 'changeShoppingListRoute',
+        component: ChangeShoppingList
     },
     {
         path: '/about',

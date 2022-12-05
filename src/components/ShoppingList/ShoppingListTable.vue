@@ -21,7 +21,7 @@
           <button v-on:click="changeShoppingListIngredient(product.shoppingListIngredientId)" type="button" class="btn btn-success">Muuda</button>
         </td>
         <td>
-          <button v-on:click="deleteFromList(product)" type="button" class="btn btn-danger">Kustuta</button>
+          <button v-on:click="deleteFromList(product.shoppingListIngredientId)" type="button" class="btn btn-danger">Kustuta</button>
         </td>
       </tr>
       </tbody>
@@ -35,8 +35,8 @@ export default {
     shoppingListIngredient: {}
   },
   methods: {
-    deleteFromList: function (product) {
-      this.$emit('deleteButtonClickEvent',product)
+    deleteFromList: function (shoppingListIngredientId) {
+      this.$emit('deleteButtonClickEvent',shoppingListIngredientId)
     },
 
     changeShoppingListIngredient: function (shoppingListIngredientId) {

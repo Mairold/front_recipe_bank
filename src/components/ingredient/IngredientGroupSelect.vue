@@ -26,8 +26,7 @@ export default {
 
   methods: {
     groupChangeEvent: function () {
-      this.$emit('groupChangeEvent',
-          this.selectedIngredientGroupId)
+      this.$emit('groupChangeEvent', this.selectedIngredientGroupId)
     },
 
     getAllIngredientGroups: function () {

@@ -17,11 +17,11 @@
         <div class="col-2">
           <IngredientGroupSelect @groupChangeEvent="setShoppingListIngredientGroupId"/>
         </div>
-        <addNewCustomShoppingListIngredient @saveShoppingListIngredientEvent="saveCustomShoppingListIngredeient"/>
+        <addNewCustomShoppingListIngredient @saveShoppingListIngredientEvent="saveCustomShoppingListIngredient"/>
       </div>
       <div class="row justify-content-evenly">
         <ShoppingListTable :shopping-list-ingredient="shoppingListIngredient"
-                           @changeButtonClickEvent="changeShopingListIngredient"
+                           @changeButtonClickEvent="changeShoppingListIngredient"
                            @deleteButtonClickEvent="deleteFromList"/>
       </div>
     </div>
@@ -103,8 +103,8 @@ export default {
       this.getAllShoppingListIngredients()
     },
 
-    saveCustomShoppingListIngredeient: function () {
-      this.$http.post("/shoppingList/customIngredient", this.customShoppingListIngredient
+    saveCustomShoppingListIngredient: function () {
+      this.$http.post("/shoppingList/ingredient", this.customShoppingListIngredient
       ).then(response => {
       }).catch(error => {
         console.log(error)
@@ -126,7 +126,7 @@ export default {
 
     updateShoppingList: function () {
       console.log(this.shoppingListIngredient.length)
-      this.$http.put("/some/path", null, {
+      this.$http.put("/shoppingList", null, {
             params: {
               shoppingListComment: this.shoppingListComment,
             }
@@ -137,19 +137,26 @@ export default {
       })
     },
 
-    deleteFromList: function (ingredient) {
-      let index = this.shoppingListIngredient.indexOf(ingredient)
-      this.shoppingListIngredient.splice(index, 1)
+    deleteFromList: function (ingredientId) {
+      this.$http.delete("/shoppingList/ingredient", {
+            params: {
+              ingredientId: ingredientId
+            }
+          }
+      ).then(response => {
+        console.log(response.data)
+      }).catch(error => {
+        console.log(error)
+      })
     },
 
-    changeShopingListIngredient: function (id) {
+    changeShoppingListIngredient: function (id) {
       this.$router.push({
-        name: '', query: {
+        name: 'changeShoppingListRoute', query: {
           shoppingListIngredientId: id
         }
       })
     }
-
   },
 
   beforeMount() {
