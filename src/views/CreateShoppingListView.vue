@@ -3,8 +3,13 @@
     <h1>Loo uus poenimekiri!</h1>
     <div class="row justify-content-start">
       <AddNewShoppingList @newShoppingListEvent="setShoppingListId"/>
+      <div class="col-3">
+        <div v-if="customShoppingListIngredient.shoppingListId === 0 & shoppingListIngredient.length === 0">
+          <== Alusta uut poenimekirja.
+        </div>
+      </div>
     </div>
-    <div v-if="customShoppingListIngredient.shoppingListId === 0" class="border border-success rounded-3 mt-3">
+    <div v-if="customShoppingListIngredient.shoppingListId > 0" class="border border-success rounded-3 mt-3">
       <div class="row m-1">
         <ShoppingListIngredientNameInput @addIngredientNameEvent="setShoppingListIngredientName"/>
         <IngredientQuantity @addIngredientQuantityEvent="setShoppingListIngredientQuantity"/>
@@ -12,11 +17,11 @@
         <div class="col-2">
           <IngredientGroupSelect @groupChangeEvent="setShoppingListIngredientGroupId"/>
         </div>
-        <addNewCustomShoppingListIngredient @saveShoppingListIngredientEvent="saveCustomShoppingListIngredeient"/>
+        <addNewCustomShoppingListIngredient @saveShoppingListIngredientEvent="saveCustomShoppingListIngredient"/>
       </div>
       <div class="row justify-content-evenly">
         <ShoppingListTable :shopping-list-ingredient="shoppingListIngredient"
-                           @changeButtonClickEvent="changeShopingListIngredient"
+                           @changeButtonClickEvent="changeShoppingListIngredient"
                            @deleteButtonClickEvent="deleteFromList"/>
       </div>
     </div>
@@ -95,10 +100,11 @@ export default {
 
     setShoppingListId: function (shoppingListId) {
       this.customShoppingListIngredient.shoppingListId = shoppingListId
+      this.getAllShoppingListIngredients()
     },
 
-    saveCustomShoppingListIngredeient: function () {
-      this.$http.post("/shoppingList/customIngredient", this.customShoppingListIngredient
+    saveCustomShoppingListIngredient: function () {
+      this.$http.post("/shoppingList/ingredient", this.customShoppingListIngredient
       ).then(response => {
       }).catch(error => {
         console.log(error)
@@ -119,7 +125,8 @@ export default {
     },
 
     updateShoppingList: function () {
-      this.$http.put("/some/path", null, {
+      console.log(this.shoppingListIngredient.length)
+      this.$http.put("/shoppingList", null, {
             params: {
               shoppingListComment: this.shoppingListComment,
             }
@@ -130,23 +137,31 @@ export default {
       })
     },
 
-    deleteFromList: function (ingredient) {
-      let index = this.shoppingListIngredient.indexOf(ingredient)
-      this.shoppingListIngredient.splice(index, 1)
+    deleteFromList: function (ingredientId) {
+      this.$http.delete("/shoppingList/ingredient", {
+            params: {
+              ingredientId: ingredientId
+            }
+          }
+      ).then(response => {
+        console.log(response.data)
+      }).catch(error => {
+        console.log(error)
+      })
     },
 
-    changeShopingListIngredient: function (id) {
+    changeShoppingListIngredient: function (id) {
       this.$router.push({
-        name: '', query: {
+        name: 'changeShoppingListRoute', query: {
           shoppingListIngredientId: id
         }
       })
     }
-
   },
 
   beforeMount() {
     this.getAllShoppingListIngredients()
+    this.shoppingListIngredient = []
   }
 }
 </script>

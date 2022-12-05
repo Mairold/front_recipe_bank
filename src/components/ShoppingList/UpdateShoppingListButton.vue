@@ -1,5 +1,5 @@
 <template>
-  <div class="col-4">
+  <div class="col-3 offset-1">
     <button v-on:click="updateShoppingList" type="button" class="btn btn-success">Salvesta poenimekiri
     </button>
   </div>

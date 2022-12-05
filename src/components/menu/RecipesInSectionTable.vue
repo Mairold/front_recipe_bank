@@ -25,7 +25,7 @@
               </button>
             </td>
             <td>
-              <button v-on:click="deleteRecipeInSection(recipe)" type="button" class="btn btn-danger">Kustuta</button>
+              <button v-on:click="deleteRecipeInSection(recipe.recipeInSectionId)" type="button" class="btn btn-danger">Kustuta</button>
             </td>
           </tr>
           </tbody>
@@ -47,8 +47,8 @@ export default {
       this.$emit('changeButtonClickEvent', recipeInSectionId)
     },
 
-    deleteRecipeInSection: function (recipeInSection) {
-      this.$emit('deleteButtonClickEvent', recipeInSection)
+    deleteRecipeInSection: function (recipeInSectionId) {
+      this.$emit('deleteButtonClickEvent', recipeInSectionId)
     }
   }
 }
