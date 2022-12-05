@@ -69,19 +69,12 @@ export default {
       ],
       recipesInMenuSection: [
         {
-          recipeInSectionId: 1,
-          sectionInMenuId: 18,
-          recipeName: 'Alkohol',
-          plannedServingSize: 1000,
-          recipeComment: 'Lheb liiale',
-        },
-        {
-          recipeInSectionId: 2,
-          sectionInMenuId: 19,
-          recipeName: 'Vaarikad',
-          plannedServingSize: 15,
-          recipeComment: 'MMMMMMM',
-        },
+          recipeInSectionId: 0,
+          sectionInMenuId: 0,
+          recipeName: '',
+          plannedServingSize: 0,
+          recipeComment: '',
+        }
       ],
       errorResponse: {
         message: '',
@@ -133,6 +126,7 @@ export default {
             }
           }
       ).then(response => {
+        this.recipesInMenuSection = response.data
         console.log(response.data)
       }).catch(error => {
         console.log(error)
