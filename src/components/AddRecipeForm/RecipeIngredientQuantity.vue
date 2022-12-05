@@ -7,14 +7,24 @@
   </div>
 </template>
 
-<!-- Parentis on datagrupis "ingredientQuantity" on 2 korda, kuidas ta teab, et kumba mõtlen.   -->
-
 <script>
+
+import ingredientQuantity from "@/components/ShoppingList/IngredientQuantity";
 
 export default {
   name: "RecipeIngredientQuantity",
-  props: {
-    ingredientQuantity: {}
+  data: function (){
+    return {
+      ingredientQuantity: 0,
+      // ingredient: [
+      //   {
+      //
+      //   }
+      //]
+    }
+
+  // props: {
+  //   ingredientQuantity: {}
   },
 
 

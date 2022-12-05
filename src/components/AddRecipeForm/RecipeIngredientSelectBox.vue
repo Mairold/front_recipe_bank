@@ -30,7 +30,7 @@ export default {
 
   methods: {
     clickSelectMeasurement: function (){
-      this.$emit('clickSelectMeasurement'), this.selectedMeasurement
+      this.$emit('clickSelectMeasurement', this.selectedMeasurementId)
     },
 
 

@@ -6,6 +6,7 @@
       <option v-for="ingredientGroup in ingredientGroups " :key="ingredientGroup.ingredientGroupId"
               :value="ingredientGroup.ingredientGroupId">
         {{ ingredientGroup.ingredientGroupName }}
+
       </option>
     </select>
   </div>
