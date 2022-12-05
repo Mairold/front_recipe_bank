@@ -5,7 +5,7 @@
     <tr v-for="recipe in recipes" :key="recipe.recipeId">
       <th scope="row">{{ recipe.sequenceNumber }}</th>
       <td>{{ recipe.categoryName }}</td>
-      <td>{{ recipe.recipeName }}</td>
+      <td v-on:click="navigateToRecipeView(recipe.recipeId)">{{ recipe.recipeName }}</td>
       <td>{{ recipe.prepTime }}</td>
       <td>
         <button v-on:click="clickAlertButtonEvent(recipe)" type="button" class="btn btn-light">Lisa
@@ -33,6 +33,10 @@ export default {
       this.$emit('clickAlertButtonEvent', recipe)
 
     },
+    navigateToRecipeView: function (recipeId) {
+      sessionStorage.setItem('recipeId', recipeId)
+      this.$router.push({name: 'recipeRoute'})
+    }
   }
 }
 </script>
