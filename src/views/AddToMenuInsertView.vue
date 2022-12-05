@@ -59,7 +59,7 @@ export default {
     return {
 
       recipeName: sessionStorage.getItem('recipeName'),
-      // Retsepti nimetus toon väljale session storagest. RetseptiId salvestada session storage'isse juba eelmises vaates ja selleks lisada sessionstorage-set "vali retsept" vaatesse
+      // Retsepti nime toon väljale session storagest. RetseptiId salvestada session storage'isse juba eelmises vaates ja selleks lisada sessionstorage-set "vali retsept" vaatesse
 
       recipeToMenuRequest: {
         sectionInMenuId: Number(sessionStorage.getItem('sectionInMenuId')), // selle salvestab SS-sse "Koosta menüü" vaade
@@ -71,18 +71,17 @@ export default {
   }
   },
 
-  // todo: nupule vajutades salvestatakse retsept id järgi menüüsse ja võetakse sinna kaasa sööjate arv ning kommentaar.
-  // todo: teha post-teenus bäcki ja kui tuleb tagasi 200, siis then blokist push
-  // todo: Backi on vaja kaasa anda userId, recipeId, sööjate arv ja kommentaar
+  // nupule vajutades salvestatakse retsept id järgi menüüsse ja võetakse sinna kaasa sööjate arv ning kommentaar.
   // todo: Peale nupu vajutamist liigutakse tagasi "Vali retsept" vaatesse järgmist retsepti otsima.
 
   methods: {
 
     insertToMenu: function () { // see meetod salvestab backis valitud retsepti koos sööjate arvu ja kommentaariga recipe-in-sectionisse
       alert('Vajutasid nupule')
-      this.$http.post("/add-recipe-to-section", this.recipeToMenuRequest
+      this.$http.post("/menu/add-recipe-to-section", this.recipeToMenuRequest
       ).then(response => {
-// tagasi ei ole meil siit midagi vaja saada, edasi on vaja liikuda "Vali retsept" vaatesse.
+// tagasi ei ole meil siia midagi vaja saada, edasi on vaja liikuda "Vali retsept" vaatesse.
+        // Kas oleks vaja midagi sessionstoragesse panna?
         console.log(response.data)
         this.$router.push({name: 'addToMenuRoute'})
       }).catch(error => {

@@ -14,6 +14,8 @@
         <div class="col col-lg-6">
           <button v-on:click="backToMenu" type="button" class="btn btn-success">
             Tagasi menüüd vaatama
+<!--            Siit menüüd vaatama minnes peavad menüüs näha olema kõik juba lisatud retseptid.
+Kas siia lehele või CreateMenuView-sse on vaja selleks midagi lisata?-->
           </button>
         </div>
       </div>
@@ -24,7 +26,7 @@
         <div class="col col-lg-2">
           <div class="row">
             <SearchBox @insertSearchValueEvent="saveSearchIntoRequestInfo"/>
-            <!-- siin on otsingukast, mille rottisin Bootstrapi avalehelt -->
+            <!-- siin on otsingukast -->
           </div>
           <div class="row mt-3">
             <CategoryDropdown @clickSelectCategoryEvent="saveCategoryIntoRequestInfo"/>
@@ -111,7 +113,6 @@ export default {
     getRecipeByRequestInfo: function () {
       this.$http.get("/filter-recipes", {
             params: {
-
               prepTimeId: this.requestInfo.prepTimeId,
               categoryId: this.requestInfo.categoryId,
               searchBoxValue: this.requestInfo.searchBoxValue
@@ -120,7 +121,6 @@ export default {
       ).then(response => {
         this.recipes = response.data
         this.addSequenceNumbers()
-
         console.log(response.data)
       }).catch(error => {
         console.log(error)
