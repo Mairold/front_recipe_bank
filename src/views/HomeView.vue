@@ -1,7 +1,15 @@
 <template>
+
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Siia tuleb kodukoka abilise leht!! :)"/>
+
+      <div class="row justify-content-center m-5">
+        <h1>Siin ehitavad Helen, Kristiina ja Mairold kodukoka abilise lehte :-)
+    </h1>
+  </div>
+
+      <img alt="Vue logo" src="../assets/logo.png">
+
+
   </div>
 </template>
 

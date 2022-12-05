@@ -33,7 +33,8 @@ Kas siia lehele või CreateMenuView-sse on vaja selleks midagi lisata?-->
             <!-- see on Kategooria rippmenüü-->
           </div>
           <div class="row mt-3">
-            <PrepTimeDropdown @clickSelectPrepTimeEvent="savePrepTimeInfoRequestInfo"/> <!-- see on Ajakulu rippmenüü-->
+            <PrepTimeDropdown @clickSelectPrepTimeEvent="savePrepTimeInfoRequestInfo"/>
+            <!-- see on Ajakulu rippmenüü-->
           </div>
         </div>
         <div class="col col-lg-10">

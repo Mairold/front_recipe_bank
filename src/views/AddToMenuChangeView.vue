@@ -2,7 +2,7 @@
   <div>
 
     <div class="row justify-content-center m-1">
-      <h1>Lisatud retsepti andmete muutmine</h1>
+      <h1>Retsepti andmete muutmine</h1>
     </div>
 
     <div>
