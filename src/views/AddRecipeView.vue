@@ -98,7 +98,7 @@
 
               <div class="col-md-12">
                 <div class="form-floating">
-                  <input type="text" class="form-control" id="floatingInput" placeholder=""
+                  <input v-model="recipeComment" type="text" class="form-control" id="floatingInput" placeholder=""
                          style="height: 250px; margin-outside: 5px">
                   <label for="floatingInput">Valmistamise juhend</label>
                 </div>
@@ -118,7 +118,7 @@
 
       <!-- NUPP: Salvesta retsept retseptide kataloogi -->
 
-      <button type="button" class="btn btn-success">Salvesta retsept</button>
+      <button v-on:click="saveRecipeComment" type="button" class="btn btn-success">Salvesta retsept</button>
     </div>
 
 
@@ -163,12 +163,14 @@ export default {
   data: function () {
     return {
       displayAddIngredient: false,
+
       recipeRequest: {
         recipeName: '',
         recipeCategoryId: 0,
         preparationTimeId: '',
         servingSize: 4
       },
+
       recipeResponse: {
         recipeId: 0
       },
@@ -184,7 +186,9 @@ export default {
           {
             message: '',
             errorCode: ''
-          }
+          },
+
+      recipeComment: ''
     }
   },
   methods: {
@@ -196,7 +200,6 @@ export default {
     setPrepTimeId: function (selectedPrepTimeIdd) {
       this.recipeRequest.preparationTimeId = selectedPrepTimeIdd;
     },
-
 
     addRecipe: function () {
       this.$http.post("/recipe", this.recipeRequest

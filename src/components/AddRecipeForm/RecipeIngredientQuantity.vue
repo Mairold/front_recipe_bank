@@ -1,9 +1,6 @@
 <template>
   <div>
-    <input v-on:change="insertQuantity" v-model="ingredientQuantity" type="number" pattern="[0-9]"
-           class="form-control" id="ingredientQuantityId"
-           placeholder="Kogus">
-
+    <input v-on:change="sendIngredientQuantity" v-model="ingredientQuantity" type="number" pattern="[0-9]" class="form-control" placeholder="Kogus">
   </div>
 </template>
 
@@ -27,10 +24,9 @@ export default {
   //   ingredientQuantity: {}
   },
 
-
   methods: {
-    insertQuantity: function (){
-      this.$emit('insertQuantity'),this.ingredientQuantity
+    sendIngredientQuantity: function () {
+      this.$emit('sendIngredientQuantity',this.ingredientQuantity)
     }
   }
 }

@@ -1,10 +1,10 @@
 <template>
     <div class="col-2 offset-md-2">
 
-      <select v-on:change="clickSelectMeasurement"  v-model="selectedMeasurement"
+      <select v-on:change="clickSelectMeasurement"  v-model="selectedMeasurementId"
               class="form-select" aria-label="Default select example">
         <option selected disabled>Vali ühik</option>
-        <option v-for="unit in measurements" :value="unit"> {{ unit.measurementName }}</option>
+        <option v-for="unit in measurements" :value="unit.measurementId"> {{ unit.measurementName }}</option>
       </select>
     </div>
 
@@ -21,10 +21,7 @@ export default {
           measurementName: ''
         }
       ],
-      selectedMeasurement: {
-        measurementId: 0,
-        measurementName: ''
-      }
+      selectedMeasurementId: 0,
     }
   },
 
