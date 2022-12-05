@@ -75,7 +75,8 @@ export default {
   methods: {
 
       getRecipeInfo: function () {
-        this.$http.get("/change-recipe-in-menu", {
+        console.log('retsepti id ' + this.recipeInMenuRequest.recipeInSectionId)
+        this.$http.get("/menu/recipe-in-menu", {
               params: {
                 recipeInSectionId: this.recipeInMenuRequest.recipeInSectionId
               }

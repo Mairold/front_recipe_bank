@@ -77,7 +77,6 @@ export default {
   methods: {
 
     insertToMenu: function () { // see meetod salvestab backis valitud retsepti koos sööjate arvu ja kommentaariga recipe-in-sectionisse
-      alert('Vajutasid nupule')
       this.$http.post("/menu/add-recipe-to-section", this.recipeToMenuRequest
       ).then(response => {
 // tagasi ei ole meil siia midagi vaja saada, edasi on vaja liikuda "Vali retsept" vaatesse.

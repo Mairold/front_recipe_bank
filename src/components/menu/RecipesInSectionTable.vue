@@ -44,6 +44,7 @@ export default {
 
   methods: {
     changeRecipeInSection: function (recipeInSectionId) {
+      console.log(recipeInSectionId)
       this.$emit('changeButtonClickEvent', recipeInSectionId)
     },
 

@@ -101,11 +101,8 @@ export default {
     },
 
     changeRecipeInSection: function (recipeInSectionId) {
-      this.$router.push({
-        name: 'addToMenuChangeRoute', query: {
-          recipeInSectionId: recipeInSectionId
-        }
-      })
+      sessionStorage.setItem('recipeInSectionId',recipeInSectionId)
+      this.$router.push({name: 'addToMenuChangeRoute'})
     },
 
     getRecipesInThisSectionBy: function (sectionId) {
