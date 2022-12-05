@@ -14,6 +14,7 @@ import CreateSectionView from "@/views/CreateSectionView";
 import CreateShoppingListView from "@/views/CreateShoppingListView";
 import ChangeShoppingList from "@/views/ChangeShoppingListView";
 import ChangeShoppingListView from "@/views/ChangeShoppingListView";
+import RecipeView from "@/views/RecipeView";
 
 Vue.use(VueRouter)
 
@@ -32,6 +33,11 @@ const routes = [
         path: '/addRecipe',
         name: 'addRecipeRoute',
         component: AddRecipeView
+    },
+    {
+        path: '/recipe',
+        name: 'recipeRoute',
+        component: RecipeView
     },
     {
         path: '/main',

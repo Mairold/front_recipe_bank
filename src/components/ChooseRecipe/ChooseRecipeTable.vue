@@ -35,7 +35,7 @@ export default {
     },
     navigateToRecipeView: function (recipeId) {
       sessionStorage.setItem('recipeId', recipeId)
-      this.$router.push({name: 'recipeRoute'})
+      this.$router.push({name: 'recipeRoute'}) // RecipeView leht on vaja luua, et saaks sinna minna
     }
   }
 }
