@@ -12,7 +12,6 @@
             <div class="form-floating "><input disabled v-model="recipeInMenuRequest.recipeName" type="text" class="form-control"
                                                id="floatingInput" placeholder="">
               <label for="floatingInput">Retsepti nimetus</label></div>
-            <!--         todo: siia väljale peab tulema bäkist menüüsse salvestatud ja hetkel muudetava retsepti nimetus. -->
           </div>
         </div>
       </div>
@@ -20,7 +19,6 @@
       <div class="row justify-content-center mt-1">
         <div class="col-lg-3">
           <h5>Muuda sööjate arvu:</h5>
-          <!--         todo: siia väljale peab tulema "Koosta menüü" üldvaatest kaasa menüüsse salvestatud sööjate arv -->
         </div>
       </div>
 
@@ -37,7 +35,6 @@
     <div class="row justify-content-center mt-3">
       <div class="col-lg-9">
         <h5>Täienda kommentaari:</h5>
-        <!--         todo: siia väljale peab tulema "Koosta menüü" üldvaatest kaasa menüüsse salvestatud retsepti kommentaar -->
       </div>
     </div>
 
