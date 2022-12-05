@@ -106,7 +106,7 @@ export default {
 
     saveCustomShoppingListIngredient: function () {
       this.customShoppingListIngredient.shoppingListId = this.shoppingListId
-      this.$http.post("/shoppingList/ingredient", this.customShoppingListIngredient
+      this.$http.post("/shopping-list/ingredient", this.customShoppingListIngredient
       ).then(response => {
       }).catch(error => {
         console.log(error)
@@ -114,7 +114,7 @@ export default {
     },
 
     getAllShoppingListIngredients: function () {
-      this.$http.get("/shoppingList/ingredients", {
+      this.$http.get("/shopping-list/ingredients", {
             params: {
               shoppingListId: sessionStorage.getItem('shoppingListId'),
             }
@@ -128,7 +128,7 @@ export default {
 
     updateShoppingList: function () {
       console.log(this.shoppingListIngredient.length)
-      this.$http.put("/shoppingList", null, {
+      this.$http.put("/shopping-list", null, {
             params: {
               shoppingListComment: this.shoppingListComment,
             }
@@ -140,7 +140,7 @@ export default {
     },
 
     deleteFromList: function (ingredientId) {
-      this.$http.delete("/shoppingList/ingredient", {
+      this.$http.delete("/shopping-list/ingredient", {
             params: {
               ingredientId: ingredientId
             }
