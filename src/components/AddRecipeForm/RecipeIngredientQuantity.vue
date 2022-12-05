@@ -25,6 +25,9 @@ export default {
   },
 
   methods: {
+
+
+
     sendIngredientQuantity: function () {
       this.$emit('sendIngredientQuantity',this.ingredientQuantity)
     }
