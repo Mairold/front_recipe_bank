@@ -1,26 +1,35 @@
 <template>
   <div>
-    <input v-on:change="insertQuantity" v-model="ingredientQuantity" type="number" pattern="[0-9]"
-           class="form-control" id="ingredientQuantityId"
-           placeholder="Kogus">
-
+    <input v-on:change="sendIngredientQuantity" v-model="ingredientQuantity" type="number" pattern="[0-9]" class="form-control" placeholder="Kogus">
   </div>
 </template>
 
-<!-- Parentis on datagrupis "ingredientQuantity" on 2 korda, kuidas ta teab, et kumba mõtlen.   -->
-
 <script>
+
+import ingredientQuantity from "@/components/ShoppingList/IngredientQuantity";
 
 export default {
   name: "RecipeIngredientQuantity",
-  props: {
-    ingredientQuantity: {}
+  data: function (){
+    return {
+      ingredientQuantity: 0,
+      // ingredient: [
+      //   {
+      //
+      //   }
+      //]
+    }
+
+  // props: {
+  //   ingredientQuantity: {}
   },
 
-
   methods: {
-    insertQuantity: function (){
-      this.$emit('insertQuantity'),this.ingredientQuantity
+
+
+
+    sendIngredientQuantity: function () {
+      this.$emit('sendIngredientQuantity',this.ingredientQuantity)
     }
   }
 }

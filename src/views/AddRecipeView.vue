@@ -20,7 +20,6 @@
                   <div class="form-group col-md-12">
                     <input v-model="recipeRequest.recipeName" type="text" class="form-control" id="recipeId"
                            placeholder="Retsepti pealkiri">
-
                   </div>
                 </div>
 
@@ -68,26 +67,9 @@
 
               <!-- Vali retsepti koostisosa -->
 
-              <table class="table table-success table-striped">
-                <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">KOOSTISOSA</th>
-                  <th scope="col">KOOGUS</th>
-                  <th scope="col">ÜHIK</th>
+              <RecipeList :recipeId="recipeResponse.recipeId"/>
 
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>PORGAND</td>
-                  <td>5</td>
-                  <td>TK</td>
-                </tr>
-                </tbody>
-              </table>
-              <!-- Vali retsepti koostisosa -->
+              <!-- Vali retsepti koostisosa -->`
 
               <div class="col-md-3">
                 <RecipeIngredient @clickSelectRecipeIngredientEvent="setRecipeIngredientId"/>
@@ -96,27 +78,27 @@
               <!-- Vali retsepti koostisosa ühiku kogus -->
 
               <div class="col-md-2">
-                <RecipeIngredientQuantity :ingredientQuantity="tempIngredient.ingredientQuantity"/>
+                <RecipeIngredientQuantity :ingredientQuantity="addQuantity"/>
               </div>
 
               <!-- Vali retsepti koostisosa ühiku  -->
 
 
-              <div class="col-md-2">
+              <div class="col-md-5">
                 <RecipeIngredientSelectBox @clickSelectMeasurement="addNewMeasurementUnit"/>
               </div>
 
               <div class="col-md-1">
 
-                <button v-on:click="addIngredientToTable" type="button" class="btn btn-success">Lisa</button>
+                <button v-on:click="addIngredient" type="button" class="btn btn-success">Lisa</button>
 
               </div>
 
               <!-- Vali retsepti valmistamise juhend -->
 
-              <div class="col-md-4">
+              <div class="col-md-12">
                 <div class="form-floating">
-                  <input type="text" class="form-control" id="floatingInput" placeholder=""
+                  <input v-model="recipeComment" type="text" class="form-control" id="floatingInput" placeholder=""
                          style="height: 250px; margin-outside: 5px">
                   <label for="floatingInput">Valmistamise juhend</label>
                 </div>
@@ -136,7 +118,7 @@
 
       <!-- NUPP: Salvesta retsept retseptide kataloogi -->
 
-      <button type="button" class="btn btn-success">Salvesta retsept</button>
+      <button v-on:click="saveRecipeComment" type="button" class="btn btn-success">Salvesta retsept</button>
     </div>
 
 
@@ -166,12 +148,13 @@ import RecipeInstructions from "@/components/AddRecipeForm/RecipeInstructions";
 import ServingSizeInput from "@/components/AddRecipeForm/ServingSizeInput";
 import IngredientSelectBox from "@/components/ingredient/IngredientSelectBox";
 import RecipeIngredientSelectBox from "@/components/AddRecipeForm/RecipeIngredientSelectBox";
+import RecipeList from "@/components/AddRecipeForm/RecipeList";
 
 
 export default {
   name: "AddRecipe",
   components: {
-    RecipeNameInput, CategoryDropdown, PrepTimeDropdown,
+    RecipeList, RecipeNameInput, CategoryDropdown, PrepTimeDropdown,
     ServingSizeInput, RecipeIngredient, RecipeIngredientQuantity,
     AllowedMeasurementTable, RecipeInstructions, IngredientSelectBox, RecipeIngredientSelectBox
   },
@@ -180,12 +163,14 @@ export default {
   data: function () {
     return {
       displayAddIngredient: false,
+
       recipeRequest: {
         recipeName: '',
         recipeCategoryId: 0,
         preparationTimeId: '',
         servingSize: 4
       },
+
       recipeResponse: {
         recipeId: 0
       },
@@ -197,48 +182,13 @@ export default {
         measurementId: 0,
       },
 
-
-      recipe: {
-        recipeName: '',
-        servingSize: 0,
-        recipeCategoryId: 0,
-        prepTimeId: '',
-        recipeIngredient: [
-          {
-            ingredientId: 0,
-            ingredientName: '',
-            ingredientQuantity: 0,
-            measurementName: '',
-            measurementId: 0,
-          }, {
-            ingredientId: 0,
-            ingredientName: '',
-            ingredientQuantity: 0,
-            measurementName: '',
-            measurementId: 0,
-          }, {
-            ingredientId: 0,
-            ingredientName: '',
-            ingredientQuantity: 0,
-            measurementName: '',
-            measurementId: 0,
-          },
-        ],
-      },
-
-      tempIngredient:
-          {
-            ingredientName: '',
-            ingredientId: 0,
-            ingredientQuantity: 0,
-            measurementName: '',
-            measurementId: 0,
-          },
       errorMessage:
           {
             message: '',
             errorCode: ''
-          }
+          },
+
+      recipeComment: ''
     }
   },
   methods: {
@@ -251,7 +201,6 @@ export default {
       this.recipeRequest.preparationTimeId = selectedPrepTimeIdd;
     },
 
-
     addRecipe: function () {
       this.$http.post("/recipe", this.recipeRequest
       ).then(response => {
@@ -261,61 +210,64 @@ export default {
         console.log(error)
       })
     },
-    setRecipeIngredientId: function (info) {
-      alert(JSON.stringify(info))
-      console.log(info)
-      this.recipeIngredientRequest.ingredientId = info // miks on recipeRequest ja recipeResponse eraldI?
-      // siin püüame kinni.
+    setRecipeIngredientId: function (selectedIngredientId) {
+      this.recipeIngredientRequest.ingredientId = selectedIngredientId //
+      // siin püüame kinni. Sulgudes oli algselt (info) , Kas siin peaks pigem panema selectedIngredientId nagu on Recipeingredientis komponendist siia emittitud?
+    },
 
+    addQuantity: function (ingredientQuantity) {
+      this.recipeIngredientRequest.ingredientQuantity = ingredientQuantity
+    },
+
+    addNewMeasurementUnit: function (measurementId) {
+      this.recipeIngredientRequest.measurementId = measurementId
     },
 
 
-    addRecipeIngredient: function () {
+    addIngredient: function () {
+      console.log(this.recipeIngredientRequest)
+      this.errorMessage.message = ''
+      if (this.recipeIngredientRequest.recipeId === 0 || this.recipeIngredientRequest.ingredientId === 0 ||
+          this.recipeIngredientRequest.ingredientQuantity === 0 || this.recipeIngredientRequest.measurementId === 0) {
+        this.errorMessage.message = 'Palun täida kõik väljad'
+      } else {
+        this.addIRecipeIngredientToRecipe();
+        // this.recipe.recipeIngredient.push(this.tempIngredient)
+
+      }
+    },
+
+    addIRecipeIngredientToRecipe: function () {
       this.$http.post("/recipe/ingredient", this.recipeIngredientRequest
       ).then(response => {
-        // getRecipeIngredientsByRecipeId
+        this.$children[10].getAllRecipeIngredients()
+        console.log(response.data)
       }).catch(error => {
         console.log(error)
       })
     },
 
-
-    addIngredientToTable: function () {
-      this.errorMessage.message = ''
-      if (this.tempIngredient.ingredientName.length === 0 || this.tempIngredient.ingredientQuantity.length === 0
-          || this.tempIngredient.measurementName.length === 0) {
-        // kas siin ei peaks olema
-        this.errorMessage.message = 'Palun täida kõik väljad'
-      } else {
-
-        this.recipe.recipeIngredient.push(this.tempIngredient)
-
-
-
-      }
-    },
-
-    addInfoToRecipeCategoryId: function (recipeCategoryId) {
-      this.recipe.recipeCategoryId = recipeCategoryId
-      console.log(this.recipe.recipeCategoryId)
-    },
     addNewIngredient: function () {
       this.$router.push({name: 'newIngredientRoute'})
     },
-    addInfoToPrepTimeId: function (prepTimeId) {
-      this.recipe.prepTimeId = prepTimeId
 
+    saveRecipeComment: function () {
+      this.$http.put("/recipe", null, {
+            params: {
+              recipeId: this.recipeResponse.recipeId,
+              recipeComment: this.recipeComment
+            }
+          }
+      ).then(response => {
+        this.errorMessage.message = 'Retsept on salvestatud'
+        this.recipeRequest = {}
+        this.recipeResponse = {}
+        this.recipeIngredientRequest = {}
+        console.log(response.data)
+      }).catch(error => {
+        console.log(error)
+      })
     },
-    addInfoToRecipeIngredient: function (ingredient) {
-      this.tempIngredient.ingredientId = ingredient.ingredientId
-      this.tempIngredient.ingredientName = ingredient.ingredientName
-    },
-    addNewMeasurementUnit: function (recipeMeasurement) {
-      this.tempIngredient.measurementId = recipeMeasurement.measurementId
-      this.tempIngredient.measurementName = recipeMeasurement.measurementName
-    },
-
-
   }
 }
 </script>
