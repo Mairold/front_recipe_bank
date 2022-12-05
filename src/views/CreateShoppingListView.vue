@@ -77,7 +77,8 @@ export default {
             shoppingListId: 0,
             quantity: 0,
           },
-      shoppingListComment: ''
+      shoppingListComment: '',
+      shoppingListId: 0
     }
   },
 
@@ -99,11 +100,12 @@ export default {
     },
 
     setShoppingListId: function (shoppingListId) {
-      this.customShoppingListIngredient.shoppingListId = shoppingListId
+      this.shoppingListId = shoppingListId
       this.getAllShoppingListIngredients()
     },
 
     saveCustomShoppingListIngredient: function () {
+      this.customShoppingListIngredient.shoppingListId = this.shoppingListId
       this.$http.post("/shoppingList/ingredient", this.customShoppingListIngredient
       ).then(response => {
       }).catch(error => {
