@@ -18,7 +18,7 @@
             <th scope="row">1</th>
             <td>{{ recipe.recipeName }}</td>
             <td>{{ recipe.plannedServingSize }}</td>
-            <td>{{ recipe.recipeComment }}</td>
+            <td>{{ recipe.comment }}</td>
             <td>
               <button v-on:click="changeRecipeInSection(recipe.recipeInSectionId)" type="button"
                       class="btn btn-success">Muuda

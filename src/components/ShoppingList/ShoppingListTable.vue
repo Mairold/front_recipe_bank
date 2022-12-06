@@ -19,10 +19,10 @@
         <td>{{ product.measurementName }}</td>
         <td>{{ product.ingredientGroupName }}</td>
         <td>
-          <button v-on:click="changeShoppingListIngredient(product.shoppingListIngredientId)" type="button" class="btn btn-success">Muuda</button>
+          <button v-on:click="changeShoppingListIngredient(product.shoppingListIngredientId)" type="button" class="btn btn-sm btn-success">Muuda</button>
         </td>
         <td>
-          <button v-on:click="deleteFromList(product.shoppingListIngredientId)" type="button" class="btn btn-danger">Kustuta</button>
+          <button v-on:click="deleteFromList(product.shoppingListIngredientId)" type="button" class="btn btn-sm btn-danger">Kustuta</button>
         </td>
       </tr>
       </tbody>

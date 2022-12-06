@@ -73,7 +73,7 @@ export default {
           sectionInMenuId: 0,
           recipeName: '',
           plannedServingSize: 0,
-          recipeComment: '',
+          comment: '',
         }
       ],
       errorResponse: {

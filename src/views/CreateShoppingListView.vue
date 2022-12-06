@@ -9,7 +9,7 @@
         </div>
       </div>
     </div>
-    <div v-if="customShoppingListIngredient.shoppingListId > 0" class="border border-success rounded-3 mt-3">
+    <div v-if="shoppingListIngredient.length > 0" class="border border-success rounded-3 mt-3">
       <div class="row m-1">
         <ShoppingListIngredientNameInput @addIngredientNameEvent="setShoppingListIngredientName"/>
         <IngredientQuantity @addIngredientQuantityEvent="setShoppingListIngredientQuantity"/>
@@ -106,9 +106,11 @@ export default {
     },
 
     saveCustomShoppingListIngredient: function () {
+      console.log('Olen Siin')
       this.customShoppingListIngredient.shoppingListId = this.shoppingListId
       this.$http.post("/shopping-list/ingredient", this.customShoppingListIngredient
       ).then(response => {
+        this.getAllShoppingListIngredients()
       }).catch(error => {
         console.log(error)
       })
@@ -165,6 +167,7 @@ export default {
   beforeMount() {
     this.getAllShoppingListIngredients()
     this.shoppingListIngredient = []
+    this.shoppingListId = sessionStorage.getItem('shoppingListId')
   }
 }
 </script>
