@@ -62,6 +62,7 @@ export default {
         {
           shoppingListIngredientId: 0,
           shoppingListIngredientName: '',
+          customIngredientName: '',
           shoppingListIngredientIsCustom: false,
           ingredientGroupName: '',
           measurementName: '',

@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div v-for="recipe in recipesInMenuSection" :key="recipe.recipeInSectionId" class="row justify-content-center">
+    <div  class="row justify-content-center">
       <div class="col">
-        <table v-if="recipe.sectionInMenuId === section.sectionId" class="table table-success table-striped">
+        <table  class="table table-success table-striped">
           <thead>
           <tr>
             <th scope="col">#</th>
@@ -14,7 +14,7 @@
           </tr>
           </thead>
           <tbody>
-          <tr>
+          <tr v-for="recipe in recipesInMenuSection" :key="recipe.recipeInSectionId" v-if="recipe.sectionInMenuId === section.sectionId">
             <th scope="row">1</th>
             <td>{{ recipe.recipeName }}</td>
             <td>{{ recipe.plannedServingSize }}</td>

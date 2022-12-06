@@ -32,7 +32,7 @@
                                @deleteButtonClickEvent="deleteRecipeInSection"/>
         <div class="row justify-content-start m-1">
           <div class="col-2">
-            <button v-on:click="addNewRecipeToMenu" type="button" class="btn btn-sm btn-success">Lisa retsept</button>
+            <button v-on:click="addNewRecipeToMenu(section.sectionId)" type="button" class="btn btn-sm btn-success">Lisa retsept</button>
           </div>
         </div>
 
@@ -92,7 +92,8 @@ export default {
     },
 
 
-    addNewRecipeToMenu: function () {
+    addNewRecipeToMenu: function (sectionInMenuId) {
+      sessionStorage.setItem('sectionInMenuId',sectionInMenuId)
       this.$router.push({name: 'addToMenuRoute'})
     },
 
