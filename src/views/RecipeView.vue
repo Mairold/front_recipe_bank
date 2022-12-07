@@ -121,7 +121,7 @@ export default {
   },
   methods: {
     closeRecipe: function () {
-
+      this.$router.go(-1)
     },
 
     getRecipe: function () {

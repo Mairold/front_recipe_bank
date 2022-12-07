@@ -14,6 +14,8 @@ import CreateSectionView from "@/views/CreateSectionView";
 import CreateShoppingListView from "@/views/CreateShoppingListView";
 import ChangeShoppingListView from "@/views/ChangeShoppingListView";
 import RecipeView from "@/views/RecipeView";
+import MenuView from "@/views/MenuView";
+import ShoppingListView from "@/views/ShoppingListView";
 
 Vue.use(VueRouter)
 
@@ -79,7 +81,7 @@ const routes = [
         component: CreateSectionView
     },
     {
-        path: '/create_shopping_list',
+        path: '/create-shopping-list',
         name: 'createShoppingListRoute',
         component: CreateShoppingListView
     },
@@ -92,6 +94,16 @@ const routes = [
         path: '/logout',
         name: 'logoutRoute',
         component: LoginView
+    },
+    {
+        path: '/menu',
+        name: 'menuRoute',
+        component: MenuView
+    },
+    {
+        path: '/shopping-list',
+        name: 'shoppingListRoute',
+        component: ShoppingListView
     },
 
     {

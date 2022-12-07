@@ -9,8 +9,10 @@
       <router-link to="/ingredient">Lisa toiduaine</router-link> |
       <router-link to="/addRecipe">Lisa retsept</router-link> |
       <router-link to="/create_menu">Koosta menüü</router-link> |
-      <router-link to="/create_shopping_list">Koosta poenimekiri</router-link> |
+      <router-link to="/create-shopping-list">Koosta poenimekiri</router-link> |
       <router-link to="/recipe">Vaata retsepti</router-link> |
+      <router-link to="/menu">Menüü</router-link> |
+      <router-link to="/shopping-list">Poenimekiri</router-link> |
       <router-link to="/logout">Logi Välja</router-link> |
 
     </nav>
