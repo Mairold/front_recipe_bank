@@ -24,7 +24,8 @@
             <h3>{{ section.sectionName }}</h3>
           </div>
           <div class="col-1">
-            <button v-on:click="deleteSection(section.sectionId)" type="button" class="btn btn-sm btn-danger">Kustuta</button>
+            <button v-on:click="deleteSection(section.sectionId)" type="button" class="btn btn-sm btn-danger">Kustuta
+            </button>
           </div>
         </div>
         <RecipesInSectionTable :recipesInMenuSection="recipesInMenuSection" :section="section"
@@ -32,7 +33,9 @@
                                @deleteButtonClickEvent="deleteRecipeInSection"/>
         <div class="row justify-content-start m-1">
           <div class="col-2">
-            <button v-on:click="addNewRecipeToMenu(section.sectionId)" type="button" class="btn btn-sm btn-success">Lisa retsept</button>
+            <button v-on:click="addNewRecipeToMenu(section.sectionId)" type="button" class="btn btn-sm btn-success">Lisa
+              retsept
+            </button>
           </div>
         </div>
 
@@ -94,7 +97,7 @@ export default {
 
 
     addNewRecipeToMenu: function (sectionInMenuId) {
-      sessionStorage.setItem('sectionInMenuId',sectionInMenuId)
+      sessionStorage.setItem('sectionInMenuId', sectionInMenuId)
       this.$router.push({name: 'addToMenuRoute'})
     },
 
@@ -103,48 +106,41 @@ export default {
     },
 
     changeRecipeInSection: function (recipeInSectionId) {
-      sessionStorage.setItem('recipeInSectionId',recipeInSectionId)
+      sessionStorage.setItem('recipeInSectionId', recipeInSectionId)
       this.$router.push({name: 'addToMenuChangeRoute'})
     },
 
-    getRecipesInThisSectionBy: function (sectionId) {
-      let recipesInOneSection
-      this.recipesInMenuSection.forEach(unit => {
-            if (unit.sectionInMenuId === sectionId) {
-              recipesInOneSection.push(unit.sectionInMenuId)
-            }
-          }
-      )
-      return recipesInOneSection;
-    },
-
     getRecipeInSections: function () {
-      this.$http.get("/menu/section/recipe", {
-            params: {
-              menuId: sessionStorage.getItem('menuId')
+      if (sessionStorage.getItem('menuId') !== null) {
+        this.$http.get("/menu/section/recipe", {
+              params: {
+                menuId: sessionStorage.getItem('menuId')
+              }
             }
-          }
-      ).then(response => {
-        this.recipesInMenuSection = response.data
-        console.log(response.data)
-      }).catch(error => {
-        console.log(error)
-      })
+        ).then(response => {
+          this.recipesInMenuSection = response.data
+          console.log(response.data)
+        }).catch(error => {
+          console.log(error)
+        })
+      }
     },
 
     getMenuSections: function () {
-      this.$http.get("/menu/section", {
-        params: {
-          menuId: sessionStorage.getItem('menuId')
-        }
-      })
-          .then(response => {
-            this.sections = response.data
-            console.log(response.data)
-          })
-          .catch(error => {
-            console.log(error)
-          })
+      if (sessionStorage.getItem('menuId') !== null) {
+        this.$http.get("/menu/section", {
+          params: {
+            menuId: sessionStorage.getItem('menuId')
+          }
+        })
+            .then(response => {
+              this.sections = response.data
+              console.log(response.data)
+            })
+            .catch(error => {
+              console.log(error)
+            })
+      }
     },
 
     deleteRecipeInSection: function (recipeId) {
@@ -166,7 +162,6 @@ export default {
       this.$http.delete("/menu/section", {
             params: {
               menuSectionId: sectionId,
-              recipeIds: this.getRecipesInThisSectionBy(sectionId)
             }
           }
       ).then(response => {

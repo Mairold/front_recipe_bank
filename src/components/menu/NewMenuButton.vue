@@ -15,19 +15,21 @@ export default {
   },
   methods: {
     addNewMenu: function () {
-      this.$http.post("/menu", null, {
-            params: {
-              userId: this.userId,
+      if (sessionStorage.getItem('userId') !== null) {
+        this.$http.post("/menu", null, {
+              params: {
+                userId: this.userId,
+              }
             }
-          }
-      ).then(response => {
-        this.menuId = response.data
-        sessionStorage.setItem('menuId', response.data)
-        this.$emit('newMenuEvent',this.menuId)
+        ).then(response => {
+          this.menuId = response.data
+          sessionStorage.setItem('menuId', response.data)
+          this.$emit('newMenuEvent', this.menuId)
 
-      }).catch(error => {
-        console.log(error)
-      })
+        }).catch(error => {
+          console.log(error)
+        })
+      }
     },
   }
 }

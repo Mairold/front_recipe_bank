@@ -112,6 +112,7 @@ export default {
     },
 
     updateShoppingListIngredient: function () {
+      sessionStorage.clear()
       if (this.shoppingListIngredient.ingredientMeasurementId === 0 ||
       this.shoppingListIngredient.ingredientGroupId === 0 ||
       this.shoppingListIngredient.quantity === 0)
