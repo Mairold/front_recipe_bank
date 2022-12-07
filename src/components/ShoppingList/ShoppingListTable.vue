@@ -13,15 +13,16 @@
       </thead>
       <tbody>
       <tr v-for="product in shoppingListIngredient" :key="product.shoppingListIngredientId">
-        <td>{{ product.shoppingListIngredientName }}</td>
+        <td v-if="!product.shoppingListIngredientIsCustom" >{{ product.shoppingListIngredientName }}</td>
+        <td v-if="product.shoppingListIngredientIsCustom" >{{ product.customIngredientName }}</td>
         <td>{{ product.quantity }}</td>
         <td>{{ product.measurementName }}</td>
         <td>{{ product.ingredientGroupName }}</td>
         <td>
-          <button v-on:click="changeShoppingListIngredient(product.shoppingListIngredientId)" type="button" class="btn btn-success">Muuda</button>
+          <button v-on:click="changeShoppingListIngredient(product.shoppingListIngredientId)" type="button" class="btn btn-sm btn-success">Muuda</button>
         </td>
         <td>
-          <button v-on:click="deleteFromList(product.shoppingListIngredientId)" type="button" class="btn btn-danger">Kustuta</button>
+          <button v-on:click="deleteFromList(product.shoppingListIngredientId)" type="button" class="btn btn-sm btn-danger">Kustuta</button>
         </td>
       </tr>
       </tbody>

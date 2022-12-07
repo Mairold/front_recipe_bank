@@ -15,7 +15,7 @@ export default {
   },
   methods: {
     addNewShoppingList: function () {
-      this.$http.post("/shoppingList", null, {
+      this.$http.post("/shopping-list", null, {
             params: {
               menuId: this.menuId,
             }

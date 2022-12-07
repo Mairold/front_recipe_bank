@@ -9,7 +9,7 @@
         </div>
       </div>
     </div>
-    <div v-if="customShoppingListIngredient.shoppingListId > 0" class="border border-success rounded-3 mt-3">
+    <div v-if="shoppingListIngredient.length > 0" class="border border-success rounded-3 mt-3">
       <div class="row m-1">
         <ShoppingListIngredientNameInput @addIngredientNameEvent="setShoppingListIngredientName"/>
         <IngredientQuantity @addIngredientQuantityEvent="setShoppingListIngredientQuantity"/>
@@ -62,6 +62,7 @@ export default {
         {
           shoppingListIngredientId: 0,
           shoppingListIngredientName: '',
+          customIngredientName: '',
           shoppingListIngredientIsCustom: false,
           ingredientGroupName: '',
           measurementName: '',
@@ -105,16 +106,18 @@ export default {
     },
 
     saveCustomShoppingListIngredient: function () {
+      console.log('Olen Siin')
       this.customShoppingListIngredient.shoppingListId = this.shoppingListId
-      this.$http.post("/shoppingList/ingredient", this.customShoppingListIngredient
+      this.$http.post("/shopping-list/ingredient", this.customShoppingListIngredient
       ).then(response => {
+        this.getAllShoppingListIngredients()
       }).catch(error => {
         console.log(error)
       })
     },
 
     getAllShoppingListIngredients: function () {
-      this.$http.get("/shoppingList/ingredients", {
+      this.$http.get("/shopping-list/ingredients", {
             params: {
               shoppingListId: sessionStorage.getItem('shoppingListId'),
             }
@@ -128,7 +131,7 @@ export default {
 
     updateShoppingList: function () {
       console.log(this.shoppingListIngredient.length)
-      this.$http.put("/shoppingList", null, {
+      this.$http.put("/shopping-list", null, {
             params: {
               shoppingListComment: this.shoppingListComment,
             }
@@ -140,7 +143,7 @@ export default {
     },
 
     deleteFromList: function (ingredientId) {
-      this.$http.delete("/shoppingList/ingredient", {
+      this.$http.delete("/shopping-list/ingredient", {
             params: {
               ingredientId: ingredientId
             }
@@ -164,6 +167,7 @@ export default {
   beforeMount() {
     this.getAllShoppingListIngredients()
     this.shoppingListIngredient = []
+    this.shoppingListId = sessionStorage.getItem('shoppingListId')
   }
 }
 </script>
