@@ -1,6 +1,6 @@
 <template>
   <div>
-
+    //       <!--Siia lehele maandutakse "Koosta menüü" vaatest retsepti taga olevat "Muuda" nuppu vajutades-->
     <div class="row justify-content-center m-1">
       <h1>Retsepti andmete muutmine</h1>
     </div>
@@ -55,11 +55,6 @@ export default {
 
   data: function () {
     return {
-//       <!--Siia lehele maandutakse "Koosta menüü" vaatest retsepti taga olevat "Muuda" nuppu vajutades-->
-// // mida ma siin vastu võtan? Mul on vaja eeltäita retsepti nimi, serving size ja kommentaar
-//       // kõik need andmed saab siia recipe_in_section Id järgi, seee on vaja eelmiselt lehelt kaasa saada.
-//       // Kui ID tuleb kaasa, siis sellel lehel teen Get-päringu, mis tooks bäckist need andmed ära ja eeltäidaks väljad.
-//       // Selleks tehtud beforemount
 
       recipeInMenuRequest: {
         recipeInSectionId: Number(sessionStorage.getItem('recipeInSectionId')), // selle salvestab SS-sse "Koosta menüü" vaade
@@ -87,8 +82,7 @@ export default {
     },
 
     changeRecipeInSection: function () {
-      alert('See nupp salvestab muudatused ja viib tagasi "Koosta menüü" üldvaatesse')
-      this.$http.put("/change-recipe-in-menu", this.recipeInMenuRequest
+      this.$http.put("/menu/change-recipe-info", this.recipeInMenuRequest
       ).then(response => {
         console.log(response.data)
         this.$router.push({name: 'createMenuRoute'})
@@ -98,10 +92,8 @@ export default {
       })
     },
     // todo: nupule vajutades muudetakse varasemalt menüüsse salvestatud retsepti sööjate arv ning kommentaar.
-    // todo: väljad eeltäidetakse andmebaasi andmetega, mitte sessionstoragest, sest vaja on 4 erinevat parameetrit.
     // salvesta muudatused taha tuleb bäkis put-teenus ja andmebaasis salvestatakse andmed üle.
     // Backis tuleb Id järgi üles entity ja siis anname sisse DTo.
-    // Küsida sealkohal Rainilt mäpperi kohta, sest me ei ole seda õppinud.
 
 
   },

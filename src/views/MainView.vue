@@ -2,10 +2,19 @@
   <div>
 
     <div class="row justify-content-center m-2">
-      <h1>Avavaade, kus on kuvatud viimase menüü ja ostunimekirja sisu</h1>
+      <h1> Tere, kasutaja! Siin on Sinu loodud menüüd ja ostunimekirjad:</h1>
     </div>
 
 <!--    Siia lehele tuleb kasutaja viimane menüü ja viimane ostunimekiri-->
+
+    <div>
+
+      <h1> Siia tuleb tabel, kus on kõik kasutaja loodud menüüd ja ostunimekirjad</h1>
+
+    </div>
+
+
+
 
   </div>
 </template>

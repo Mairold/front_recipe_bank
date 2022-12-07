@@ -16,7 +16,7 @@
           <tbody>
           <tr v-for="recipe in recipesInMenuSection" :key="recipe.recipeInSectionId" v-if="recipe.sectionInMenuId === section.sectionId">
             <th scope="row">1</th>
-            <td>{{ recipe.recipeName }}</td>
+            <td v-on:click="navigateToRecipeView(recipe.recipeId)">{{ recipe.recipeName }}</td>
             <td>{{ recipe.plannedServingSize }}</td>
             <td>{{ recipe.comment }}</td>
             <td>
@@ -50,6 +50,10 @@ export default {
 
     deleteRecipeInSection: function (recipeInSectionId) {
       this.$emit('deleteButtonClickEvent', recipeInSectionId)
+    },
+    navigateToRecipeView: function (recipeId) {
+      sessionStorage.setItem('recipeId', recipeId)
+      this.$router.push({name: 'recipeRoute'})
     }
   }
 }
