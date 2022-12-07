@@ -10,7 +10,7 @@
          id="General">
       <div class="row justify-content-center">
         <div class="col-lg-5">
-          <div v-if="recipeResponse.recipeId === 0">
+          <div v-if="recipeResponseDto.recipeId === 0">
             <div style="border:1px solid darkslategrey; text-align: left; padding:10px; text-indent: 3px">
               Üldandmed
               <form>
@@ -18,7 +18,7 @@
                   <!-- Sisesta retsepti pealkiri -->
 
                   <div class="form-group col-md-12">
-                    <input v-model="recipeRequest.recipeName" type="text" class="form-control" id="recipeId"
+                    <input v-model="recipeRequestDto.recipeName" type="text" class="form-control" id="recipeId"
                            placeholder="Retsepti pealkiri">
                   </div>
                 </div>
@@ -39,7 +39,7 @@
                   <!-- Vali retsepti sööjate arv -->
 
                   <div class="form-group col-md-4">
-                    <ServingSizeInput :servingSize="recipeRequest.servingSize"/>
+                    <ServingSizeInput :servingSize="recipeRequestDto.servingSize"/>
                   </div>
 
                   <button v-on:click="addRecipe" type="button" class="btn btn-success">Lisa</button>
@@ -51,25 +51,25 @@
             </div>
           </div>
 
-          <div v-if="recipeResponse.recipeId !== 0">
+          <div v-if="recipeResponseDto.recipeId !== 0">
             <div style="border:1px solid darkslategrey; text-align: left; padding:10px; text-indent: 3px">
               <h1>Retsept</h1>
-              <h3>{{ recipeRequest.recipeName }}</h3>
+              <h3>{{ recipeRequestDto.recipeName }}</h3>
             </div>
           </div>
 
           <!-- Koostisosade komponent -->
 
-          <div v-if="recipeResponse.recipeId !== 0"
+          <div v-if="recipeResponseDto.recipeId !== 0"
                style="border:1px solid darkslategrey; text-align: left; padding:10px; text-indent: 3px">
             Koostisosad
             <div class="row g-3">
 
               <!-- Vali retsepti koostisosa -->
 
-              <RecipeList :recipeId="recipeResponse.recipeId"/>
+              <RecipeList :recipeId="recipeResponseDto.recipeId"/>
 
-              <!-- Vali retsepti koostisosa -->`
+              <!-- Vali retsepti koostisosa -->
 
               <div class="col-md-3">
                 <RecipeIngredient @clickSelectRecipeIngredientEvent="setRecipeIngredientId"/>
@@ -164,14 +164,14 @@ export default {
     return {
       displayAddIngredient: false,
 
-      recipeRequest: {
+      recipeRequestDto: {
         recipeName: '',
         recipeCategoryId: 0,
         preparationTimeId: '',
         servingSize: 4
       },
 
-      recipeResponse: {
+      recipeResponseDto: {
         recipeId: 0
       },
 
@@ -179,7 +179,13 @@ export default {
         recipeId: 0,
         ingredientId: 0,
         ingredientQuantity: 0,
-        measurementId: 0,
+        // measurementId: 0,
+        allowedMeasurements: [
+          {
+            measurementName: '',
+            measurementId: 0
+          }
+        ],
       },
 
       errorMessage:
@@ -194,17 +200,17 @@ export default {
   methods: {
 
     setCategoryId: function (selectedCategoryId) {
-      this.recipeRequest.recipeCategoryId = selectedCategoryId;
+      this.recipeRequestDto.recipeCategoryId = selectedCategoryId;
     },
 
     setPrepTimeId: function (selectedPrepTimeIdd) {
-      this.recipeRequest.preparationTimeId = selectedPrepTimeIdd;
+      this.recipeRequestDto.preparationTimeId = selectedPrepTimeIdd;
     },
 
     addRecipe: function () {
-      this.$http.post("/recipe", this.recipeRequest
+      this.$http.post("/recipe", this.recipeRequestDto
       ).then(response => {
-        this.recipeResponse.recipeId = response.data.recipeId;
+        this.recipeResponseDto.recipeId = response.data.recipeId;
         this.recipeIngredientRequest.recipeId = response.data.recipeId;
       }).catch(error => {
         console.log(error)
@@ -223,6 +229,22 @@ export default {
       this.recipeIngredientRequest.measurementId = measurementId
     },
 
+    //todo ("("/recipeAllowedMeasurement")") Pooleli
+
+      getAllowedMeasurementsByIngredientId: function (ingredientId) {
+        this.$http.get("/recipeAllowedMeasurement", {
+              params: {
+                someRequestParam1: this.someDataBlockVariable1,
+                someRequestParam2: this.someDataBlockVariable2
+              }
+            }
+        ).then(response => {
+          console.log(response.data)
+        }).catch(error => {
+          console.log(error)
+        })
+      },
+
 
     addIngredient: function () {
       console.log(this.recipeIngredientRequest)
@@ -231,14 +253,14 @@ export default {
           this.recipeIngredientRequest.ingredientQuantity === 0 || this.recipeIngredientRequest.measurementId === 0) {
         this.errorMessage.message = 'Palun täida kõik väljad'
       } else {
-        this.addIRecipeIngredientToRecipe();
+        this.addRecipeIngredientToRecipe();
         // this.recipe.recipeIngredient.push(this.tempIngredient)
 
       }
     },
 
-    addIRecipeIngredientToRecipe: function () {
-      this.$http.post("/recipe/ingredient", this.recipeIngredientRequest
+    addRecipeIngredientToRecipe: function () {
+      this.$http.post("/ingredient/ingredientToRecipe", this.recipeIngredientRequest
       ).then(response => {
         this.$children[10].getAllRecipeIngredients()
         console.log(response.data)
@@ -254,14 +276,14 @@ export default {
     saveRecipeComment: function () {
       this.$http.put("/recipe", null, {
             params: {
-              recipeId: this.recipeResponse.recipeId,
+              recipeId: this.recipeResponseDto.recipeId,
               recipeComment: this.recipeComment
             }
           }
       ).then(response => {
         this.errorMessage.message = 'Retsept on salvestatud'
-        this.recipeRequest = {}
-        this.recipeResponse = {}
+        this.recipeRequestDto = {}
+        this.recipeResponseDto = {}
         this.recipeIngredientRequest = {}
         console.log(response.data)
       }).catch(error => {
