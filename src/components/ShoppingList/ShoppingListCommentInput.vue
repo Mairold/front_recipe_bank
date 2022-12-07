@@ -2,7 +2,7 @@
   <div class="col-6">
     <div class="input-group mb-3">
       <span class="input-group-text" id="inputGroup-sizing-default">Kommentaar</span>
-      <input v-model="shoppingListComment" type="text" class="form-control"
+      <input v-on:change="sendShoppingListComment" v-model="shoppingListComment" type="text" class="form-control"
              aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
     </div>
   </div>
@@ -10,8 +10,17 @@
 <script>
 export default {
   name: 'ShoppingListCommentInput',
-  props: {
-    shoppingListComment: {}
+
+  data: function () {
+    return {
+      shoppingListComment: ""
+    }
+  },
+
+  methods: {
+    sendShoppingListComment: function () {
+      this.$emit('commentInputEvent',this.shoppingListComment)
+    }
   }
 }
 </script>

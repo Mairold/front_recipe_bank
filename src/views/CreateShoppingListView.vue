@@ -26,7 +26,7 @@
       </div>
     </div>
     <div class="row justify-content-start mt-3">
-      <ShoppingListCommentInput :shopping-list-comment="shoppingListComment"/>
+      <ShoppingListCommentInput @commentInputEvent="setShoppingListComment"/>
     </div>
     <div class="row justify-content-start">
       <UpdateShoppingListButton @updateButtonClickEvent="updateShoppingList"/>
@@ -105,6 +105,10 @@ export default {
       this.getAllShoppingListIngredients()
     },
 
+    setShoppingListComment: function (shoppingListComment) {
+      this.shoppingListComment = shoppingListComment
+    },
+
     saveCustomShoppingListIngredient: function () {
       console.log('Olen Siin')
       this.customShoppingListIngredient.shoppingListId = this.shoppingListId
@@ -130,13 +134,16 @@ export default {
     },
 
     updateShoppingList: function () {
+      console.log("Olen siin " + this.shoppingListComment)
       console.log(this.shoppingListIngredient.length)
       this.$http.put("/shopping-list", null, {
             params: {
+              shoppingListId: this.shoppingListId,
               shoppingListComment: this.shoppingListComment,
             }
           }
       ).then(response => {
+        this.$router.push({name: 'mainRoute'})
       }).catch(error => {
         console.log(error)
       })
@@ -165,8 +172,8 @@ export default {
   },
 
   beforeMount() {
-    this.getAllShoppingListIngredients()
     this.shoppingListIngredient = []
+    this.getAllShoppingListIngredients()
     this.shoppingListId = sessionStorage.getItem('shoppingListId')
   }
 }

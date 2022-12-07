@@ -106,17 +106,6 @@ export default {
       this.$router.push({name: 'addToMenuChangeRoute'})
     },
 
-    getRecipesInThisSectionBy: function (sectionId) {
-      let recipesInOneSection
-      this.recipesInMenuSection.forEach(unit => {
-            if (unit.sectionInMenuId === sectionId) {
-              recipesInOneSection.push(unit.sectionInMenuId)
-            }
-          }
-      )
-      return recipesInOneSection;
-    },
-
     getRecipeInSections: function () {
       this.$http.get("/menu/section/recipe", {
             params: {
@@ -165,7 +154,6 @@ export default {
       this.$http.delete("/menu/section", {
             params: {
               menuSectionId: sectionId,
-              recipeIds: this.getRecipesInThisSectionBy(sectionId)
             }
           }
       ).then(response => {
