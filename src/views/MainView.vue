@@ -3,62 +3,48 @@
 
     <div class="row justify-content-center m-2">
       <h1> Tere, {{ username }}! Siin on kõik Sinu loodud menüüd ja ostunimekirjad:</h1>
+<!--      Töötab! :-)   -->
     </div>
-
-    <!--    Siia lehele tuleb kasutaja viimane menüü ja viimane ostunimekiri-->
 
     <div class="row m-5">
-      <div class="col-6">
-        <table class="table table-striped">
-          <thead class="textBackground">
-          <tr>
-            <th scope="col">*</th>
-            <th scope="col">Menüü</th>
-            <th scope="col">Saada e-kirjaga</th>
-          </tr>
-          </thead>
-          <tbody class="textBackground">
-          <tr v-for="menu in menus" :key="menu.menuId">
-            <th scope="row"> {{ menu.sequenceNumber }}</th>
+      <table class="table table-striped">
+        <thead class="textBackground">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Menüü</th>
+          <th scope="col">Saada e-kirjaga</th>
+          <th scope="col">Poenimekiri</th>
+          <th scope="col">Saada e-kirjaga</th>
+        </tr>
+        </thead>
+        <tbody class="textBackground">
+        <tr v-for="menu in menus" :key="menu.menuId">
+          <th scope="row">{{ menu.sequenceNumber }}</th>
+          <td>
+            <router-link :to="{name: 'menuRoute', params: { menuId: 0 }}">{{ menu.menuDate }}</router-link>
+          </td>
+          <td>
+            <button type="button" class="btn btn-light">Saada</button>
+          </td>
+          <td>siia tuleb vbl poenimekirja link
 
-            <td>
-              <router-link :to="{name: 'menuRoute', params: { menuId: 0 }}">{{ menu.menuDate }}</router-link>
-            </td>
-            <td>
-              <button type="button" class="btn btn-light">Saada</button>
-            </td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="col-6">
-        <table class="table table-striped">
-          <thead class="textBackground">
-          <tr>
-            <th scope="col">*</th>
-            <th scope="col">Poenimekiri</th>
-            <th scope="col">Saada e-kirjaga</th>
-          </tr>
-          </thead>
-          <tbody class="textBackground">
-          <tr v-for="shoppingList in shoppingLists" :key="shoppingList.shoppingListId">
-            <th scope="row">{ shoppingList.sequenceNumber }}</th>
-            {
-            <td>
-              <router-link :to="{name: 'shoppingListRoute', params: { shoppingListId: 0 }}">
-                {{ menu.shoppingListDate }}
-              </router-link>
-            </td>
-            <td>
-              <button type="button" class="btn btn-light">Saada</button>
-            </td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
+<!--            <router-link :to="{name: 'shoppingListRoute', params: { shoppingListId: 0 }}">{{ menu.shoppingLists.shoppingListDate }}</router-link>-->
+<!--            <div v-for="shoppinglist in menu.shoppingLists" >-->
+<!--              <router-link :to="{name: 'shoppingListRoute', params: { shoppingListId: 0 }}">-->
+<!--                {{ shoppinglist.shoppingListDate }}-->
+<!--              </router-link>-->
+<!--            </div>-->
+          </td>
+          <td>
+            <button type="button" class="btn btn-light">Saada</button>
+          </td>
+
+        </tr>
+        </tbody>
+      </table>
     </div>
-
   </div>
+
 </template>
 
 <script>
@@ -74,15 +60,15 @@ export default {
       menus: [
         {
           menuId: 0,
-          menuDate: ''
+          menuDate: '',
+          shoppingLists: [
+            {
+              shoppingListId: 0,
+              shoppingListDate: ''
+            }
+          ]
         }
       ],
-      shoppingLists: [
-        {
-          shoppingListId: 0,
-          shoppingListDate: ''
-        }
-      ]
     }
   },
   methods: {
@@ -102,56 +88,56 @@ export default {
     },
 
     getAllMenus: function () {
-      this.$http.get("/menu/menus", {
+      this.$http.get("/shopping-list/menus", {
             params: {
               userId: this.userId
             }
           }
       ).then(response => {
         this.menus = response.data
-        this.addMenuSequenceNumbers()
-
-        console.log(response.data)
-
-      }).catch(error => {
-        console.log(error)
-      })
-    },
-    getAllShoppingLists: function () {
-      this.$http.get("/shopping-list", {
-            params: {
-              menuId: this.menus.menuId,
-            }
-          }
-      ).then(response => {
-        this.shoppingLists = response.data
-        this.addShoppingListSequenceNumbers()
+        this.addSequenceNumbers()
         console.log(response.data)
       }).catch(error => {
         console.log(error)
       })
     },
-    addMenuSequenceNumbers: function () {
+    // getAllShoppingLists: function () {
+    //   this.$http.get("/shopping-list", {
+    //         params: {
+    //           menuId: this.menus.menuId,
+    //         }
+    //       }
+    //   ).then(response => {
+    //     this.shoppingLists = response.data
+    //     this.addShoppingListSequenceNumbers()
+    //     console.log(response.data)
+    //   }).catch(error => {
+    //     console.log(error)
+    //   })
+    // },
+    addSequenceNumbers: function () {
       let counter = 1
-      this.menus.forEach(location => {
+      this.menus.forEach(menu => {
         menu.sequenceNumber = counter
         counter++
       });
     },
-    addShoppingListSequenceNumbers: function () {
-      let counter = 1
-      this.shoppingLists.forEach(location => {
-        shoppingList.sequenceNumber = counter
-        counter++
-      });
-    },
+    // addShoppingListSequenceNumbers: function () {
+    //   let counter = 1
+    //   this.shoppingLists.forEach(location => {
+    //     shoppingList.sequenceNumber = counter
+    //     counter++
+    //   });
+    // },
 
 
   },
-  beforeMount() {
-    this.getAllMenus()
-    this.getUserName()
-    this.getAllShoppingLists()
-  }
+beforeMount()
+{
+  this.getAllMenus()
+  this.getUserName()
+  // this.getAllShoppingLists()
+}
+
 }
 </script>
