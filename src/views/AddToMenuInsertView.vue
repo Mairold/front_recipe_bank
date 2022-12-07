@@ -25,7 +25,7 @@
       <div class="row justify-content-center mt-1">
         <div class="col-lg-1">
           <div class="input-group mb-3">
-            <div><input v-model="recipeToMenuRequest.servingSize" type="number" class="form-control" id="servingSizeInput">
+            <div><input v-model="recipeToMenuRequest.servingSize" type="number" min="1" class="form-control" id="servingSizeInput">
 <!--              väljale on määratud default väärtuseks 4-->
             </div>
           </div>

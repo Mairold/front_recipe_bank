@@ -36,7 +36,7 @@
       <div class="col-2">
         <div class="input-group mb-3">
           <span class="input-group-text">Sööjate arv</span>
-          <input  v-model="recipe.servingSize" class="form-control" type="number" id="servingSizeInput">
+          <input  v-model="recipe.servingSize" class="form-control" type="number" min="1" id="servingSizeInput">
 <!--          -->
         </div>
       </div>
@@ -68,7 +68,7 @@
               <tbody>
               <tr v-for="ingredient in ingredients" :key="ingredient.ingredientId">
                 <td>{{ ingredient.ingredientName }}</td>
-                <td>{{ ingredient.quantity / initialServingSize * recipe.servingSize }}</td>
+                <td>{{ Math.round((ingredient.quantity / initialServingSize * recipe.servingSize) * 100)/100 }}</td>
                 <td>{{ ingredient.measureUnitName }}</td>
               </tr>
               </tbody>

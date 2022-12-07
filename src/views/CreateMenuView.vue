@@ -71,6 +71,7 @@ export default {
         {
           recipeInSectionId: 0,
           sectionInMenuId: 0,
+          recipeId: 0,
           recipeName: '',
           plannedServingSize: 0,
           comment: '',
