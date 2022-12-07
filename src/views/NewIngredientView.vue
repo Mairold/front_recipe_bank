@@ -115,8 +115,7 @@ export default {
     },
 
     navigateToPreviousPage: function () {
-      // this.$router.push('page name')
-      alert("See nupp viib eelmisele lehele")
+      this.$router.push({name:'addRecipeRoute'})
     },
 
     resetAllFields: function () {

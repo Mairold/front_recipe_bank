@@ -166,7 +166,6 @@ export default {
   data: function () {
     return {
       displayAddIngredient: false,
-
       recipeRequestDto: {
         recipeName: '',
         recipeCategoryId: 0,
