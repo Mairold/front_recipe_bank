@@ -67,7 +67,8 @@
 
               <!-- Vali retsepti koostisosa -->
 
-              <RecipeList :recipeId="recipeResponseDto.recipeId"/>
+              <RecipeList :recipe-ingredient-info="recipeIngredientInfo"/>
+
 
               <!-- Vali retsepti koostisosa -->
 
@@ -78,14 +79,14 @@
               <!-- Vali retsepti koostisosa ühiku kogus -->
 
               <div class="col-md-2">
-                <RecipeIngredientQuantity :ingredientQuantity="addQuantity"/>
+                <RecipeIngredientQuantity @sendIngredientQuantity="setQuantity"/>
               </div>
 
               <!-- Vali retsepti koostisosa ühiku  -->
 
-
-              <div class="col-md-5">
-                <RecipeIngredientSelectBox @clickSelectMeasurement="addNewMeasurementUnit"/>
+              <div class="col-md-6">
+                <IngredientAllowedMeasurement :allowedMeasurementUnits="allowedMeasurementUnits"
+                                              @clickSelectAllowedMeasurement="setSelectedAllowedMeasurement"/>
               </div>
 
               <div class="col-md-1">
@@ -149,11 +150,13 @@ import ServingSizeInput from "@/components/AddRecipeForm/ServingSizeInput";
 import IngredientSelectBox from "@/components/ingredient/IngredientSelectBox";
 import RecipeIngredientSelectBox from "@/components/AddRecipeForm/RecipeIngredientSelectBox";
 import RecipeList from "@/components/AddRecipeForm/RecipeList";
+import IngredientAllowedMeasurement from "@/components/AddRecipeForm/IngredientAllowedMeasurement";
 
 
 export default {
   name: "AddRecipe",
   components: {
+    IngredientAllowedMeasurement,
     RecipeList, RecipeNameInput, CategoryDropdown, PrepTimeDropdown,
     ServingSizeInput, RecipeIngredient, RecipeIngredientQuantity,
     AllowedMeasurementTable, RecipeInstructions, IngredientSelectBox, RecipeIngredientSelectBox
@@ -179,14 +182,18 @@ export default {
         recipeId: 0,
         ingredientId: 0,
         ingredientQuantity: 0,
-        // measurementId: 0,
-        allowedMeasurements: [
-          {
-            measurementName: '',
-            measurementId: 0
-          }
-        ],
+        measurementUnitId: 0,
+
       },
+
+      recipeIngredientInfo: [
+        {
+          recipeId: 0,
+          ingredientName: '',
+          quantity: 0,
+          measureUnitName: '',
+        }
+      ],
 
       errorMessage:
           {
@@ -194,7 +201,16 @@ export default {
             errorCode: ''
           },
 
-      recipeComment: ''
+      recipeComment: '',
+
+      allowedMeasurementUnits: [
+        {
+          measurementUnitId: 0,
+          allowedMeasurementUnitId: 0,
+          allowedMeasurementName: ''
+        }
+      ]
+
     }
   },
   methods: {
@@ -216,58 +232,61 @@ export default {
         console.log(error)
       })
     },
+
     setRecipeIngredientId: function (selectedIngredientId) {
       this.recipeIngredientRequest.ingredientId = selectedIngredientId //
+      this.getAllowedRecipeIngredientMeasurementInfo(selectedIngredientId)
       // siin püüame kinni. Sulgudes oli algselt (info) , Kas siin peaks pigem panema selectedIngredientId nagu on Recipeingredientis komponendist siia emittitud?
     },
 
-    addQuantity: function (ingredientQuantity) {
-      this.recipeIngredientRequest.ingredientQuantity = ingredientQuantity
-    },
-
-    addNewMeasurementUnit: function (measurementId) {
-      this.recipeIngredientRequest.measurementId = measurementId
-    },
-
-    //todo ("("/recipeAllowedMeasurement")") Pooleli
-
-      getAllowedMeasurementsByIngredientId: function (ingredientId) {
-        this.$http.get("/recipeAllowedMeasurement", {
-              params: {
-                someRequestParam1: this.someDataBlockVariable1,
-                someRequestParam2: this.someDataBlockVariable2
-              }
+    getAllowedRecipeIngredientMeasurementInfo: function (ingredientId) {
+      this.$http.get("/ingredient/recipeAllowedMeasurement", {
+            params: {
+              ingredientId: ingredientId,
             }
-        ).then(response => {
-          console.log(response.data)
-        }).catch(error => {
-          console.log(error)
-        })
-      },
-
-
-    addIngredient: function () {
-      console.log(this.recipeIngredientRequest)
-      this.errorMessage.message = ''
-      if (this.recipeIngredientRequest.recipeId === 0 || this.recipeIngredientRequest.ingredientId === 0 ||
-          this.recipeIngredientRequest.ingredientQuantity === 0 || this.recipeIngredientRequest.measurementId === 0) {
-        this.errorMessage.message = 'Palun täida kõik väljad'
-      } else {
-        this.addRecipeIngredientToRecipe();
-        // this.recipe.recipeIngredient.push(this.tempIngredient)
-
-      }
-    },
-
-    addRecipeIngredientToRecipe: function () {
-      this.$http.post("/ingredient/ingredientToRecipe", this.recipeIngredientRequest
+          }
       ).then(response => {
-        this.$children[10].getAllRecipeIngredients()
+        this.allowedMeasurementUnits = response.data
         console.log(response.data)
       }).catch(error => {
         console.log(error)
       })
     },
+
+    setQuantity: function (ingredientQuantity) {
+      this.recipeIngredientRequest.ingredientQuantity = ingredientQuantity
+    },
+
+    setSelectedAllowedMeasurement: function (selectedMeasurementUnit) {
+      this.recipeIngredientRequest.measurementUnitId = selectedMeasurementUnit
+    },
+
+    addRecipeIngredientToRecipe: function () {
+      this.$http.post("/ingredient/ingredientToRecipe", this.recipeIngredientRequest
+      ).then(response => {
+        this.getAllRecipeIngredients()
+
+        console.log(response.data)
+      }).catch(error => {
+        console.log(error)
+      })
+    },
+
+    getAllRecipeIngredients: function () {
+      this.$http.get("/ingredient/in-recipe", {
+        params: {
+          recipeId: this.recipeResponseDto.recipeId
+        }
+      })
+          .then(response => {
+            this.recipeIngredientInfo = response.data
+            console.log(response.data)
+          })
+          .catch(error => {
+            console.log(error)
+          })
+    },
+
 
     addNewIngredient: function () {
       this.$router.push({name: 'newIngredientRoute'})
@@ -290,10 +309,28 @@ export default {
         console.log(error)
       })
     },
+
+    addIngredient: function () {
+      console.log('Olen siin 22')
+      this.errorMessage.message = ''
+      if (this.recipeIngredientRequest.recipeId === 0 || this.recipeIngredientRequest.ingredientId === 0 ||
+          this.recipeIngredientRequest.ingredientQuantity === 0 || this.recipeIngredientRequest.allowedMeasurementUnitId === 0) {
+        this.errorMessage.message = 'Palun täida kõik väljad'
+      } else {
+        this.addRecipeIngredientToRecipe();
+       //this.recipe.recipeIngredient.push(this.recipeIngredientInfo)
+
+      }
+    },
+
+  },
+
+  beforeMount() {
+    this.recipeIngredientInfo = []
+    this.getAllRecipeIngredients()
   }
+
 }
 </script>
 
-<style scoped>
 
-</style>

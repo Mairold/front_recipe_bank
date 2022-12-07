@@ -1,7 +1,8 @@
 <template>
 
     <div>
-      <select v-on:change="addIngredient" v-model="selectedIngredientId" class="form-select" aria-label="Default select example">
+      <select v-on:change="addIngredient" v-model="selectedIngredientId"
+              class="form-select" aria-label="Default select example">
         <option selected disabled>Koostisosa</option>
         <option v-for="ingredient in ingredients" :value="ingredient.ingredientId"> {{ ingredient.ingredientName }}</option>
       </select>
