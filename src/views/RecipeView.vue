@@ -12,9 +12,6 @@
         <div class="col col-lg-2">
           <button v-on:click="closeRecipe" type="button" class="btn btn-success">
             Sulge retsept
-            <!-- Nupu vajutusel viiakse tagasi sinna vaatesse, kust tuldi retsepti vaatama:
-            kas tagasi 1. "Koosta menüü", 2. "Valmis menüü" või 3. "Vali retsept" vaatesse
-            Kas siia või teistesse vaadetesse on vaja selleks midagi lisada?-->
           </button>
         </div>
       </div>
@@ -37,13 +34,8 @@
         <div class="input-group mb-3">
           <span class="input-group-text">Sööjate arv</span>
           <input  v-model="recipe.servingSize" class="form-control" type="number" min="1" id="servingSizeInput">
-<!--          -->
         </div>
       </div>
-
-      <!--      Kategooria ja ajakulu on fikseeritud ja disabled. Tulevad andmebaasist.-->
-      <!--      ServingSize tuleb andmebaasist default nagu on salvestatud.-->
-      <!--      Aga võiks olla muudetav ning koostisosade kogused võiksid muutuda vastavalt servingSize muutmisele-->
 
     </div>
 
@@ -54,9 +46,6 @@
 
           <div>
             <h4>Koostisosad</h4>
-            <!--   Kasutan rohelist tabelit ja tabeli päisesse kiri Koostisosad.
-            Koostisosade kogust peaks saama muuta vastavalt servingSize'ile -->
-
             <table class="table table-striped table-hover">
               <thead>
               <tr>
