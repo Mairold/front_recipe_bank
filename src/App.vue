@@ -10,6 +10,7 @@
       <router-link to="/addRecipe">Lisa retsept</router-link> |
       <router-link to="/create_menu">Koosta menüü</router-link> |
       <router-link to="/create_shopping_list">Koosta poenimekiri</router-link> |
+      <router-link to="/recipe">Vaata retsepti</router-link> |
 
     </nav>
     <router-view/>

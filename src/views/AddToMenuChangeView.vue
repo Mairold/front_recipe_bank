@@ -2,7 +2,7 @@
   <div>
 
     <div class="row justify-content-center m-1">
-      <h1>Lisatud retsepti andmete muutmine</h1>
+      <h1>Retsepti andmete muutmine</h1>
     </div>
 
     <div>
@@ -89,9 +89,7 @@ export default {
     changeRecipeInSection: function () {
       alert('See nupp salvestab muudatused ja viib tagasi "Koosta menüü" üldvaatesse')
       this.$http.put("/change-recipe-in-menu", this.recipeInMenuRequest
-          // mida me saadame put-iga bäkki? komment,
       ).then(response => {
-        // kas on siit midagi vaja tagasi saada?
         console.log(response.data)
         this.$router.push({name: 'createMenuRoute'})
         // Peale nupuvajutust liigutakse tagasi "Koosta menüü" üldvaatesse, kus kuvatakse retsepti juures tehtud muudatused.
