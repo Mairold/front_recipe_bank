@@ -18,8 +18,9 @@ export default {
   },
 
   methods: {
-
-
+    resetIngredientQuantity: function() {
+      this.ingredientQuantity = 0
+    },
 
     sendIngredientQuantity: function () {
       this.$emit('sendIngredientQuantity',this.ingredientQuantity)

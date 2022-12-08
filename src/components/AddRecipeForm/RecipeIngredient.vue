@@ -48,9 +48,15 @@ export default {
           });
 
     },
+
     addIngredient: function (){
       this.$emit('clickSelectRecipeIngredientEvent', this.selectedIngredientId)
+    },
+
+    resetSelectedIngredientId: function () {
+      this.selectedIngredientId = 0
     }
+
   },
   beforeMount() {
     this.getAllIngredientInfo()
