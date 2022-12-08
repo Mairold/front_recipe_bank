@@ -129,8 +129,7 @@ export default {
 
     alertRecipeName: function (recipe) {
       sessionStorage.setItem('recipeId', recipe.recipeId)
-      sessionStorage.setItem('recipeName', recipe.recipeName)
-      this.$router.push({name: 'addToMenuInsertRoute'})
+     this.$router.push({name: 'addToMenuInsertRoute'})
     },
 
     addSequenceNumbers: function () {

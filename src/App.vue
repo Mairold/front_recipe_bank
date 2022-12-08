@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <nav>
-      <router-link to="/login">Logi sisse</router-link> |
+      <router-link to="/">Logi sisse</router-link> |
       <router-link to="/main">Minu menüüd ja ostunimekirjad</router-link> |
       <router-link to="/add-to-menu">Vaata kõiki retsepte</router-link> |
       <router-link to="/addRecipe">Lisa uus retsept</router-link> |

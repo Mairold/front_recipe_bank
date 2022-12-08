@@ -1,13 +1,13 @@
 <template>
   <table class="table table-success table-striped">
-    <ChooseRecipeTableHead/>
+    <ChooseRecipeTableHead :sectionInMenuId="sectionInMenuId"/>
     <tbody>
     <tr v-for="recipe in recipes" :key="recipe.recipeId">
       <th scope="row">{{ recipe.sequenceNumber }}</th>
       <td>{{ recipe.categoryName }}</td>
       <td v-on:click="navigateToRecipeView(recipe.recipeId)">{{ recipe.recipeName }}</td>
       <td>{{ recipe.prepTime }}</td>
-      <td>
+      <td v-if="sectionInMenuId !== null">
         <button v-on:click="clickAlertButtonEvent(recipe)" type="button" class="btn btn-light">Lisa
           menüüsse
         </button>
@@ -26,7 +26,9 @@ export default {
     recipes: {}
   },
   data: function () {
-    return {}
+    return {
+      sectionInMenuId: sessionStorage.getItem('sectionInMenuId'),
+    }
   },
   methods: {
     clickAlertButtonEvent: function (recipe) {

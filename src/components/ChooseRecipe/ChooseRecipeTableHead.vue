@@ -5,12 +5,15 @@
     <th scope="col">Kategooria</th>
     <th scope="col">Retsept</th>
     <th scope="col">Ajakulu</th>
-    <th scope="col">Lisa menüüsse</th>
+    <th v-if="sectionInMenuId !== null" scope="col">Lisa menüüsse</th>
   </tr>
   </thead>
 </template>
 <script>
 export default {
-  name: 'ChooseRecipeTableHead'
+  name: 'ChooseRecipeTableHead',
+  props: {
+    sectionInMenuId: 0
+  },
 }
 </script>

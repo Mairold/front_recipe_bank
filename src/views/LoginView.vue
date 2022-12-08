@@ -98,6 +98,9 @@ export default {
     createUser: function () {
       this.$router.push({name: 'createUserRoute'})
     }
+  },
+  beforeMount() {
+    sessionStorage.clear()
   }
 }
 </script>
