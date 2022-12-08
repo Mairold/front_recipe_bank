@@ -14,9 +14,12 @@
 <script>
 export default {
   name: 'IngredientGroupSelect',
+  props: {
+    ingredientGroupId: {},
+  },
   data: function () {
     return {
-      selectedIngredientGroupId: 0,
+      selectedIngredientGroupId: this.ingredientGroupId,
       ingredientGroups: [
         {
           ingredientGroupId: 0,
@@ -28,6 +31,10 @@ export default {
   methods: {
     groupChangeEvent: function () {
       this.$emit('groupChangeEvent', this.selectedIngredientGroupId)
+    },
+
+    setSelectedIngredientGroup: function () {
+      this.selectedIngredientGroupId = this.ingredientGroupId
     },
 
     getAllIngredientGroups: function () {
@@ -43,6 +50,9 @@ export default {
 
   beforeMount() {
     this.getAllIngredientGroups()
-  }
+    this.setSelectedIngredientGroup()
+
+  },
+
 }
 </script>

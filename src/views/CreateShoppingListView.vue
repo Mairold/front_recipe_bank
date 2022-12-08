@@ -144,6 +144,8 @@ export default {
             }
           }
       ).then(response => {
+        sessionStorage.removeItem('menuId')
+        sessionStorage.removeItem('shoppingListId')
         this.$router.push({name: 'mainRoute'})
       }).catch(error => {
         console.log(error)
@@ -157,6 +159,8 @@ export default {
             }
           }
       ).then(response => {
+        this.getAllShoppingListIngredients()
+        this.generateRowNumbers()
         console.log(response.data)
       }).catch(error => {
         console.log(error)
@@ -166,7 +170,7 @@ export default {
     changeShoppingListIngredient: function (id) {
       this.$router.push({
         name: 'changeShoppingListRoute', query: {
-          shoppingListIngredientId: id
+          shoppingListItemId: id
         }
       })
     },

@@ -10,11 +10,11 @@ export default {
   methods: {
     clearSessionStorage: function () {
       sessionStorage.clear()
+      this.$router.push({name:'loginRoute'})
     }
   },
   beforeMount() {
     this.clearSessionStorage()
-    this.$router.push({name:'loginRoute'})
   }
 }
 </script>
