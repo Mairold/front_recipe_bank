@@ -15,7 +15,7 @@
 export default {
   name: 'IngredientGroupSelect',
   props: {
-    ingredientGroupId: {},
+    ingredientGroupId: 0,
   },
   data: function () {
     return {
