@@ -1,5 +1,5 @@
 <template>
-  <div v-if="errorResponse?.message.length > 0" :class="errorResponse.alertAttClass" role="alert">
+  <div v-if="errorResponse?.message.length > 0 " :class="errorResponse.alertAttClass" role="alert">
     {{ errorResponse.message }}
   </div>
 </template>
