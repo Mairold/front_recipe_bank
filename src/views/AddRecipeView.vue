@@ -70,7 +70,7 @@
 
                 <!-- Vali retsepti koostisosa -->
 
-                <RecipeList :recipe-ingredient-info="recipeIngredientInfo"/>
+                <RecipeList :recipe-ingredient-info="recipeIngredientInfo" @recipeIngredientDeleteEvent="getRecipeIngredients"/>
 
 
                 <!-- Vali retsepti koostisosa -->
@@ -132,7 +132,7 @@
         </div>
         <div class="row justify-content-evenly m-4">
           <!-- NUPP: Salvesta retsept retseptide kataloogi ja lisa õige menüü külge kui see on olemas-->
-          <div class="col-2">
+          <div v-if="isRecipeFinished" class="col-2">
             <button v-on:click="ifSavedAddToMenu" class="btn btn-success" type="button">Lisa retsept menüüsse</button>
           </div>
           <div class="col-2">
@@ -175,7 +175,7 @@ export default {
   data: function () {
     return {
       displayAddIngredient: false,
-
+      isRecipeFinished: false,
       recipeRequestDto: {
         recipeName: null,
         recipeCategoryId: 0,
@@ -198,7 +198,7 @@ export default {
 
       recipeIngredientInfo: [
         {
-          recipeId: 0,
+          recipeIngredientId: 0,
           ingredientName: '',
           quantity: 0,
           measureUnitName: '',
@@ -233,6 +233,10 @@ export default {
 
     setPrepTimeId: function (selectedPrepTimeIdd) {
       this.recipeRequestDto.preparationTimeId = selectedPrepTimeIdd;
+    },
+
+    getRecipeIngredients: function () {
+      this.getAllRecipeIngredients()
     },
 
     postRecipe: function () {
@@ -347,7 +351,6 @@ export default {
       } else if(sessionStorage.getItem('sectionInMenuId') === null) {
         this.showErrorMessage('Ei leitud ühtegi koostamisel olevat menüüd.','alert alert-danger',)
       } else {
-        sessionStorage.setItem('recipeId', this.recipeResponseDto.recipeId)
         sessionStorage.setItem('recipeName', this.recipeResponseDto.recipeName)
         this.$router.push({name: 'addToMenuInsertRoute'})
       }
@@ -356,6 +359,7 @@ export default {
 
     resetFieldsAfterRecipeSaved: function () {
       sessionStorage.removeItem('inputRecipeId')
+      sessionStorage.setItem('recipeId',this.recipeResponseDto.recipeId)
       this.recipeResponseDto.recipeId = null
       this.recipeRequestDto = {}
     },
@@ -370,6 +374,7 @@ export default {
           console.log(response.data)
           this.showErrorMessage('Retsept on deeki lisatud', 'alert alert-success')
           this.resetFieldsAfterRecipeSaved()
+          this.isRecipeFinished = true
         }).catch(error => {
           console.log(error)
         })
