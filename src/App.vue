@@ -1,19 +1,12 @@
 <template>
   <div id="app">
     <nav>
-      <router-link to="/login">Sisselogimine</router-link> |
-      <router-link to="/main">Avavaade</router-link> |
-      <router-link to="/add-to-menu">Vali retsept</router-link> |
-      <router-link to="/add-to-menu-insert">Lisa retsept menüüsse</router-link> |
-      <router-link to="/add-to-menu-change">Muuda retsepti menüüs</router-link> |
-      <router-link to="/ingredient">Lisa toiduaine</router-link> |
-      <router-link to="/addRecipe">Lisa retsept</router-link> |
-      <router-link to="/create_menu">Koosta menüü</router-link> |
-      <router-link to="/create-shopping-list">Koosta poenimekiri</router-link> |
-      <router-link to="/recipe">Vaata retsepti</router-link> |
-      <router-link to="/menu">Menüü</router-link> |
-      <router-link to="/shopping-list">Poenimekiri</router-link> |
-      <router-link to="/logout">Logi Välja</router-link> |
+      <router-link to="/login">Logi sisse</router-link> |
+      <router-link to="/main">Minu menüüd ja ostunimekirjad</router-link> |
+      <router-link to="/add-to-menu">Vaata kõiki retsepte</router-link> |
+      <router-link to="/addRecipe">Lisa uus retsept</router-link> |
+      <router-link to="/create_menu">Koosta uus menüü</router-link> |
+      <router-link to="/logout">Logi välja</router-link> |
 
     </nav>
     <router-view/>

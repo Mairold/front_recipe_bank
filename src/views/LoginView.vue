@@ -2,7 +2,9 @@
   <div>
 
     <div class="row justify-content-center m-2">
-      <h1>Sisselogimine</h1>
+      <h1>Tere tulemast kodukoka abilise lehele!</h1>
+      <h1>Logi sisse:</h1>
+
     </div>
 
     <div class="row justify-content-center">

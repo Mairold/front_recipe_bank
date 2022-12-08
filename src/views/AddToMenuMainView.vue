@@ -1,11 +1,10 @@
 <template>
   <div>
-    <div class="row justify-content-center m-2">
-      <h1>Vali retseptid ja lisa menüüsse</h1>
+    <div class="row justify-content-center">
     </div>
 
     <div>
-      <div class="row justify-content-between mt-5">
+      <div class="row justify-content-between ">
         <div class="col col-lg-6">
           <button v-on:click="addNewRecipe" type="button" class="btn btn-success">
             Ei leidnud endale isuäratavat retsepti? Lisa uus siit

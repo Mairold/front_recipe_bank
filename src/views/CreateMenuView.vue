@@ -2,7 +2,7 @@
 
 
   <div class="container overflow-hidden">
-    <h1>Loo uus menüü!</h1>
+<!--    <h1>Loo uus menüü!</h1>-->
 
     <!--  Lisa sektsioon nupp-->
     <div class="row justify-content-center">

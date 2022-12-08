@@ -20,13 +20,13 @@ import ShoppingListView from "@/views/ShoppingListView";
 Vue.use(VueRouter)
 
 const routes = [
+    // {
+    //     path: '/',
+    //     name: 'homeRoute',
+    //     component: HomeView
+    // },
     {
         path: '/',
-        name: 'homeRoute',
-        component: HomeView
-    },
-    {
-        path: '/login',
         name: 'loginRoute',
         component: LoginView
     },

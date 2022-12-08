@@ -2,7 +2,7 @@
   <div>
 
     <div class="row justify-content-center m-2">
-      <h1> Tere, {{ username }}! Siin on kõik Sinu loodud menüüd ja ostunimekirjad:</h1>
+      <h1> {{ username }} menüüd ja poenimekirjad:</h1>
     </div>
 
     <div class="row m-5">
