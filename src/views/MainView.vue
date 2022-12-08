@@ -2,7 +2,7 @@
   <div>
 
     <div class="row justify-content-center m-2">
-      <h1> {{ username }} menüüd ja poenimekirjad:</h1>
+      <h1> Kasutaja {{ username }} menüüd ja poenimekirjad:</h1>
     </div>
 
     <div class="row m-5">
@@ -19,8 +19,8 @@
         <tbody class="textBackground">
         <tr v-for="menu in menus" :key="menu.shoppingListId">
           <th scope="row">{{ menu.sequenceNumber }}</th>
-          <td>
-            <router-link :to="{name: 'menuRoute', params: { menuId: menu.menuId } }">{{ menu.menuDate }}</router-link>
+          <td v-on:click="setSessionStorage(menu.menuId)">
+            {{ menu.menuDate }}
           </td>
           <td>
             <button type="button" class="btn btn-light">Saada</button>
@@ -96,6 +96,11 @@ export default {
         counter++
       });
     },
+
+    setSessionStorage: function (menuId) {
+      sessionStorage.setItem('menuId',menuId)
+      this.$router.push({name: 'menuRoute'})
+    }
   },
 beforeMount()
 {

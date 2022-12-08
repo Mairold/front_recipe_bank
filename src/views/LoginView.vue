@@ -87,6 +87,7 @@ export default {
           console.log(response.data)
 
           sessionStorage.setItem('userId', this.userId)
+          this.$emit('updateStatusEvent')
           this.$router.push({name: 'mainRoute'})
 
         }).catch(error => {
@@ -101,6 +102,7 @@ export default {
   },
   beforeMount() {
     sessionStorage.clear()
+    this.$emit('updateStatusEvent')
   }
 }
 </script>

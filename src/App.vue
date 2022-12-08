@@ -1,18 +1,51 @@
 <template>
   <div id="app">
-    <nav>
-      <router-link to="/">Logi sisse</router-link> |
-      <router-link to="/main">Minu menüüd ja ostunimekirjad</router-link> |
-      <router-link to="/add-to-menu">Vaata kõiki retsepte</router-link> |
-      <router-link to="/addRecipe">Lisa uus retsept</router-link> |
-      <router-link to="/create_menu">Koosta uus menüü</router-link> |
-      <router-link to="/logout">Logi välja</router-link> |
 
-    </nav>
-    <router-view/>
+    <div v-if="displayUserNavBar">
+      <nav>
+        <router-link to="/">Login sisse</router-link>
+      </nav>
+    </div>
+
+    <div v-else>
+      <nav>
+        <router-link to="/main">Minu menüüd ja ostunimekirjad</router-link>
+        |
+        <router-link to="/add-to-menu">Vaata kõiki retsepte</router-link>
+        |
+        <router-link to="/addRecipe">Lisa uus retsept</router-link>
+        |
+        <router-link to="/create_menu">Koosta uus menüü</router-link>
+        |
+        <router-link to="/logout">Logi välja</router-link>
+
+      </nav>
+    </div>
+    <router-view @updateStatusEvent="updateStatus"/>
   </div>
 </template>
 
+<script>
+export default {
+  name: "App",
+  data: function () {
+    return {
+      displayUserNavBar: true,
+      userId: sessionStorage.getItem('userId')
+    }
+  },
+  methods: {
+    updateStatus: function () {
+      this.userId = sessionStorage.getItem('userId')
+      this.displayUserNavBar = this.userId == null
+
+    }
+  },
+  mounted() {
+    this.updateStatus()
+  }
+}
+</script>
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
