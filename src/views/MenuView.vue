@@ -34,21 +34,21 @@
   </div>
     <div class="row justify-content-end m-3">
       <div class="col-2">
-        <CloseButton :close="close"/>
+        <CloseButton/>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import CloseButton from "@/views/CloseButton";
+import CloseButton from "@/components/general/CloseButton";
 
 export default {
   name: "MenuView",
   components: {CloseButton},
   data: function () {
     return {
-      menuId: 18, //this.$route.query.menuId,
+      menuId: this.$route.params.menuId,
       sections: [
         {
           sectionId: 0,
@@ -69,7 +69,7 @@ export default {
   },
   methods: {
     getRecipeInSections: function () {
-      // if (this.$route.query.menuId !== null) {
+      if (this.$route.query.menuId !== null) {
         this.$http.get("/menu/section/recipe", {
               params: {
                 menuId: this.menuId
@@ -82,11 +82,11 @@ export default {
         }).catch(error => {
           console.log(error)
         })
-      // }
+      }
     },
 
     getMenuSections: function () {
-      // if (this.$route.query.menuId !== null) {
+      if (this.$route.query.menuId !== null) {
       this.$http.get("/menu/section", {
         params: {
           menuId: this.menuId
@@ -99,7 +99,7 @@ export default {
           .catch(error => {
             console.log(error)
           })
-    // }
+    }
     },
 
     generateRowNumbers: function () {

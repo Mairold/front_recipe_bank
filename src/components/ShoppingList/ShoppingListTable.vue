@@ -3,6 +3,7 @@
     <table class="table table-success table-striped">
       <thead>
       <tr>
+        <th scope="col">#</th>
         <th scope="col">Koostisosa</th>
         <th scope="col">Kogus</th>
         <th scope="col">Ühik</th>
@@ -13,6 +14,7 @@
       </thead>
       <tbody>
       <tr v-for="product in shoppingListIngredient" :key="product.shoppingListIngredientId">
+        <td>{{product.sequenceNumber}}</td>
         <td v-if="!product.shoppingListIngredientIsCustom" >{{ product.shoppingListIngredientName }}</td>
         <td v-if="product.shoppingListIngredientIsCustom" >{{ product.customIngredientName }}</td>
         <td>{{ product.quantity }}</td>

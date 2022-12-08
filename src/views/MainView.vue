@@ -17,16 +17,16 @@
         </tr>
         </thead>
         <tbody class="textBackground">
-        <tr v-for="menu in menus" :key="menu.menuId">
+        <tr v-for="menu in menus" :key="menu.shoppingListId">
           <th scope="row">{{ menu.sequenceNumber }}</th>
           <td>
-            <router-link :to="{name: 'menuRoute', params: { menuId: 0 }}">{{ menu.menuDate }}</router-link>
+            <router-link :to="{name: 'menuRoute', params: { menuId: menu.menuId } }">{{ menu.menuDate }}</router-link>
           </td>
           <td>
             <button type="button" class="btn btn-light">Saada</button>
           </td>
           <td>
-            <router-link :to="{name: 'shoppingListRoute', params: { shoppingListId: 0 }}">{{ menu.shoppingListDate }}</router-link>
+            <router-link :to="{name: 'shoppingListRoute', params: { shoppingListId: menu.shoppingListId } }">{{ menu.shoppingListDate }}</router-link>
           </td>
           <td>
             <button type="button" class="btn btn-light">Saada</button>

@@ -128,6 +128,7 @@ export default {
           }
       ).then(response => {
         this.shoppingListIngredient = response.data
+        this.generateRowNumbers()
       }).catch(error => {
         console.log(error)
       })
@@ -168,7 +169,15 @@ export default {
           shoppingListIngredientId: id
         }
       })
-    }
+    },
+
+    generateRowNumbers: function () {
+      let counter = 1
+      this.shoppingListIngredient.forEach(element => {
+            element.sequenceNumber = counter++
+          }
+      )
+    },
   },
 
   beforeMount() {

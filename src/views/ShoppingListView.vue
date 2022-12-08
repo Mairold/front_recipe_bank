@@ -46,14 +46,14 @@
     </div>
     <div class="row justify-content-end m-3">
       <div class="col-2">
-        <CloseButton :close="close"/>
+        <CloseButton />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import CloseButton from "@/views/CloseButton";
+import CloseButton from "@/components/general/CloseButton";
 
 export default {
   name: "ShoppingListView",
@@ -76,7 +76,7 @@ export default {
         shoppingListTimeAdded: '',
         shoppingListComment: ''
       },
-      shoppingListId: 69 //this.$route.query.shoppingListId,
+      shoppingListId: this.$route.params.shoppingListId,
     }
 
   },
