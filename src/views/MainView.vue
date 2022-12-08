@@ -3,7 +3,6 @@
 
     <div class="row justify-content-center m-2">
       <h1> Tere, {{ username }}! Siin on kõik Sinu loodud menüüd ja ostunimekirjad:</h1>
-<!--      Töötab! :-)   -->
     </div>
 
     <div class="row m-5">
@@ -26,19 +25,12 @@
           <td>
             <button type="button" class="btn btn-light">Saada</button>
           </td>
-          <td>siia tuleb vbl poenimekirja link
-
-<!--            <router-link :to="{name: 'shoppingListRoute', params: { shoppingListId: 0 }}">{{ menu.shoppingLists.shoppingListDate }}</router-link>-->
-<!--            <div v-for="shoppinglist in menu.shoppingLists" >-->
-<!--              <router-link :to="{name: 'shoppingListRoute', params: { shoppingListId: 0 }}">-->
-<!--                {{ shoppinglist.shoppingListDate }}-->
-<!--              </router-link>-->
-<!--            </div>-->
+          <td>
+            <router-link :to="{name: 'shoppingListRoute', params: { shoppingListId: 0 }}">{{ menu.shoppingListDate }}</router-link>
           </td>
           <td>
             <button type="button" class="btn btn-light">Saada</button>
           </td>
-
         </tr>
         </tbody>
       </table>
@@ -61,12 +53,8 @@ export default {
         {
           menuId: 0,
           menuDate: '',
-          shoppingLists: [
-            {
-              shoppingListId: 0,
-              shoppingListDate: ''
-            }
-          ]
+          shoppingListId: 0,
+          shoppingListDate: ''
         }
       ],
     }
@@ -101,20 +89,6 @@ export default {
         console.log(error)
       })
     },
-    // getAllShoppingLists: function () {
-    //   this.$http.get("/shopping-list", {
-    //         params: {
-    //           menuId: this.menus.menuId,
-    //         }
-    //       }
-    //   ).then(response => {
-    //     this.shoppingLists = response.data
-    //     this.addShoppingListSequenceNumbers()
-    //     console.log(response.data)
-    //   }).catch(error => {
-    //     console.log(error)
-    //   })
-    // },
     addSequenceNumbers: function () {
       let counter = 1
       this.menus.forEach(menu => {
@@ -122,21 +96,11 @@ export default {
         counter++
       });
     },
-    // addShoppingListSequenceNumbers: function () {
-    //   let counter = 1
-    //   this.shoppingLists.forEach(location => {
-    //     shoppingList.sequenceNumber = counter
-    //     counter++
-    //   });
-    // },
-
-
   },
 beforeMount()
 {
   this.getAllMenus()
   this.getUserName()
-  // this.getAllShoppingLists()
 }
 
 }
