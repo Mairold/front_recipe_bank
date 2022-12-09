@@ -1,5 +1,5 @@
 <template>
-    <div class="col-2">
+    <div>
       <button v-on:click="generateNewSection" type="button" class="btn btn-success">Lisa uus sektsioon</button>
     </div>
 </template>

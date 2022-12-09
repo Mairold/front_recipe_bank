@@ -12,7 +12,7 @@
     </div>
 
     <!--Ühikute lisamine-->
-    <IngredientSelectBox @addMeasurementUnit="addNewMeasurementUnit"/>
+    <IngredientSelectBox ref="resetSelectedId" :key="ingredient.ingredientGroupId" @addMeasurementUnit="addNewMeasurementUnit"/>
 
     <!--Lubatud ühikud-->
     <div class="row justify-content-start mt-5 ">
@@ -122,6 +122,7 @@ export default {
       this.ingredient.ingredientName = ''
       this.ingredient.ingredientGroupId = 0
       this.ingredient.allowedMeasurements = []
+      this.$refs.resetSelectedId.resetSelected()
     },
 
     postIngredient: function () {

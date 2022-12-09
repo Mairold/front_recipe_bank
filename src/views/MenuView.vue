@@ -48,7 +48,7 @@ export default {
   components: {CloseButton},
   data: function () {
     return {
-      menuId: this.$route.params.menuId,
+      menuId: sessionStorage.getItem('menuId'),
       sections: [
         {
           sectionId: 0,
@@ -72,7 +72,7 @@ export default {
       if (this.$route.query.menuId !== null) {
         this.$http.get("/menu/section/recipe", {
               params: {
-                menuId: this.menuId
+                menuId: sessionStorage.getItem('menuId')
               }
             }
         ).then(response => {

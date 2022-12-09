@@ -25,6 +25,9 @@ export default {
   },
   methods: {
 
+    resetSelectedMeasurementUnit: function () {
+      this.selectedMeasurementUnit = 0
+    },
 
     // getAllowedRecipeIngredientMeasurementInfo: function () {
     //   this.$http.get("/ingredient/recipeAllowedMeasurement")

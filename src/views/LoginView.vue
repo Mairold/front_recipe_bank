@@ -87,6 +87,7 @@ export default {
           console.log(response.data)
 
           sessionStorage.setItem('userId', this.userId)
+          this.$emit('updateStatusEvent')
           this.$router.push({name: 'mainRoute'})
 
         }).catch(error => {
@@ -98,6 +99,10 @@ export default {
     createUser: function () {
       this.$router.push({name: 'createUserRoute'})
     }
+  },
+  beforeMount() {
+    sessionStorage.clear()
+    this.$emit('updateStatusEvent')
   }
 }
 </script>

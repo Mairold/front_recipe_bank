@@ -15,7 +15,9 @@
           Nüüd tee uus menüü väli ==>
         </div>
       </div>
-      <NewSectionButton/>
+      <div v-if="menuId !== null" class="col-2">
+      <NewSectionButton />
+      </div>
     </div>
     <div v-for="section in sections" :key="section.sectionId">
       <div class="border border-success rounded-3 mt-3">
@@ -42,7 +44,7 @@
       </div>
     </div>
     <div class="row justify-content-end mt-3">
-      <div class="col-2">
+      <div v-if="recipesInMenuSection.length > 0" class="col-2">
         <button v-on:click="moveToShoppingList" type="button" class="btn btn-sm btn-success">Salvesta ja loo poenimekiri
         </button>
       </div>
@@ -63,7 +65,7 @@ export default {
 
   data: function () {
     return {
-      menuId: 0,
+      menuId: sessionStorage.getItem('menuId'),
       sections: [
         {
           sectionId: 0,
@@ -175,6 +177,7 @@ export default {
   },
   beforeMount() {
     this.sections = []
+    this.recipesInMenuSection = []
     this.getMenuSections()
     this.getRecipeInSections()
   }

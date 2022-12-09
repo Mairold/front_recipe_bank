@@ -44,6 +44,10 @@ export default {
             console.log(error)
           })
     },
+
+    resetSelected: function () {
+      this.selectedMeasurement = {}
+    }
   },
   beforeMount() {
     this.getAllMeasurements()
