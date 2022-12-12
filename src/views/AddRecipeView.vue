@@ -45,12 +45,11 @@
                     <input v-model="recipeRequestDto.servingSize" type="number" min="1"
                            class="form-control" id="servingSizeId" placeholder="Sööjate arv">
                   </div>
-
-
-                  <button v-on:click="addRecipe" type="button" class="btn btn-success">Lisa</button>
-
                 </div>
-                <div class="form-group">
+                <div class="row justify-content-center m-2">
+                  <div class="col-md-4 offset-1">
+                    <button v-on:click="addRecipe" type="button" class="btn btn-success">Salvesta retsepti üldandmed</button>
+                  </div>
                 </div>
               </form>
             </div>
@@ -70,7 +69,8 @@
 
                 <!-- Vali retsepti koostisosa -->
 
-                <RecipeList :recipe-ingredient-info="recipeIngredientInfo" @recipeIngredientDeleteEvent="getRecipeIngredients"/>
+                <RecipeList :recipe-ingredient-info="recipeIngredientInfo"
+                            @recipeIngredientDeleteEvent="getRecipeIngredients"/>
 
 
                 <!-- Vali retsepti koostisosa -->
@@ -136,7 +136,7 @@
             <button v-on:click="ifSavedAddToMenu" class="btn btn-success" type="button">Lisa retsept menüüsse</button>
           </div>
           <div class="col-2">
-            <button v-on:click="navigateToRecipeMainView" type="button" class="btn btn-success">Vaata salvestatud
+            <button v-on:click="navigateToRecipeMainView" type="button" class="btn btn-success">Vaata kõiki
               retsepte
             </button>
           </div>
@@ -159,7 +159,7 @@ import RecipeIngredientSelectBox from "@/components/AddRecipeForm/RecipeIngredie
 import RecipeList from "@/components/AddRecipeForm/RecipeList";
 import IngredientAllowedMeasurement from "@/components/AddRecipeForm/IngredientAllowedMeasurement";
 import AlertMessage from "@/components/general/AlertMessage";
-import { getCurrentInstance } from 'vue'
+import {getCurrentInstance} from 'vue'
 
 export default {
   name: "AddRecipe",
@@ -348,8 +348,8 @@ export default {
     ifSavedAddToMenu: function () {
       if (this.recipeInstruction.recipeComment.length < 1) {
         this.showErrorMessage('Retsepti sisetamine ei ole veel lõpule viidud', 'alert alert-danger')
-      } else if(sessionStorage.getItem('sectionInMenuId') === null) {
-        this.showErrorMessage('Ei leitud ühtegi koostamisel olevat menüüd.','alert alert-danger',)
+      } else if (sessionStorage.getItem('sectionInMenuId') === null) {
+        this.showErrorMessage('Ei leitud ühtegi koostamisel olevat menüüd.', 'alert alert-danger',)
       } else {
         sessionStorage.setItem('recipeName', this.recipeResponseDto.recipeName)
         this.$router.push({name: 'addToMenuInsertRoute'})
@@ -359,7 +359,7 @@ export default {
 
     resetFieldsAfterRecipeSaved: function () {
       sessionStorage.removeItem('inputRecipeId')
-      sessionStorage.setItem('recipeId',this.recipeResponseDto.recipeId)
+      sessionStorage.setItem('recipeId', this.recipeResponseDto.recipeId)
       this.recipeResponseDto.recipeId = null
       this.recipeRequestDto = {}
     },
