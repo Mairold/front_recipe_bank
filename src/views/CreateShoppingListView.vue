@@ -11,11 +11,11 @@
     </div>
     <div v-if="shoppingListIngredient.length > 0" class="border border-success rounded-3 mt-3">
       <div class="row m-1">
-        <ShoppingListIngredientNameInput @addIngredientNameEvent="setShoppingListIngredientName"/>
-        <IngredientQuantity @addIngredientQuantityEvent="setShoppingListIngredientQuantity"/>
-        <MeasurementDropDownBox @SendMeasurementIdEvent="setMeasurementId"/>
+        <ShoppingListIngredientNameInput ref="itemNameInput" @addIngredientNameEvent="setShoppingListIngredientName"/>
+        <IngredientQuantity ref="itemQuantity" @addIngredientQuantityEvent="setShoppingListIngredientQuantity"/>
+        <MeasurementDropDownBox ref="itemMeasurement" @SendMeasurementIdEvent="setMeasurementId"/>
         <div class="col-2">
-          <IngredientGroupSelect @groupChangeEvent="setShoppingListIngredientGroupId"/>
+          <IngredientGroupSelect ref="itemGroup" @groupChangeEvent="setShoppingListIngredientGroupId"/>
         </div>
         <addNewCustomShoppingListIngredient @saveShoppingListIngredientEvent="saveCustomShoppingListIngredient"/>
       </div>
@@ -109,29 +109,42 @@ export default {
       this.shoppingListComment = shoppingListComment
     },
 
+    resetCustomIngredientInputFields: function () {
+      this.$refs.itemNameInput.resetData()
+      this.customShoppingListIngredient.shoppingListIngredientName = ''
+      this.$refs.itemMeasurement.resetData()
+      this.customShoppingListIngredient.measurementId = 0
+      this.$refs.itemGroup.resetData()
+      this.customShoppingListIngredient.ingredientGroupId = 0
+      this.$refs.itemQuantity.resetData()
+      this.customShoppingListIngredient.quantity = 0
+    },
+
     saveCustomShoppingListIngredient: function () {
-      console.log('Olen Siin')
       this.customShoppingListIngredient.shoppingListId = this.shoppingListId
       this.$http.post("/shopping-list/ingredient", this.customShoppingListIngredient
       ).then(response => {
         this.getAllShoppingListIngredients()
+        this.resetCustomIngredientInputFields();
       }).catch(error => {
         console.log(error)
       })
     },
 
     getAllShoppingListIngredients: function () {
-      this.$http.get("/shopping-list/ingredients", {
-            params: {
-              shoppingListId: sessionStorage.getItem('shoppingListId'),
+      if (sessionStorage.getItem('shoppingListId') !== null) {
+        this.$http.get("/shopping-list/ingredients", {
+              params: {
+                shoppingListId: sessionStorage.getItem('shoppingListId'),
+              }
             }
-          }
-      ).then(response => {
-        this.shoppingListIngredient = response.data
-        this.generateRowNumbers()
-      }).catch(error => {
-        console.log(error)
-      })
+        ).then(response => {
+          this.shoppingListIngredient = response.data
+          this.generateRowNumbers()
+        }).catch(error => {
+          console.log(error)
+        })
+      }
     },
 
     updateShoppingList: function () {

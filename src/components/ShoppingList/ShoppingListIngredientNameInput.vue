@@ -12,15 +12,18 @@ export default {
   name: 'ShoppingListIngredientNameInput',
   data: function () {
     return {
-    ingredientName: '',
+      ingredientName: '',
     }
   },
 
   methods: {
     sendIngredientName: function () {
-      this.$emit('addIngredientNameEvent',this.ingredientName)
-    }
+      this.$emit('addIngredientNameEvent', this.ingredientName)
+    },
 
+    resetData: function () {
+      this.ingredientName = ''
+    }
   }
 }
 </script>

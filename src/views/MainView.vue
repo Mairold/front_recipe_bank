@@ -20,13 +20,13 @@
         <tr v-for="menu in menus" :key="menu.shoppingListId">
           <th scope="row">{{ menu.sequenceNumber }}</th>
           <td v-on:click="setSessionStorage(menu.menuId)">
-            {{ menu.formatedDateTimeMenu }}
+            {{ menu.menuDate }}
           </td>
           <td>
             <button type="button" class="btn btn-light">Saada</button>
           </td>
           <td>
-            <router-link :to="{name: 'shoppingListRoute', params: { shoppingListId: menu.shoppingListId } }">{{ menu.formatedDateTimeShoppingList }}</router-link>
+            <router-link :to="{name: 'shoppingListRoute', params: { shoppingListId: menu.shoppingListId } }">{{ menu.shoppingListDate }}</router-link>
 
           </td>
           <td>
@@ -41,17 +41,13 @@
 </template>
 
 <script>
-import moment from "moment";
-
 export default {
   name: "MainView",
   components: {},
   data: function () {
     return {
       userId: Number(sessionStorage.getItem('userId')),
-
       username: '',
-
       menus: [
         {
           menuId: 0,
@@ -78,13 +74,6 @@ export default {
       })
     },
 
-    formatDateTime: function () {
-      this.menus.forEach( menu => {
-        menu.formatedDateTimeShoppingList = moment().format(menu.shoppingListDate, )
-        menu.formatedDateTimeMenu = moment().format(menu.menuDate)
-      })
-    },
-
     getAllMenus: function () {
       this.$http.get("/shopping-list/menus", {
             params: {
@@ -94,7 +83,6 @@ export default {
       ).then(response => {
         this.menus = response.data
         this.addSequenceNumbers()
-        this.formatDateTime()
         console.log(response.data)
       }).catch(error => {
         console.log(error)

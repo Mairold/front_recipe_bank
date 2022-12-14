@@ -47,7 +47,7 @@ export default {
   methods: {
     createUser: function () {
       this.errorMessage.message = ''
-      this.$http.post("/login", null, {
+      this.$http.post("/user/login", null, {
             params: {
               username: this.username,
               password: this.password

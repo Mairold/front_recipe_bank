@@ -47,7 +47,8 @@
       </div>
 
       <div class="row justify-content-center mt-1">
-        <MeasurementDropDownBox :key="shoppingListItemRequest.ingredientMeasurementId" :ingredientMeasurementId="shoppingListItemRequest.ingredientMeasurementId"
+        <MeasurementDropDownBox :key="shoppingListItemRequest.shoppingListIngredientId"
+                                :measurement="shoppingListItemRequest.ingredientMeasurementId"
                                 @SendMeasurementIdEvent="setNewMeasurement"/>
       </div>
 
@@ -59,7 +60,9 @@
 
       <div class="row justify-content-center mt-1">
         <div class="col-3">
-          <IngredientGroupSelect :key="shoppingListItemRequest.ingredientGroupId" :ingredientGroupId="shoppingListItemRequest.ingredientGroupId"
+          <IngredientGroupSelect :key="shoppingListItemRequest.shoppingListIngredientId"
+                                 :groupId="shoppingListItemRequest.ingredientGroupId"
+                                 :itemCustomName="shoppingListItemRequest.customIngredientName"
                                  @groupChangeEvent="setNewGroup"/>
         </div>
       </div>

@@ -1,6 +1,7 @@
 <template>
   <div class="col-3">
-    <select v-on:change="sendMeasurementId" v-model="selectedMeasurementId" class="form-select" aria-label="Default select example">
+    <select v-on:change="sendMeasurementId" v-model="selectedMeasurementId" class="form-select"
+            aria-label="--Vali mõõtühik--">
       <option selected disabled value="0">--Vali ühik--</option>
       <option v-for="unit in measurements" :value="unit.measurementId"> {{ unit.measurementName }}</option>
     </select>
@@ -10,18 +11,18 @@
 export default {
   name: 'MeasurementDropDownBox',
   props: {
-    ingredientMeasurementId: 0,
+    measurement: 0
   },
+
   data: function () {
     return {
+      selectedMeasurementId: this.measurement,
       measurements: [
         {
           measurementId: 0,
           measurementName: ''
         }
-      ],
-      selectedMeasurementId: this.ingredientMeasurementId,
-
+      ]
     }
   },
   methods: {
@@ -38,7 +39,12 @@ export default {
             console.log(error)
           })
     },
+
+    resetData: function () {
+      this.selectedMeasurementId = ''
+    }
   },
+
   beforeMount() {
     this.getAllMeasurements()
   }

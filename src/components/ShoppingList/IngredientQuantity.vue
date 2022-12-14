@@ -19,8 +19,11 @@ export default {
   methods: {
     sendIngredientQuantity: function () {
       this.$emit('addIngredientQuantityEvent',this.ingredientQuantity)
-    }
+    },
 
+    resetData: function () {
+      this.ingredientQuantity = 0
+    }
   }
 }
 </script>
