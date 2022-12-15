@@ -42,41 +42,5 @@ export default {
         })
     }
   }
-  // data: function () {
-  //   return {
-  //     recipeIngredientInfo: [
-  //       {
-  //         ingredientId: 0,
-  //         ingredientName: '',
-  //         ingredientQuantity: 0,
-  //         measurementName: '',
-  //       }
-  //     ]
-  //   }
-  // },
-
-  // methods: {
-  //
-  //   // getAllRecipeIngredients: function () {
-  //   //   this.$http.get("/recipe/ingredient", {
-  //   //     params: {
-  //   //       recipeId: this.recipeId
-  //   //     }
-  //   //   })
-  //   //       .then(response => {
-  //   //         this.recipeIngredientInfo = response.data
-  //   //         console.log(response.data)
-  //   //       })
-  //   //       .catch(error => {
-  //   //         console.log(error)
-  //   //       })
-  //   // },
-  // },
-
-  // beforeMount() {
-  //   this.recipeIngredientInfo = []
-  //   this.getAllRecipeIngredients()
-  // }
-
 }
 </script>

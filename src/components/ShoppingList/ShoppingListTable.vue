@@ -1,5 +1,5 @@
 <template>
-  <div class="col">
+
     <table class="table table-success table-striped">
       <thead>
       <tr>
@@ -29,7 +29,7 @@
       </tr>
       </tbody>
     </table>
-  </div>
+
 </template>
 <script>
 export default {

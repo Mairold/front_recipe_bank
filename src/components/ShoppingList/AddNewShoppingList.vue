@@ -1,7 +1,5 @@
 <template>
-  <div class="col-3 offset-1">
     <button v-on:click="addNewShoppingList" type="button" class="btn btn-success">Alusta uut poenimekirja</button>
-  </div>
 </template>
 <script>
 export default {

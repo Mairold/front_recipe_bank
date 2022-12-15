@@ -1,11 +1,9 @@
 <template>
-  <div class="col-3">
     <select v-on:change="sendMeasurementId" v-model="selectedMeasurementId" class="form-select"
             aria-label="--Vali mõõtühik--">
       <option selected disabled value="0">--Vali ühik--</option>
       <option v-for="unit in measurements" :value="unit.measurementId"> {{ unit.measurementName }}</option>
     </select>
-  </div>
 </template>
 <script>
 export default {

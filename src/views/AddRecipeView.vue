@@ -69,7 +69,8 @@
 
                 <!-- Vali retsepti koostisosa -->
 
-                <RecipeList :recipe-ingredient-info="recipeIngredientInfo"
+                <RecipeList :key="recipeIngredientInfo.length"
+                            :recipe-ingredient-info="recipeIngredientInfo"
                             @recipeIngredientDeleteEvent="getRecipeIngredients"/>
 
 
@@ -159,7 +160,6 @@ import RecipeIngredientSelectBox from "@/components/AddRecipeForm/RecipeIngredie
 import RecipeList from "@/components/AddRecipeForm/RecipeList";
 import IngredientAllowedMeasurement from "@/components/AddRecipeForm/IngredientAllowedMeasurement";
 import AlertMessage from "@/components/general/AlertMessage";
-import {getCurrentInstance} from 'vue'
 
 export default {
   name: "AddRecipe",
@@ -319,8 +319,11 @@ export default {
 
     clearIngredientFields: function () {
       this.$refs.recipeIngredient.resetSelectedIngredientId()
+      this.recipeIngredientRequest.ingredientId = 0
       this.$refs.ingredientQuantity.resetIngredientQuantity()
+      this.recipeIngredientRequest.ingredientQuantity = null
       this.$refs.allowedMeasurements.resetSelectedMeasurementUnit()
+      this.recipeIngredientRequest.measurementUnitId = 0
     },
 
     getAllRecipeIngredients: function () {
@@ -362,6 +365,7 @@ export default {
       sessionStorage.setItem('recipeId', this.recipeResponseDto.recipeId)
       this.recipeResponseDto.recipeId = null
       this.recipeRequestDto = {}
+      this.recipeIngredientInfo = []
     },
 
     saveRecipeComment: function () {
@@ -383,8 +387,7 @@ export default {
 
     addIngredient: function () {
       console.log('Olen siin 22')
-      if (this.recipeIngredientRequest.ingredientId === 0 || this.recipeIngredientRequest.ingredientQuantity === 0 ||
-          this.recipeIngredientRequest.allowedMeasurementUnitId === 0) {
+      if (this.recipeIngredientRequest.ingredientId === 0 || this.recipeIngredientRequest.allowedMeasurementUnitId === 0) {
         this.showErrorMessage('Palun täida kõik väljad', 'alert alert-danger')
       } else {
         this.addRecipeIngredientToRecipe();

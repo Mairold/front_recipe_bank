@@ -1,6 +1,6 @@
 <template>
   <div>
-    <input v-on:change="sendIngredientQuantity" v-model="ingredientQuantity" type="number" min="0.1"
+    <input v-on:change="sendIngredientQuantity" v-model="ingredientQuantity" type="number" min="0"
            class="form-control" placeholder="Kogus">
   </div>
 </template>
