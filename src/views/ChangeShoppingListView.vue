@@ -26,7 +26,7 @@
       </div>
 
       <div class="row justify-content-center mt-1">
-        <div class="col-lg-3">
+        <div class="col-lg-2">
           <h5>Kogus:</h5>
         </div>
       </div>
@@ -34,7 +34,7 @@
       <div class="row justify-content-center mt-1">
         <div class="col-2">
           <div class="input-group mb-3">
-            <input v-model=" shoppingListItemRequest.quantity" type="number" class="form-control"
+            <input v-model=" shoppingListItemRequest.quantity" type="number" min="0" max="1000" class="form-control"
                    id="servingSizeInput">
           </div>
         </div>
@@ -47,19 +47,21 @@
       </div>
 
       <div class="row justify-content-center mt-1">
-        <MeasurementDropDownBox :key="shoppingListItemRequest.shoppingListIngredientId"
-                                :measurement="shoppingListItemRequest.ingredientMeasurementId"
-                                @SendMeasurementIdEvent="setNewMeasurement"/>
+        <div class="col-2">
+          <MeasurementDropDownBox :key="shoppingListItemRequest.shoppingListIngredientId"
+                                  :measurement="shoppingListItemRequest.ingredientMeasurementId"
+                                  @SendMeasurementIdEvent="setNewMeasurement"/>
+        </div>
       </div>
 
       <div class="row justify-content-center mt-1">
-        <div class="col-lg-3">
+        <div class="col-lg-2">
           <h5>Grupp:</h5>
         </div>
       </div>
 
       <div class="row justify-content-center mt-1">
-        <div class="col-3">
+        <div class="col-2">
           <IngredientGroupSelect :key="shoppingListItemRequest.shoppingListIngredientId"
                                  :groupId="shoppingListItemRequest.ingredientGroupId"
                                  :itemCustomName="shoppingListItemRequest.customIngredientName"
@@ -138,13 +140,13 @@ export default {
       //   this.showErrorMessage('Nime väli peab olema täidetud', 'alert alert-danger')
       // } else {
 
-          this.$http.put("/shopping-list/ingredient", this.shoppingListItemRequest
-          ).then(response => {
-            this.$router.push({name:'createShoppingListRoute'})
-            console.log(response.data)
-          }).catch(error => {
-            console.log(error)
-          })
+      this.$http.put("/shopping-list/ingredient", this.shoppingListItemRequest
+      ).then(response => {
+        this.$router.push({name: 'createShoppingListRoute'})
+        console.log(response.data)
+      }).catch(error => {
+        console.log(error)
+      })
       // }
     },
 

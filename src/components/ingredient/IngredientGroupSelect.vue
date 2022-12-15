@@ -29,7 +29,7 @@ export default {
 
   data: function () {
     return {
-      selectedIngredientGroupId: this.groupId,
+      selectedIngredientGroupId: this.groupId === undefined ? 0 : this.groupId,
       ingredientGroups: [
         {
           ingredientGroupId: 0,

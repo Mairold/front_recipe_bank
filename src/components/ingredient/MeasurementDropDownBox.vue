@@ -14,7 +14,7 @@ export default {
 
   data: function () {
     return {
-      selectedMeasurementId: this.measurement,
+      selectedMeasurementId: this.measurement === undefined ? 0 : this.measurement,
       measurements: [
         {
           measurementId: 0,

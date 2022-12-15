@@ -10,7 +10,7 @@ export default {
   name: 'IngredientQuantity',
   data: function () {
     return {
-      ingredientQuantity: 0,
+      ingredientQuantity: '',
     }
   },
 

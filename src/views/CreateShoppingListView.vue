@@ -6,12 +6,12 @@
         <AddNewShoppingList @newShoppingListEvent="setShoppingListId"/>
       </div>
       <div class="col-3">
-        <div v-if="customShoppingListIngredient.shoppingListId === 0 & shoppingListIngredient.length === 0">
+        <div v-if="shoppingListId === null">
           <== Alusta uut poenimekirja.
         </div>
       </div>
     </div>
-    <div v-if="shoppingListIngredient.length > 0" class="border border-success rounded-3 mt-3">
+    <div v-if="shoppingListId !== null" class="border border-success rounded-3 mt-3">
       <div class="row m-1">
         <div class="col-4">
           <ShoppingListIngredientNameInput ref="itemNameInput" @addIngredientNameEvent="setShoppingListIngredientName"/>
@@ -36,9 +36,7 @@
       </div>
       <div class="row justify-content-evenly">
         <div class="col">
-          <ShoppingListTable :shopping-list-ingredient="shoppingListIngredient"
-                             @changeButtonClickEvent="changeShoppingListIngredient"
-                             @deleteButtonClickEvent="deleteFromList"/>
+          <ShoppingListTable ref="shoppingListTable"/>
         </div>
       </div>
     </div>
@@ -81,17 +79,7 @@ export default {
 
   data: function () {
     return {
-      shoppingListIngredient: [
-        {
-          shoppingListIngredientId: 0,
-          shoppingListIngredientName: '',
-          customIngredientName: '',
-          shoppingListIngredientIsCustom: false,
-          ingredientGroupName: '',
-          measurementName: '',
-          quantity: 0,
-        }
-      ],
+
       customShoppingListIngredient:
           {
             shoppingListIngredientName: '',
@@ -99,7 +87,7 @@ export default {
             ingredientGroupId: 0,
             measurementId: 0,
             shoppingListId: 0,
-            quantity: 0,
+            quantity: '',
           },
       shoppingListComment: '',
       shoppingListId: 0,
@@ -155,7 +143,7 @@ export default {
         this.customShoppingListIngredient.shoppingListId = this.shoppingListId
         this.$http.post("/shopping-list/ingredient", this.customShoppingListIngredient
         ).then(response => {
-          this.getAllShoppingListIngredients()
+          this.$refs.shoppingListTable.getAllShoppingListIngredients()
           this.resetCustomIngredientInputFields();
         }).catch(error => {
           console.log(error)
@@ -163,25 +151,7 @@ export default {
       }
     },
 
-    getAllShoppingListIngredients: function () {
-      if (sessionStorage.getItem('shoppingListId') !== null) {
-        this.$http.get("/shopping-list/ingredients", {
-              params: {
-                shoppingListId: sessionStorage.getItem('shoppingListId'),
-              }
-            }
-        ).then(response => {
-          this.shoppingListIngredient = response.data
-          this.generateRowNumbers()
-        }).catch(error => {
-          console.log(error)
-        })
-      }
-    },
-
     updateShoppingList: function () {
-      console.log("Olen siin " + this.shoppingListComment)
-      console.log(this.shoppingListIngredient.length)
       this.$http.put("/shopping-list", null, {
             params: {
               shoppingListId: this.shoppingListId,
@@ -197,37 +167,6 @@ export default {
       })
     },
 
-    deleteFromList: function (ingredientId) {
-      this.$http.delete("/shopping-list/ingredient", {
-            params: {
-              ingredientId: ingredientId
-            }
-          }
-      ).then(response => {
-        this.getAllShoppingListIngredients()
-        this.generateRowNumbers()
-        console.log(response.data)
-      }).catch(error => {
-        console.log(error)
-      })
-    },
-
-    changeShoppingListIngredient: function (id) {
-      this.$router.push({
-        name: 'changeShoppingListRoute', query: {
-          shoppingListItemId: id
-        }
-      })
-    },
-
-    generateRowNumbers: function () {
-      let counter = 1
-      this.shoppingListIngredient.forEach(element => {
-            element.sequenceNumber = counter++
-          }
-      )
-    },
-
     showErrorMessage: function (message, alertClass) {
       this.errorResponse.message = message
       this.errorResponse.alertAttClass = alertClass
@@ -235,8 +174,6 @@ export default {
   },
 
   beforeMount() {
-    this.shoppingListIngredient = []
-    this.getAllShoppingListIngredients()
     this.shoppingListId = sessionStorage.getItem('shoppingListId')
   }
 }

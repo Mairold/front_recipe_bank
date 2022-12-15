@@ -42,7 +42,7 @@
 
                   <div class="form-group col-md-4">
 
-                    <input v-model="recipeRequestDto.servingSize" type="number" min="1"
+                    <input v-model="recipeRequestDto.servingSize" type="number" min="1" max="100"
                            class="form-control" id="servingSizeId" placeholder="Sööjate arv">
                   </div>
                 </div>

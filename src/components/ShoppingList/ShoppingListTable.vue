@@ -34,17 +34,74 @@
 <script>
 export default {
   name: 'ShoppingListTable',
-  props: {
-    shoppingListIngredient: {}
+
+  data: function () {
+    return {
+      shoppingListIngredient: [
+        {
+          shoppingListIngredientId: 0,
+          shoppingListIngredientName: '',
+          customIngredientName: '',
+          shoppingListIngredientIsCustom: false,
+          ingredientGroupName: '',
+          measurementName: '',
+          quantity: 0,
+        }
+      ],
+    }
   },
+
   methods: {
+    generateRowNumbers: function () {
+      let counter = 1
+      this.shoppingListIngredient.forEach(element => {
+            element.sequenceNumber = counter++
+          }
+      )
+    },
+
+    getAllShoppingListIngredients: function () {
+      if (sessionStorage.getItem('shoppingListId') !== null) {
+        this.$http.get("/shopping-list/ingredients", {
+              params: {
+                shoppingListId: sessionStorage.getItem('shoppingListId'),
+              }
+            }
+        ).then(response => {
+          this.shoppingListIngredient = response.data
+          this.generateRowNumbers()
+        }).catch(error => {
+          console.log(error)
+        })
+      }
+    },
+
     deleteFromList: function (shoppingListIngredientId) {
-      this.$emit('deleteButtonClickEvent',shoppingListIngredientId)
+      this.$http.delete("/shopping-list/ingredient", {
+            params: {
+              ingredientId: shoppingListIngredientId
+            }
+          }
+      ).then(response => {
+        this.getAllShoppingListIngredients()
+        this.generateRowNumbers()
+      }).catch(error => {
+        console.log(error)
+      })
     },
 
     changeShoppingListIngredient: function (shoppingListIngredientId) {
-      this.$emit('changeButtonClickEvent',shoppingListIngredientId)
-    }
+      this.$router.push({
+        name: 'changeShoppingListRoute', query: {
+          shoppingListItemId: shoppingListIngredientId
+        }
+      })
+    },
+  },
+
+  beforeMount() {
+    this.shoppingListIngredient = []
+    this.getAllShoppingListIngredients()
   }
 }
 </script>
