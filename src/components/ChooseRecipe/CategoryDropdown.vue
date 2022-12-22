@@ -7,11 +7,9 @@
     </option>
   </select>
 </template>
-
 <script>
 export default {
   name: 'CategoryDropdown',
-
   data: function () {
     return {
       selectedCategoryId: 0,
@@ -25,6 +23,7 @@ export default {
   },
 
   methods: {
+
     getCategoryDropdownInfo: function () {
       this.$http.get('/category')
           .then(result => {
@@ -35,9 +34,9 @@ export default {
           });
     },
     clickSelectCategoryEvent: function () {
-      console.log('olen siin')
       this.$emit('clickSelectCategoryEvent', this.selectedCategoryId)
     },
+
   },
   beforeMount() {
     this.getCategoryDropdownInfo()

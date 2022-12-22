@@ -7,11 +7,9 @@
     </option>
   </select>
 </template>
-
 <script>
 export default {
   name: 'PrepTimeDropdown',
-
   data: function () {
     return {
       selectedPrepTimeId: 0,
@@ -23,7 +21,9 @@ export default {
       ]
     }
   },
+
   methods: {
+
     getPrepTimeDropdownInfo: function () {
       this.$http.get('/prep-time')
           .then(result => {
@@ -33,11 +33,12 @@ export default {
             console.log(error)
           })
     },
+
     clickSelectEvent: function () {
-      console.log("Olen siin 999 " + this.selectedPrepTimeId)
       this.$emit('clickSelectPrepTimeEvent', this.selectedPrepTimeId)
     },
   },
+
   beforeMount() {
     this.getPrepTimeDropdownInfo()
   }

@@ -1,32 +1,22 @@
 <template>
-
-    <div>
-      <select v-on:change="addIngredient" v-model="selectedIngredientId"
-              class="form-select" aria-label="Default select example">
-        <option selected disabled>Koostisosa</option>
-        <option v-for="ingredient in ingredients" :value="ingredient.ingredientId"> {{ ingredient.ingredientName }}</option>
-      </select>
-    </div>
-
-  <!--
-  <select v-on:change="clickSelectRecipeIngredientEvent" v-model="selectedIngredientId"
-          class="form-select" aria-label="Koostisosa">
-    <option selected disabled value="0">Koostisosa</option>
-    <option v-for="ingredient in ingredients" :key="ingredient.ingredientId"
-            :value="ingredient.ingredientId"> {{ ingredient.ingredientName }}
-    </option>
-  </select>
--->
-
+  <div>
+    <select v-on:change="addIngredient" v-model="selectedIngredientId"
+            class="form-select" aria-label="Default select example">
+      <option selected disabled value="0">Koostisosa</option>
+      <option v-for="ingredient in ingredients" :value="ingredient.ingredientId"> {{
+          ingredient.ingredientName
+        }}
+      </option>
+    </select>
+  </div>
 </template>
-
 <script>
 export default {
   name: "RecipeIngredient",
-
   data: function () {
     return {
-      selectedIngredientId:0,
+      selectedIngredientId: 0,
+
       ingredients: [
         {
           ingredientName: '',
@@ -37,6 +27,7 @@ export default {
   },
 
   methods: {
+
     getAllIngredientInfo: function () {
       this.$http.get("/ingredient/recipeIngredient")
           .then(response => {
@@ -46,24 +37,19 @@ export default {
           .catch(error => {
             console.log(error)
           });
-
     },
 
-    addIngredient: function (){
+    addIngredient: function () {
       this.$emit('clickSelectRecipeIngredientEvent', this.selectedIngredientId)
     },
 
     resetSelectedIngredientId: function () {
       this.selectedIngredientId = 0
     }
-
   },
+
   beforeMount() {
     this.getAllIngredientInfo()
   }
 }
 </script>
-
-<style scoped>
-
-</style>

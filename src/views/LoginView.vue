@@ -3,40 +3,24 @@
     <div class="row m-2 justify-content-start ">
       <h1>Tere tulemast kodukoka abilise lehele!</h1>
     </div>
-    <div class="row justify-content-start offset-2 mt-5">
-      <div class="col-3">
+    <div class="row justify-content-center mt-5">
+      <div class="col-5">
         <h2>Logi sisse:</h2>
-      </div>
-      <div class="row justify-content-start">
-        <div class="col-3">
-          <div class="input-group mt-3">
-            <span class="input-group-text">Kasutajanimi</span>
-            <input v-model="username" type="text" class="form-control">
-          </div>
+        <div class="input-group mt-3">
+          <span class="input-group-text">Kasutajanimi</span>
+          <input v-model="username" type="text" class="form-control">
         </div>
-      </div>
-      <div class="row justify-content-start">
-        <div class="col-3">
-          <div class="input-group mt-3">
-            <span class="input-group-text">Parool</span>
-            <input v-model="password" type="password" class="form-control">
-          </div>
-          <div v-if="errorMessage.message.length > 0" class="alert alert-danger" role="alert">
-            {{ errorMessage.message }}
-          </div>
+        <div class="input-group mt-3">
+          <span class="input-group-text">Parool</span>
+          <input v-model="password" type="password" class="form-control">
         </div>
-      </div>
-    </div>
-    <div class="row justify-content-start offset-2 mt-5">
-      <div class="col-3">
-        <div class="d-grid gap-2 col-6 mx-auto">
+        <div v-if="errorMessage.message.length > 0" class="alert alert-danger mt-3" role="alert">
+          {{ errorMessage.message }}
+        </div>
+        <div class="d-grid gap-2 mx-auto mt-3">
           <button v-on:click="loginAndCheckCredentials" type="button" class="btn btn-success">Logi sisse</button>
         </div>
-      </div>
-    </div>
-    <div class="row justify-content-start offset-2 mt-3">
-      <div class="col-3">
-        <div class="d-grid gap-2 col-6 mx-auto">
+        <div class="d-grid gap-2 mx-auto mt-3">
           <button v-on:click="createUser" type="button" class="btn btn-success">Tee kasutaja</button>
         </div>
       </div>
@@ -58,7 +42,6 @@ export default {
     }
   },
   methods: {
-
     validateCredentialsAndLogin: function () {
       this.$http.get("/user/login", {
             params: {

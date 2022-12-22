@@ -1,10 +1,8 @@
 <template>
   <div>
-
     <div class="row justify-content-center m-2">
       <h1> Kasutaja {{ username }} menüüd ja poenimekirjad:</h1>
     </div>
-
     <div class="row m-5">
       <table class="table table-striped">
         <thead class="textBackground">
@@ -13,6 +11,7 @@
           <th scope="col">Menüü</th>
           <th scope="col">Saada e-kirjaga</th>
           <th scope="col">Poenimekiri</th>
+          <th scope="col">Kommentaar</th>
           <th scope="col">Saada e-kirjaga</th>
         </tr>
         </thead>
@@ -27,7 +26,9 @@
           </td>
           <td>
             <router-link :to="{name: 'shoppingListRoute', params: { shoppingListId: menu.shoppingListId } }">{{ menu.shoppingListDate }}</router-link>
-
+          </td>
+          <td>
+            {{menu.shoppingListComment}}
           </td>
           <td>
             <button type="button" class="btn btn-light">Saada</button>
@@ -37,9 +38,7 @@
       </table>
     </div>
   </div>
-
 </template>
-
 <script>
 export default {
   name: "MainView",
@@ -53,13 +52,14 @@ export default {
           menuId: 0,
           menuDate: '',
           shoppingListId: 0,
-          shoppingListDate: ''
+          shoppingListDate: '',
+          shoppingListComment: ''
         }
       ],
     }
   },
-  methods: {
 
+  methods: {
     getUserName: function () {
       this.$http.get("/user", {
             params: {
@@ -68,7 +68,6 @@ export default {
           }
       ).then(response => {
         this.username = response.data
-        console.log(response.data)
       }).catch(error => {
         console.log(error)
       })
@@ -83,7 +82,6 @@ export default {
       ).then(response => {
         this.menus = response.data
         this.addSequenceNumbers()
-        console.log(response.data)
       }).catch(error => {
         console.log(error)
       })
@@ -102,12 +100,10 @@ export default {
       this.$router.push({name: 'menuRoute'})
     }
   },
-beforeMount()
-{
+
+beforeMount() {
   this.getAllMenus()
   this.getUserName()
-
 }
-
 }
 </script>

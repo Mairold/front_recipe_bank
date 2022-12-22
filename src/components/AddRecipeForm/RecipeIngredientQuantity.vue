@@ -4,22 +4,19 @@
            class="form-control" placeholder="Kogus">
   </div>
 </template>
-
 <script>
-
-
 export default {
   name: "RecipeIngredientQuantity",
   data: function (){
     return {
-      ingredientQuantity: 0,
+      ingredientQuantity: null,
     }
-
   },
 
   methods: {
+
     resetIngredientQuantity: function() {
-      this.ingredientQuantity = 0
+      this.ingredientQuantity = null
     },
 
     sendIngredientQuantity: function () {
@@ -28,7 +25,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-
-</style>
