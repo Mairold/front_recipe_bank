@@ -9,10 +9,8 @@
         <tr>
           <th scope="col">#</th>
           <th scope="col">Menüü</th>
-          <th scope="col">Saada e-kirjaga</th>
           <th scope="col">Poenimekiri</th>
           <th scope="col">Kommentaar</th>
-          <th scope="col">Saada e-kirjaga</th>
         </tr>
         </thead>
         <tbody class="textBackground">
@@ -22,16 +20,10 @@
             {{ menu.menuDate }}
           </td>
           <td>
-            <button type="button" class="btn btn-light">Saada</button>
-          </td>
-          <td>
             <router-link :to="{name: 'shoppingListRoute', params: { shoppingListId: menu.shoppingListId } }">{{ menu.shoppingListDate }}</router-link>
           </td>
           <td>
             {{menu.shoppingListComment}}
-          </td>
-          <td>
-            <button type="button" class="btn btn-light">Saada</button>
           </td>
         </tr>
         </tbody>

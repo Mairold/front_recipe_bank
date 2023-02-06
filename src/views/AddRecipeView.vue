@@ -19,7 +19,7 @@
             </div>
             <div style="border:1px solid darkslategrey; text-align: left; padding:10px; text-indent: 3px">
               <div class="form-floating">
-                <textarea class="form-control" placeholder="Valmistamise juhend:" id="instructionsBox"
+                <textarea v-model="recipeInstruction.recipeComment" class="form-control" placeholder="Valmistamise juhend:" id="instructionsBox"
                           style="height: 100px"></textarea>
                 <label for="instructionsBox">Valmistamise juhend:</label>
               </div>
@@ -124,11 +124,12 @@ export default {
       this.recipeResponseDto.recipeId = null
       this.$refs.recipeGeneralInfo.resetInputFields()
       this.$refs.recipeComponentInfo.resetIngredientFields()
+      this.recipeInstruction.recipeComment = ''
     },
 
     saveRecipeComment: function () {
-      if (this.recipeInstruction.recipeComment.length === 0 || this.recipeIngredientInfo.length === 0) {
-        this.showErrorMessage('Sisesta valmistamise juhend ja vali koostisosa.', 'alert alert-danger')
+      if (this.recipeInstruction.recipeComment.length < 1 ) {
+        this.showErrorMessage('Sisesta valmistamise juhend.', 'alert alert-danger')
       } else {
         this.$http.put("/recipe", this.recipeInstruction
         ).then(response => {
